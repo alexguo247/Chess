@@ -3,9 +3,9 @@
 
 using namespace std;
 
-string Piece::getName() {}
+Type Piece::getType() { return type; }
 
-string Piece::getColour() {}
+Colour Piece::getColour() { return colour; }
 
 int Piece::getPos() {}
 

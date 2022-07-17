@@ -16,8 +16,8 @@ protected:
 
 public:
     Piece(Colour c, Type t) : colour{c}, type{t} {}
-    virtual std::string getName();         // return the name of the piece
-    virtual std::string getColour();       // return the colour of the piece
+    virtual Colour getColour();            // return the colour of the piece
+    virtual Type getType();                // return the type of the piece
     virtual int getPos();                  // return the position of the piece
     virtual void setPos(int, int);         // set the position of the piece
     virtual void move(int, int, int, int); // move the peice from old location to the new location

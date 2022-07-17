@@ -1,12 +1,12 @@
-#ifndef __QUEEN_H__
-#define __QUEEN_H__
+#ifndef __KNIGHT_H__
+#define __KNIGHT_H__
 #include "colour.h"
 #include "board.h"
 
-class Queen : public Piece
+class Knight : public Piece
 {
 public:
-    Queen(Colour);
+    Knight(Colour);
     bool checkMove(int, int, int, int, Board *);
 };
 
