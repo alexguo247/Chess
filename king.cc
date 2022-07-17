@@ -34,5 +34,7 @@ bool King::checkMove(int r, int c, int nr, int nc, Board *b)
         }
     }
 
+    // TODO: check if going into danger spot
+
     return false;
 }
