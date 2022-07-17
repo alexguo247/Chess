@@ -29,7 +29,7 @@ bool Pawn::checkMove(int r, int c, int nr, int nc, Board *b)
         }
         if (hasMoved)
         {
-            if (rowDiff == 1 && b->getPiece(nr, nc)->getType() == Type::Empty)
+            if (rowDiff == 1 && b->getPiece(nr, nc) == nullptr)
             {
                 return true;
             }
@@ -37,7 +37,7 @@ bool Pawn::checkMove(int r, int c, int nr, int nc, Board *b)
         }
         else
         {
-            if ((rowDiff == 1 || rowDiff == 2) && b->getPiece(nr, nc)->getType() == Type::Empty)
+            if ((rowDiff == 1 || rowDiff == 2) && b->getPiece(nr, nc) == nullptr)
             {
                 return true;
             }
@@ -56,7 +56,7 @@ bool Pawn::checkMove(int r, int c, int nr, int nc, Board *b)
         }
         if (hasMoved)
         {
-            if (rowDiff == -1 && b->getPiece(nr, nc)->getType() == Type::Empty)
+            if (rowDiff == -1 && b->getPiece(nr, nc) == nullptr)
             {
                 return true;
             }
@@ -64,7 +64,7 @@ bool Pawn::checkMove(int r, int c, int nr, int nc, Board *b)
         }
         else
         {
-            if ((rowDiff == -1 || rowDiff == -2) && b->getPiece(nr, nc)->getType() == Type::Empty)
+            if ((rowDiff == -1 || rowDiff == -2) && b->getPiece(nr, nc) == nullptr)
             {
                 return true;
             }

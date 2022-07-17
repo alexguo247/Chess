@@ -28,7 +28,7 @@ bool King::checkMove(int r, int c, int nr, int nc, Board *b)
 
     for (auto &d : dirs)
     {
-        if (nr == r + d.first && nc == c + d.second && b->getPiece(nr, nc)->getType() == Type::Empty)
+        if (nr == r + d.first && nc == c + d.second && b->getPiece(nr, nc) == nullptr)
         {
             return true;
         }

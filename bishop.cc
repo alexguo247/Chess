@@ -32,7 +32,7 @@ bool Bishop::checkMove(int r, int c, int nr, int nc, Board *b)
     {
         for (int i = 1; i < rowDiff; i++)
         {
-            if (b->getPiece(r + i, c + i)->getType() != Type::Empty)
+            if (b->getPiece(r + i, c + i) != nullptr)
             {
                 return false;
             }
@@ -43,7 +43,7 @@ bool Bishop::checkMove(int r, int c, int nr, int nc, Board *b)
     {
         for (int i = 1; i < colDiff; i++)
         {
-            if (b->getPiece(r - i, c + i)->getType() != Type::Empty)
+            if (b->getPiece(r - i, c + i) != nullptr)
             {
                 return false;
             }
@@ -54,7 +54,7 @@ bool Bishop::checkMove(int r, int c, int nr, int nc, Board *b)
     {
         for (int i = 1; i < rowDiff; i++)
         {
-            if (b->getPiece(r + i, c - i)->getType() != Type::Empty)
+            if (b->getPiece(r + i, c - i) != nullptr)
             {
                 return false;
             }
@@ -65,7 +65,7 @@ bool Bishop::checkMove(int r, int c, int nr, int nc, Board *b)
     {
         for (int i = 1; i < (-1 * rowDiff); i++)
         {
-            if (b->getPiece(r - i, c - i)->getType() != Type::Empty)
+            if (b->getPiece(r - i, c - i) != nullptr)
             {
                 return false;
             }

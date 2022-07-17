@@ -32,7 +32,7 @@ bool Rook::checkMove(int r, int c, int nr, int nc, Board *b)
     {
         for (int i = 1; i < rowDiff; i++)
         {
-            if (b->getPiece(r + i, c)->getType() != Type::Empty)
+            if (b->getPiece(r + i, c) != nullptr)
             {
                 return false;
             }
@@ -43,7 +43,7 @@ bool Rook::checkMove(int r, int c, int nr, int nc, Board *b)
     {
         for (int i = 1; i < (-1 * rowDiff); i++)
         {
-            if (b->getPiece(r - i, c)->getType() != Type::Empty)
+            if (b->getPiece(r - i, c) != nullptr)
             {
                 return false;
             }
@@ -54,7 +54,7 @@ bool Rook::checkMove(int r, int c, int nr, int nc, Board *b)
     {
         for (int i = 1; i < (-1 * colDiff); i++)
         {
-            if (b->getPiece(r, c - i)->getType() != Type::Empty)
+            if (b->getPiece(r, c - i) != nullptr)
             {
                 return false;
             }
@@ -65,7 +65,7 @@ bool Rook::checkMove(int r, int c, int nr, int nc, Board *b)
     {
         for (int i = 1; i < colDiff; i++)
         {
-            if (b->getPiece(r, c + i)->getType() != Type::Empty)
+            if (b->getPiece(r, c + i) != nullptr)
             {
                 return false;
             }
