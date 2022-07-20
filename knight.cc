@@ -37,9 +37,9 @@ bool Knight::checkMove(pair<int, int> n, Board *b)
     return false;
 }
 
-vector<pair<int, int>> Knight::getAttackMoves(Board *b)
+vector<vector<int>> Knight::getAttackMoves(Board *b)
 {
-    vector<pair<int, int>> attackMoves;
+    vector<vector<int>> attackMoves;
     vector<pair<int, int>> dirs{
         pair<int, int>{-1, -2},
         pair<int, int>{-2, -1},
@@ -57,7 +57,7 @@ vector<pair<int, int>> Knight::getAttackMoves(Board *b)
         int newCol = col + d.second;
         if (b->getPiece(newRow, newCol) == nullptr || b->getPiece(newRow, newCol)->getColour() != colour)
         {
-            attackMoves.emplace_back(make_pair(newRow, newCol));
+            attackMoves.emplace_back(newRow, newCol, row, col);
         }
     }
     return attackMoves;

@@ -75,53 +75,53 @@ bool Rook::checkMove(pair<int, int> n, Board *b)
     return true;
 }
 
-vector<pair<int, int>> Rook::getAttackMoves(Board *b)
+vector<vector<int>> Rook::getAttackMoves(Board *b)
 {
-    vector<pair<int, int>> attackMoves;
+    vector<vector<int>> attackMoves;
     int currRow = row;
     int currCol = col;
     // Down
     while (currRow < 8 && b->getPiece(currRow, currCol) == nullptr)
     {
-        attackMoves.emplace_back(make_pair(currRow, currCol));
+        attackMoves.emplace_back(currRow, currCol, row, col);
         currRow++;
     }
     if (currRow < 8 && b->getPiece(currRow, currCol)->getColour() != colour)
     {
-        attackMoves.emplace_back(make_pair(currRow, currCol));
+        attackMoves.emplace_back(currRow, currCol, row, col);
     }
     currRow = row;
     // Up
     while (currRow >= 0 && b->getPiece(currRow, currCol) == nullptr)
     {
-        attackMoves.emplace_back(make_pair(currRow, currCol));
+        attackMoves.emplace_back(currRow, currCol, row, col);
         currRow--;
     }
     if (currRow >= 0 && b->getPiece(currRow, currCol)->getColour() != colour)
     {
-        attackMoves.emplace_back(make_pair(currRow, currCol));
+        attackMoves.emplace_back(currRow, currCol, row, col);
     }
     currRow = row;
     // Left
     while (currCol >= 0 && b->getPiece(currRow, currCol) == nullptr)
     {
-        attackMoves.emplace_back(make_pair(currRow, currCol));
+        attackMoves.emplace_back(currRow, currCol, row, col);
         currCol--;
     }
     if (currCol >= 0 && b->getPiece(currRow, currCol)->getColour() != colour)
     {
-        attackMoves.emplace_back(make_pair(currRow, currCol));
+        attackMoves.emplace_back(currRow, currCol, row, col);
     }
     currCol = col;
     // Right
     while (currCol < 8 && b->getPiece(currRow, currCol) == nullptr)
     {
-        attackMoves.emplace_back(make_pair(currRow, currCol));
+        attackMoves.emplace_back(currRow, currCol, row, col);
         currCol++;
     }
     if (currCol < 8 && b->getPiece(currRow, currCol)->getColour() != colour)
     {
-        attackMoves.emplace_back(make_pair(currRow, currCol));
+        attackMoves.emplace_back(currRow, currCol, row, col);
     }
     return attackMoves;
 }

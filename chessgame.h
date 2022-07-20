@@ -2,22 +2,29 @@
 #include "board.h"
 #include "player.h"
 
-class Chessgame {
+class Chessgame
+{
     Board board;
-    Player* p1;
-    Player* p2;
+    Player *p1;
+    Player *p2;
     Colour turn;
-    set<pair<int, int>> whiteAttackingMoves;
-    set<pair<int, int>> blackAttackingMoves;
+    vector<vector<int>> whiteAttackingMoves;
+    vector<vector<int>> blackAttackingMoves;
     pair<int, int> blackKing;
     pair<int, int> whiteKing;
 
     void updateAttackingMoves(Colour);
+    vector<vector<int>> getAttackers(Colour);
+    bool canBlock(Colour, int, int);
+    bool inDanger(Colour, int, int);
 
-    public:
-        Chessgame();
-        void game(string, string);
-        void move(string, string);
-        void resign();
-        void setup();
+public:
+    Chessgame();
+    void game(string, string);
+    void move(string, string);
+    void resign();
+    void setup();
+    bool inCheck();
+    bool inCheckmate();
+    bool inStalemate();
 };
