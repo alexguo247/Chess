@@ -93,11 +93,18 @@ void Chessgame::move(string coord1, string coord2) {
         return;
     }
 
+    int res; // 0 for invalid move, 1 for valid move
     if (turn == Colour::WHITE) {
-        p1->move(start, end);
+        res = p1->move(start, end);
+        if (res == 1 && piece->getType() == Type::KING) {
+            whiteKing = end;
+        }
         updateAttackingMoves(Colour::WHITE);
     } else {
-        p2->move(start, end);
+        res = p2->move(start, end);
+        if (res == 1 && piece->getType() == Type::KING) {
+            blackKing = end;
+        }
         updateAttackingMoves(Colour::BLACK);
     }
 
