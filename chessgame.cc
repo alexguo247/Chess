@@ -2,7 +2,7 @@
 #include "colour.h"
 #include <iostream>
 #include <cmath>
-#include "king.h"
+
 using namespace std;
 
 pair<int, int> convertCoord(string coord)
