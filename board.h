@@ -8,4 +8,5 @@ class Board {
         Piece* getPiece(int, int);
         void setPiece(Piece*, int, int);
         bool isValid(); 
+        void setup(set<pair<int, int>>&, set<pair<int,int>> &, pair<int, int> &, pair<int, int> &);
 };

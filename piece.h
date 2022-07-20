@@ -4,6 +4,7 @@
 #include <string>
 #include <colour.h>
 #include <type.h>
+#include "board.h"
 
 class Piece
 {
@@ -15,7 +16,7 @@ protected:
     bool isMoved;
 
 public:
-    Piece(Colour c, Type t) : colour{c}, type{t} {}
+    Piece(Colour c, Type t, int row, int col) : colour{c}, type{t}, row{row}, col{col} {};
     virtual Colour getColour();            // return the colour of the piece
     virtual Type getType();                // return the type of the piece
     virtual int getPos();                  // return the position of the piece
@@ -23,9 +24,8 @@ public:
     virtual void move(int, int, int, int); // move the peice from old location to the new location
     virtual bool isMoved();                // return if the piece was moved
     virtual void setMove(bool);            // set isMoved to true
-    // virtual bool validMove() = 0; // check if move is valid
     virtual bool isRiskyMove(int, int, int, int);   // check if this is a risky move
-    virtual bool checkMove(int, int, int, int) = 0; // check if move is valid
+    virtual bool checkMove(int, int, int, int, Board *) = 0; // check if move is valid
     void notifyObservers();
 };
 #endif

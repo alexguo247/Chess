@@ -6,7 +6,7 @@
 class Bishop : public Piece
 {
 public:
-    Bishop(Colour);
+    Bishop(Colour, int, int);
     bool checkMove(int, int, int, int, Board *);
 };
 

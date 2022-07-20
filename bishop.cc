@@ -1,7 +1,7 @@
 #include "bishop.h"
 #include <cmath>
 
-Bishop::Bishop(Colour c) : Piece(c, Type::Bishop){};
+Bishop::Bishop(Colour c, int row, int col) : Piece(c, Type::BISHOP, row, col){};
 
 bool Bishop::checkMove(int r, int c, int nr, int nc, Board *b)
 {
