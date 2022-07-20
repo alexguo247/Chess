@@ -1,11 +1,14 @@
+#ifndef CHESSGAME_H
+#define CHESSGAME_H
 #include <set>
 #include "board.h"
 #include "player.h"
 
-class Chessgame {
+class Chessgame
+{
     Board board;
-    Player* p1;
-    Player* p2;
+    Player *p1;
+    Player *p2;
     Colour turn;
     set<pair<int, int>> whiteAttackingMoves;
     set<pair<int, int>> blackAttackingMoves;
@@ -14,10 +17,12 @@ class Chessgame {
 
     void updateAttackingMoves(Colour);
 
-    public:
-        Chessgame();
-        void game(string, string);
-        void move(string, string);
-        void resign();
-        void setup();
+public:
+    Chessgame();
+    void game(string, string);
+    void move(string, string);
+    void resign();
+    void setup();
 };
+
+#endif;
