@@ -11,4 +11,4 @@ void Chessgame::game(string player1, string player2) {
     board.setup();
 }
 
-void 
+void Chessgame::
