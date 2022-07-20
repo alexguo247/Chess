@@ -7,7 +7,7 @@
 #include "type.h"
 #include "piece.h"
 
-class Textdisplay
+class Textdisplay: public Observer
 {
 private:
     char **theDis;
