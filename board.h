@@ -19,8 +19,6 @@ public:
     bool isValid();
     void printBoard();
     void setup(std::set<pair<int, int>> &, std::set<pair<int, int>> &, pair<int, int> &, pair<int, int> &);
-
 };
 
 #endif
-
