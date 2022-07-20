@@ -12,13 +12,17 @@ pair<int, int> Piece::getPos()
     return make_pair(row, col);
 }
 
-void Piece::setPos(int row, int col)
-{
-    this->row = row;
-    this->col = col;
+void Piece::setPos(int x, int y) {
+    row = x;
+    col = y;
 }
 
-void Piece::move(int r, int c, int nr, int nc) {}
+void Piece::move(pair<int, int> end, Board *b) {
+    b->setPiece(this, end.first, end.second);
+    b->setPiece(nullptr, row, col);
+    p->setPos(end.first, end.second);
+}
+
 
 bool Piece::isMoved()
 {

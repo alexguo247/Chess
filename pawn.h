@@ -9,7 +9,7 @@ class Pawn : public Piece
 
 public:
     Pawn(Colour, int, int);
-    bool checkMove(int, int, int, int, Board *);
+    bool checkMove(std::pair<int, int>, Board *);
     std::vector<std::pair<int, int>> getAttackMoves(Board *);
 };
 

@@ -7,7 +7,7 @@ class Bishop : public Piece
 {
 public:
     Bishop(Colour, int, int);
-    bool checkMove(int, int, int, int, Board *);
+    bool checkMove(std::pair<int, int>, Board *);
     std::vector<std::pair<int, int>> getAttackMoves(Board *);
 };
 

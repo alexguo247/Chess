@@ -7,7 +7,7 @@ class Queen : public Piece
 {
 public:
     Queen(Colour, int, int);
-    bool checkMove(int, int, int, int, Board *);
+    bool checkMove(pair<int, int>, Board *);
     std::vector<std::pair<int, int>> getAttackMoves(Board *);
 };
 

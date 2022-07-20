@@ -93,8 +93,8 @@ void Board::setup(set<pair<int, int>> &blackAttackingMoves, set<pair<int, int>> 
         }
     }
 
-    whiteKing = make_pair(7, 4);
-    blackKing = make_pair(0, 4);
+    whiteKing = pair<int, int>{7, 4};
+    blackKing = pair<int, int>{0, 4};
 
     for (int i = 0; i < 8; i++)
     {
