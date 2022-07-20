@@ -2,7 +2,7 @@
 #include <cmath>
 using namespace std;
 
-Knight::Knight(Colour c) : Piece(c, Type::Knight){};
+Knight::Knight(Colour c, int row, int col) : Piece(c, Type::KNIGHT, row, col){};
 
 bool Knight::checkMove(int r, int c, int nr, int nc, Board *b)
 {

@@ -1,11 +1,19 @@
+#ifndef __SCOREBOARD_H__
+#define __SCOREBOARD_H__
+
+#include <string>
 #include "colour.h"
 
-class Scoreboard {
-    int p1Score;
-    int p2Score;
+class Scoreboard
+{
+    float white;
+    float black;
 
-    public:
-        Scoreboard();
-        void print();
-        void incrementScore(Colour);
+public:
+    Scoreboard();
+    void print();
+    void incrementScore(Colour c);
+    void staleMate();
 };
+
+#endif
