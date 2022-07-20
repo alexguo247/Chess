@@ -293,28 +293,13 @@ bool Chessgame::inCheckmate()
         {
             double slope = (double)colDiff / rowDiff;
             // Escape by moving away
-            if (slope == 1.0)
+            for (auto &d : dirs)
             {
-                for (auto &d : dirs)
+                int nr = kingRow + d.first;
+                int nc = kingRow + d.second;
+                if (currKing->checkMove({nr, nc}, &board) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
                 {
-                    int nr = kingRow + d.first;
-                    int nc = kingRow + d.second;
-                    if (currKing->checkMove({nr, nc}, &board) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
-                    {
-                        return false;
-                    }
-                }
-            }
-            else
-            {
-                for (auto &d : dirs)
-                {
-                    int nr = kingRow + d.first;
-                    int nc = kingRow + d.second;
-                    if (currKing->checkMove({nr, nc}, &board) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
             // Escape by blocking
