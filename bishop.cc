@@ -1,6 +1,6 @@
 #include "bishop.h"
 #include <cmath>
-#include <set>
+
 using namespace std;
 Bishop::Bishop(Colour c) : Piece(c, Type::Bishop){};
 
