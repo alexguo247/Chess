@@ -5,6 +5,41 @@
 using namespace std;
 
 // AGUO ADD A convertCoord func plzzzzzzzzzzzzzz
+pair<int, int> convertCoord(string coord)
+{
+    pair<int, int> convertedCoordinate;
+    int row = coord[1] - '0';
+    switch (coord[0])
+    {
+    case 'a':
+        convertedCoordinate = make_pair(8 - row, 0);
+        break;
+    case 'b':
+        convertedCoordinate = make_pair(8 - row, 1);
+        break;
+    case 'c':
+        convertedCoordinate = make_pair(8 - row, 2);
+        break;
+    case 'd':
+        convertedCoordinate = make_pair(8 - row, 3);
+        break;
+    case 'e':
+        convertedCoordinate = make_pair(8 - row, 4);
+        break;
+    case 'f':
+        convertedCoordinate = make_pair(8 - row, 5);
+        break;
+    case 'g':
+        convertedCoordinate = make_pair(8 - row, 6);
+        break;
+    case 'h':
+        convertedCoordinate = make_pair(8 - row, 7);
+        break;
+    default:
+        break;
+    }
+    return convertedCoordinate;
+}
 
 Chessgame::Chessgame() : p1{nullptr}, p2{nullptr}, turn{Colour::WHITE} {};
 
@@ -14,10 +49,14 @@ void Chessgame::game(string player1, string player2) {
     board.setup(blackAttackingMoves, whiteAttackingMoves, blackKing, whiteKing);
 }
 
-void Chessgame::resign() {
-    if (turn == Colour::WHITE) {
+void Chessgame::resign()
+{
+    if (turn == Colour::WHITE)
+    {
         cout << "Black wins!" << endl;
-    } else {
+    }
+    else
+    {
         cout << "White wins!" << endl;
     }
 }
@@ -63,7 +102,7 @@ void Chessgame::move(string coord1, string coord2) {
         updateAttackingMoves(Colour::BLACK)
     }
 
-    /* 
+    /*
     1 -> someone is in check
     2 -> someone is in checkmate
     3 -> stalemate
@@ -72,7 +111,9 @@ void Chessgame::move(string coord1, string coord2) {
     if (inCheck()) {
         if (turn == Colour::WHITE) {
             cout << "Black is in check." << endl;
-        } else {
+        }
+        else
+        {
             cout << "White is in check." << endl;
         }
     };
@@ -80,10 +121,12 @@ void Chessgame::move(string coord1, string coord2) {
     if (inCheckmate()) {
         if (turn == Colour::WHITE) {
             cout << "Checkmate! White wins!" << endl;
-        } else {
+        }
+        else
+        {
             cout << "Checkmate! Black wins!" << endl;
         }
-    } 
+    }
 
     if (inStalemate()) {
         cout << "Stalemate!" << endl;

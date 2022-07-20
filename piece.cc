@@ -7,7 +7,10 @@ Type Piece::getType() { return type; }
 
 Colour Piece::getColour() { return colour; }
 
-int Piece::getPos() {}
+pair<int, int> Piece::getPos()
+{
+    return make_pair(row, col);
+}
 
 void Piece::setPos(int x, int y) {
     row = x;
@@ -21,7 +24,10 @@ void Piece::move(pair<int, int> end, Board *b) {
 }
 
 
-bool Piece::isMoved() {}
+bool Piece::isMoved()
+{
+    return isMoved;
+}
 
 void Piece::setMove(bool m) {}
 

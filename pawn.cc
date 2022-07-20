@@ -74,3 +74,31 @@ bool Pawn::checkMove(pair<int, int> n, Board *b)
 
     return false;
 }
+
+vector<pair<int, int>> Pawn::getAttackMoves(Board *b)
+{
+    vector<pair<int, int>> attackMoves;
+    if (colour == Colour::BLACK)
+    {
+        if (b->getPiece(row + 1, col + 1) == nullptr || b->getPiece(row + 1, col + 1)->getColour() != colour)
+        {
+            attackMoves.emplace_back(make_pair(row + 1, col + 1));
+        }
+        if (b->getPiece(row + 1, col - 1) == nullptr || b->getPiece(row + 1, col - 1)->getColour() != colour)
+        {
+            attackMoves.emplace_back(make_pair(row + 1, col - 1));
+        }
+    }
+    else
+    {
+        if (b->getPiece(row - 1, col + 1) == nullptr || b->getPiece(row - 1, col + 1)->getColour() != colour)
+        {
+            attackMoves.emplace_back(make_pair(row - 1, col + 1));
+        }
+        if (b->getPiece(row - 1, col - 1) == nullptr || b->getPiece(row - 1, col - 1)->getColour() != colour)
+        {
+            attackMoves.emplace_back(make_pair(row - 1, col - 1));
+        }
+    }
+    return attackMoves;
+}

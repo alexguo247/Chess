@@ -119,3 +119,106 @@ bool Queen::checkMove(pair<int, int> n, Board *b)
 
     return true;
 }
+
+vector<pair<int, int>> Queen::getAttackMoves(Board *b)
+{
+    vector<pair<int, int>> attackMoves;
+    int currRow = row;
+    int currCol = col;
+    // Down right
+    while (currRow < 8 && currCol < 8 && b->getPiece(currRow, currCol) == nullptr)
+    {
+        attackMoves.emplace_back(make_pair(currRow, currCol));
+        currRow++;
+        currCol++;
+    }
+    if (currRow < 8 && currCol < 8 && b->getPiece(currRow, currCol)->getColour() != colour)
+    {
+        attackMoves.emplace_back(make_pair(currRow, currCol));
+    }
+    currRow = row;
+    currCol = col;
+    // Top left
+    while (currRow >= 0 && currCol >= 0 && b->getPiece(currRow, currCol) == nullptr)
+    {
+        attackMoves.emplace_back(make_pair(currRow, currCol));
+        currRow--;
+        currCol--;
+    }
+    if (currRow >= 0 && currCol >= 0 && b->getPiece(currRow, currCol)->getColour() != colour)
+    {
+        attackMoves.emplace_back(make_pair(currRow, currCol));
+    }
+    currRow = row;
+    currCol = col;
+    // Bottom left
+    while (currRow < 8 && currCol >= 0 && b->getPiece(currRow, currCol) == nullptr)
+    {
+        attackMoves.emplace_back(make_pair(currRow, currCol));
+        currRow++;
+        currCol--;
+    }
+    if (currRow < 8 && currCol >= 0 && b->getPiece(currRow, currCol)->getColour() != colour)
+    {
+        attackMoves.emplace_back(make_pair(currRow, currCol));
+    }
+    currRow = row;
+    currCol = col;
+    // Top right
+    while (currRow >= 0 && currCol < 8 && b->getPiece(currRow, currCol) == nullptr)
+    {
+        attackMoves.emplace_back(make_pair(currRow, currCol));
+        currRow--;
+        currCol++;
+    }
+    if (currRow >= 0 && currCol < 8 && b->getPiece(currRow, currCol)->getColour() != colour)
+    {
+        attackMoves.emplace_back(make_pair(currRow, currCol));
+    }
+    currRow = row;
+    currCol = col;
+    // Down
+    while (currRow < 8 && b->getPiece(currRow, currCol) == nullptr)
+    {
+        attackMoves.emplace_back(make_pair(currRow, currCol));
+        currRow++;
+    }
+    if (currRow < 8 && b->getPiece(currRow, currCol)->getColour() != colour)
+    {
+        attackMoves.emplace_back(make_pair(currRow, currCol));
+    }
+    currRow = row;
+    // Up
+    while (currRow >= 0 && b->getPiece(currRow, currCol) == nullptr)
+    {
+        attackMoves.emplace_back(make_pair(currRow, currCol));
+        currRow--;
+    }
+    if (currRow >= 0 && b->getPiece(currRow, currCol)->getColour() != colour)
+    {
+        attackMoves.emplace_back(make_pair(currRow, currCol));
+    }
+    currRow = row;
+    // Left
+    while (currCol >= 0 && b->getPiece(currRow, currCol) == nullptr)
+    {
+        attackMoves.emplace_back(make_pair(currRow, currCol));
+        currCol--;
+    }
+    if (currCol >= 0 && b->getPiece(currRow, currCol)->getColour() != colour)
+    {
+        attackMoves.emplace_back(make_pair(currRow, currCol));
+    }
+    currCol = col;
+    // Right
+    while (currCol < 8 && b->getPiece(currRow, currCol) == nullptr)
+    {
+        attackMoves.emplace_back(make_pair(currRow, currCol));
+        currCol++;
+    }
+    if (currCol < 8 && b->getPiece(currRow, currCol)->getColour() != colour)
+    {
+        attackMoves.emplace_back(make_pair(currRow, currCol));
+    }
+    return attackMoves;
+}
