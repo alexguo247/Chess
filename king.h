@@ -8,6 +8,7 @@ class King : public Piece
 public:
     King(Colour);
     bool checkMove(int, int, int, int, Board *);
+    std::vector<std::pair<int, int>> getAttackMoves(Board *);
 };
 
 #endif
