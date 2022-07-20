@@ -2,7 +2,7 @@
 #include <cmath>
 using namespace std;
 
-King::King(Colour c) : Piece(c, Type::King){};
+King::King(Colour c, int row, int col) : Piece(c, Type::KING, row, col){};
 
 bool King::checkMove(int r, int c, int nr, int nc, Board *b)
 {

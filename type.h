@@ -3,13 +3,12 @@
 
 enum class Type
 {
-    Empty,
-    Pawn,
-    Knight,
-    Rook,
-    Bishop,
-    Queen,
-    King
+    PAWN,
+    KNIGHT,
+    ROOK,
+    BISHOP,
+    QUEEN,
+    KING,
 };
 
 #endif
