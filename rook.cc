@@ -1,6 +1,6 @@
 #include "rook.h"
 #include <cmath>
-
+using namespace std;
 Rook::Rook(Colour c, int row, int col) : Piece(c, Type::ROOK, row, col){};
 
 bool Rook::checkMove(int r, int c, int nr, int nc, Board *b)

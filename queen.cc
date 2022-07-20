@@ -1,6 +1,6 @@
 #include "queen.h"
 #include <cmath>
-
+using namespace std;
 Queen::Queen(Colour c, int row, int col) : Piece(c, Type::QUEEN, row, col){};
 
 bool Queen::checkMove(int r, int c, int nr, int nc, Board *b)
