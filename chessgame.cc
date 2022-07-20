@@ -4,7 +4,6 @@
 
 using namespace std;
 
-// AGUO ADD A convertCoord func plzzzzzzzzzzzzzz
 pair<int, int> convertCoord(string coord)
 {
     pair<int, int> convertedCoordinate;
@@ -71,7 +70,7 @@ void Chessgame::updateAttackingMoves(Colour c) {
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
             if (board.getPiece(i, j)->getColour() == c) {
-               for (auto a: board.getPiece(i, j)->getAttackingSquares()) {
+               for (auto a: board.getPiece(i, j)->getAttackMoves(&board)) {
                    if (c == Colour::WHITE) {
                         whiteAttackingMoves.insert(a);
                    } else {
@@ -96,10 +95,10 @@ void Chessgame::move(string coord1, string coord2) {
 
     if (turn == Colour::WHITE) {
         p1->move(start, end);
-        updateAttackingMoves(Colour::WHITE)
+        updateAttackingMoves(Colour::WHITE);
     } else {
         p2->move(start, end);
-        updateAttackingMoves(Colour::BLACK)
+        updateAttackingMoves(Colour::BLACK);
     }
 
     /*

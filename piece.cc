@@ -29,11 +29,12 @@ void Piece::move(int r, int c, int nr, int nc) {}
 bool Piece::isMoved() {}
 
 void Piece::move(pair<int, int> end, Board *b) {
+    pair<int, int> old = pair<int, int> {row, col};
     b->setPiece(this, end.first, end.second);
     b->setPiece(nullptr, row, col);
-    p->setPos(end.first, end.second);
+    setPos(end.first, end.second);
+    notifyObservers(this, old);
 }
-
 
 bool Piece::isMoved()
 {
@@ -43,5 +44,3 @@ bool Piece::isMoved()
 void Piece::setMove(bool m) {}
 
 bool Piece::isRiskyMove(int r, int c, int nr, int nc) {}
-
-void Piece::notifyObservers() {}
