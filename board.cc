@@ -25,6 +25,12 @@ void Board::setPiece(Piece *piece, int row, int col)
     grid[row][col] = piece;
 }
 
+
+void Board::printBoard()
+{
+    cout << grid;
+}
+
 void Board::setup(set<pair<int, int>> &blackAttackingMoves, set<pair<int, int>> &whiteAttackingMoves, pair<int, int> &blackKing, pair<int, int> &whiteKing)
 {
     // clean up old board

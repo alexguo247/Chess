@@ -19,7 +19,7 @@ public:
     Piece(Colour c, Type t, int row, int col) : colour{c}, type{t}, row{row}, col{col} {};
     virtual Colour getColour();            // return the colour of the piece
     virtual Type getType();                // return the type of the piece
-    virtual std::pair<int, int> getPos();       // return the position of the piece
+    virtual std::pair<int, int> getPos();  // return the position of the piece
     virtual void setPos(int, int);         // set the position of the piece
     virtual void move(int, int, int, int); // move the peice from old location to the new location
     virtual bool isMoved();                // return if the piece was moved
