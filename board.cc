@@ -8,6 +8,7 @@
 #include "pawn.h"
 
 #include <set>
+#include <iostream>
 
 using namespace std;
 
@@ -24,7 +25,6 @@ void Board::setPiece(Piece *piece, int row, int col)
     }
     grid[row][col] = piece;
 }
-
 
 void Board::printBoard()
 {
