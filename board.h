@@ -4,7 +4,9 @@
 #include "piece.h"
 #include "textdisplay.h"
 #include <vector>
+#include <set>
 #include <stdbool.h>
+#include <set>
 
 class Board
 {
@@ -16,6 +18,9 @@ public:
     void setPiece(Piece *, int, int);
     bool isValid();
     void printBoard();
+    void setup(std::set<pair<int, int>> &, std::set<pair<int, int>> &, pair<int, int> &, pair<int, int> &);
+
 };
 
 #endif
+

@@ -1,28 +1,28 @@
 #include "rook.h"
 #include <cmath>
+using namespace std;
+Rook::Rook(Colour c, int row, int col) : Piece(c, Type::ROOK, row, col){};
 
-Rook::Rook(Colour c) : Piece(c, Type::Rook){};
-
-bool Rook::checkMove(int r, int c, int nr, int nc, Board *b)
+bool Rook::checkMove(pair<int, int> n, Board *b)
 {
-    if (r == nr && c == nc)
+    if (row == n.first && col == n.second)
     {
         return false;
     }
-    if (nr < 0 || nr > 7 || nc < 0 || nc > 7)
+    if (n.first < 0 || n.first > 7 || n.second < 0 || n.second > 7)
     {
         return false;
     }
-    if (r != nr && c != nc)
+    if (row != n.first && col != n.second)
     {
         return false;
     }
 
-    int rowDiff = nr - r;
-    int colDiff = nc - c;
+    int rowDiff = n.first - row;
+    int colDiff = n.second - col;
 
     // If the ending spot is the same colour
-    if (b->getPiece(nr, nc)->getColour() == colour)
+    if (b->getPiece(n.first, n.second)->getColour() == colour)
     {
         return false;
     }
@@ -32,7 +32,7 @@ bool Rook::checkMove(int r, int c, int nr, int nc, Board *b)
     {
         for (int i = 1; i < rowDiff; i++)
         {
-            if (b->getPiece(r + i, c) != nullptr)
+            if (b->getPiece(row + i, col) != nullptr)
             {
                 return false;
             }
@@ -43,7 +43,7 @@ bool Rook::checkMove(int r, int c, int nr, int nc, Board *b)
     {
         for (int i = 1; i < (-1 * rowDiff); i++)
         {
-            if (b->getPiece(r - i, c) != nullptr)
+            if (b->getPiece(row - i, col) != nullptr)
             {
                 return false;
             }
@@ -54,7 +54,7 @@ bool Rook::checkMove(int r, int c, int nr, int nc, Board *b)
     {
         for (int i = 1; i < (-1 * colDiff); i++)
         {
-            if (b->getPiece(r, c - i) != nullptr)
+            if (b->getPiece(row, col - i) != nullptr)
             {
                 return false;
             }
@@ -65,7 +65,7 @@ bool Rook::checkMove(int r, int c, int nr, int nc, Board *b)
     {
         for (int i = 1; i < colDiff; i++)
         {
-            if (b->getPiece(r, c + i) != nullptr)
+            if (b->getPiece(row, col + i) != nullptr)
             {
                 return false;
             }
@@ -73,4 +73,55 @@ bool Rook::checkMove(int r, int c, int nr, int nc, Board *b)
     }
 
     return true;
+}
+
+vector<pair<int, int>> Rook::getAttackMoves(Board *b)
+{
+    vector<pair<int, int>> attackMoves;
+    int currRow = row;
+    int currCol = col;
+    // Down
+    while (currRow < 8 && b->getPiece(currRow, currCol) == nullptr)
+    {
+        attackMoves.emplace_back(make_pair(currRow, currCol));
+        currRow++;
+    }
+    if (currRow < 8 && b->getPiece(currRow, currCol)->getColour() != colour)
+    {
+        attackMoves.emplace_back(make_pair(currRow, currCol));
+    }
+    currRow = row;
+    // Up
+    while (currRow >= 0 && b->getPiece(currRow, currCol) == nullptr)
+    {
+        attackMoves.emplace_back(make_pair(currRow, currCol));
+        currRow--;
+    }
+    if (currRow >= 0 && b->getPiece(currRow, currCol)->getColour() != colour)
+    {
+        attackMoves.emplace_back(make_pair(currRow, currCol));
+    }
+    currRow = row;
+    // Left
+    while (currCol >= 0 && b->getPiece(currRow, currCol) == nullptr)
+    {
+        attackMoves.emplace_back(make_pair(currRow, currCol));
+        currCol--;
+    }
+    if (currCol >= 0 && b->getPiece(currRow, currCol)->getColour() != colour)
+    {
+        attackMoves.emplace_back(make_pair(currRow, currCol));
+    }
+    currCol = col;
+    // Right
+    while (currCol < 8 && b->getPiece(currRow, currCol) == nullptr)
+    {
+        attackMoves.emplace_back(make_pair(currRow, currCol));
+        currCol++;
+    }
+    if (currCol < 8 && b->getPiece(currRow, currCol)->getColour() != colour)
+    {
+        attackMoves.emplace_back(make_pair(currRow, currCol));
+    }
+    return attackMoves;
 }

@@ -8,8 +8,9 @@ class Pawn : public Piece
     bool hasMoved;
 
 public:
-    Pawn(Colour);
-    bool checkMove(int, int, int, int, Board *);
+    Pawn(Colour, int, int);
+    bool checkMove(std::pair<int, int>, Board *);
+    std::vector<std::pair<int, int>> getAttackMoves(Board *);
 };
 
 #endif
