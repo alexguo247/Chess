@@ -7,7 +7,7 @@ class Rook : public Piece
 {
 public:
     Rook(Colour, int, int);
-    bool checkMove(int, int, int, int, Board *) override;
+    bool checkMove(pair<int, int>, Board *) override;
 };
 
 #endif

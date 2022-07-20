@@ -9,9 +9,17 @@ Colour Piece::getColour() { return colour; }
 
 int Piece::getPos() {}
 
-void Piece::setPos(int x, int y) {}
+void Piece::setPos(int x, int y) {
+    row = x;
+    col = y;
+}
 
-void Piece::move(int r, int c, int nr, int nc) {}
+void Piece::move(pair<int, int> end, Board *b) {
+    b->setPiece(this, end.first, end.second);
+    b->setPiece(nullptr, row, col);
+    p->setPos(end.first, end.second);
+}
+
 
 bool Piece::isMoved() {}
 

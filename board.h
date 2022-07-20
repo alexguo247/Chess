@@ -1,5 +1,6 @@
 #include "piece.h"
 #include <vector>
+#include <set>
 #include <stdbool.h>
 
 class Board {

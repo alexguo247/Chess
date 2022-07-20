@@ -4,24 +4,24 @@ using namespace std;
 
 Pawn::Pawn(Colour c, int row, int col) : Piece(c, Type::PAWN, row, col){};
 
-bool Pawn::checkMove(int r, int c, int nr, int nc, Board *b)
+bool Pawn::checkMove(pair<int, int> n, Board *b)
 {
-    if (r == nr && c == nc)
+    if (row == n.first && col == n.second)
     {
         return false;
     }
-    if (nr < 0 || nr > 7 || nc < 0 || nc > 7)
+    if (n.first < 0 || n.first > 7 || n.second < 0 || n.second > 7)
     {
         return false;
     }
 
-    int rowDiff = nr - r;
-    int colDiff = nc - c;
+    int rowDiff = n.first - row;
+    int colDiff = n.second - col;
     if (colour == Colour::BLACK)
     {
         if ((colDiff == 1 || colDiff == -1) && rowDiff == 1)
         {
-            if (b->getPiece(nr, nc)->getColour() != colour)
+            if (b->getPiece(n.first, n.second)->getColour() != colour)
             {
                 return true;
             }
@@ -29,7 +29,7 @@ bool Pawn::checkMove(int r, int c, int nr, int nc, Board *b)
         }
         if (hasMoved)
         {
-            if (rowDiff == 1 && b->getPiece(nr, nc) == nullptr)
+            if (rowDiff == 1 && b->getPiece(n.first, n.second) == nullptr)
             {
                 return true;
             }
@@ -37,7 +37,7 @@ bool Pawn::checkMove(int r, int c, int nr, int nc, Board *b)
         }
         else
         {
-            if ((rowDiff == 1 || rowDiff == 2) && b->getPiece(nr, nc) == nullptr)
+            if ((rowDiff == 1 || rowDiff == 2) && b->getPiece(n.first, n.second) == nullptr)
             {
                 return true;
             }
@@ -48,7 +48,7 @@ bool Pawn::checkMove(int r, int c, int nr, int nc, Board *b)
     {
         if ((colDiff == 1 || colDiff == -1) && rowDiff == -1)
         {
-            if (b->getPiece(nr, nc)->getColour() != colour)
+            if (b->getPiece(n.first, n.second)->getColour() != colour)
             {
                 return true;
             }
@@ -56,7 +56,7 @@ bool Pawn::checkMove(int r, int c, int nr, int nc, Board *b)
         }
         if (hasMoved)
         {
-            if (rowDiff == -1 && b->getPiece(nr, nc) == nullptr)
+            if (rowDiff == -1 && b->getPiece(n.first, n.second) == nullptr)
             {
                 return true;
             }
@@ -64,7 +64,7 @@ bool Pawn::checkMove(int r, int c, int nr, int nc, Board *b)
         }
         else
         {
-            if ((rowDiff == -1 || rowDiff == -2) && b->getPiece(nr, nc) == nullptr)
+            if ((rowDiff == -1 || rowDiff == -2) && b->getPiece(n.first, n.second) == nullptr)
             {
                 return true;
             }

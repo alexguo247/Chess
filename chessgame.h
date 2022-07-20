@@ -12,6 +12,8 @@ class Chessgame {
     pair<int, int> blackKing;
     pair<int, int> whiteKing;
 
+    void updateAttackingMoves(Colour);
+
     public:
         Chessgame();
         void game(string, string);

@@ -7,7 +7,7 @@ class Knight : public Piece
 {
 public:
     Knight(Colour, int, int);
-    bool checkMove(int, int, int, int, Board *);
+    bool checkMove(std::pair<int, int>, Board *);
 };
 
 #endif

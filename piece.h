@@ -25,7 +25,7 @@ public:
     virtual bool isMoved();                // return if the piece was moved
     virtual void setMove(bool);            // set isMoved to true
     virtual bool isRiskyMove(int, int, int, int);   // check if this is a risky move
-    virtual bool checkMove(int, int, int, int, Board *) = 0; // check if move is valid
+    virtual bool checkMove(std::pair<int, int>, Board *) = 0; // check if move is valid
     void notifyObservers();
 };
 #endif
