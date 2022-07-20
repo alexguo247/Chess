@@ -17,8 +17,6 @@ public:
     bool isValid();
     void printBoard();
     void setup(std::vector<vector<int>> &, std::vector<vector<int>> &, pair<int, int> &, pair<int, int> &);
-
 };
 
 #endif
-

@@ -33,6 +33,7 @@ void Board::printBoard()
 
 void Board::setup(vector<vector<int>> &blackAttackingMoves, vector<vector<int>> &whiteAttackingMoves, pair<int, int> &blackKing, pair<int, int> &whiteKing)
 {
+    td = new Textdisplay();
     // clean up old board
     for (int i = 0; i < 8; i++)
     {
