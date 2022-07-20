@@ -130,4 +130,10 @@ void Chessgame::move(string coord1, string coord2) {
     if (inStalemate()) {
         cout << "Stalemate!" << endl;
     }
+
+    if (turn == Colour::WHITE) {
+        turn = Colour::BLACK;
+    } else {
+        turn = Colour::WHITE;
+    }
 }
