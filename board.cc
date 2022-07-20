@@ -8,6 +8,7 @@
 #include "pawn.h"
 
 #include <set>
+#include <iostream>
 
 using namespace std;
 

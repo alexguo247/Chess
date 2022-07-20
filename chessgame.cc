@@ -5,7 +5,6 @@
 #include "king.h"
 using namespace std;
 
-// AGUO ADD A convertCoord func plzzzzzzzzzzzzzz
 pair<int, int> convertCoord(string coord)
 {
     pair<int, int> convertedCoordinate;
@@ -42,7 +41,10 @@ pair<int, int> convertCoord(string coord)
     return convertedCoordinate;
 }
 
-Chessgame::Chessgame() : p1{nullptr}, p2{nullptr}, turn{Colour::WHITE} {};
+Chessgame::Chessgame() : p1{nullptr}, p2{nullptr}, turn{Colour::WHITE}
+{
+    sb = new Scoreboard();
+};
 
 void Chessgame::game(string player1, string player2)
 {
@@ -56,10 +58,12 @@ void Chessgame::resign()
     if (turn == Colour::WHITE)
     {
         cout << "Black wins!" << endl;
+        sb->incrementScore(Colour::BLACK);
     }
     else
     {
         cout << "White wins!" << endl;
+        sb->incrementScore(Colour::WHITE);
     }
 }
 
@@ -456,15 +460,18 @@ void Chessgame::move(string coord1, string coord2)
         if (turn == Colour::WHITE)
         {
             cout << "Checkmate! White wins!" << endl;
+            sb->incrementScore(Colour::WHITE);
         }
         else
         {
             cout << "Checkmate! Black wins!" << endl;
+            sb->incrementScore(Colour::BLACK);
         }
     }
 
     if (inStalemate())
     {
         cout << "Stalemate!" << endl;
+        sb->staleMate();
     }
 }

@@ -1,6 +1,9 @@
+#ifndef CHESSGAME_H
+#define CHESSGAME_H
 #include <set>
 #include "board.h"
 #include "player.h"
+#include "scoreboard.h"
 
 class Chessgame
 {
@@ -10,9 +13,9 @@ class Chessgame
     Colour turn;
     vector<vector<int>> whiteAttackingMoves;
     vector<vector<int>> blackAttackingMoves;
+    Scoreboard *sb;
     pair<int, int> blackKing;
     pair<int, int> whiteKing;
-
     void updateAttackingMoves(Colour);
     vector<vector<int>> getAttackers(Colour);
     bool canBlock(Colour, int, int);
