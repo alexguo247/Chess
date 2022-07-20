@@ -7,7 +7,7 @@ class King : public Piece
 {
 public:
     King(Colour, int, int);
-    bool checkMove(int, int, int, int, Board *);
+    bool checkMove(std::pair<int, int>, Board *) override;
     std::vector<std::pair<int, int>> getAttackMoves(Board *);
 };
 
