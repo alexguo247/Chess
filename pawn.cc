@@ -2,7 +2,10 @@
 #include <cmath>
 using namespace std;
 
-Pawn::Pawn(Colour c, int row, int col) : Piece(c, Type::PAWN, row, col){};
+Pawn::Pawn(Colour c, int row, int col) : Piece(c, Type::PAWN, row, col)
+{
+    hasMoved = false;
+};
 
 bool Pawn::checkMove(pair<int, int> n, Board *b)
 {

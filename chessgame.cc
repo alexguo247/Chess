@@ -86,17 +86,21 @@ Piece *buildPiece(char pieceType, pair<int, int> pos)
 
 Chessgame::Chessgame() : p1{nullptr}, p2{nullptr} {};
 
-pair<int, int> Chessgame::findKing(Colour c) {
-    for (int i = 0; i < 8; i++) {
-        for (int j = 0; j < 8; j++) {
-            if (board.getPiece(i, j)->getType() == Type::KING && board.getPiece(i, j)->getColour() == c) {
+pair<int, int> Chessgame::findKing(Colour c)
+{
+    for (int i = 0; i < 8; i++)
+    {
+        for (int j = 0; j < 8; j++)
+        {
+            if (board.getPiece(i, j)->getType() == Type::KING && board.getPiece(i, j)->getColour() == c)
+            {
                 return pair<int, int>{i, j};
             }
         }
     }
 }
 
-Chessgame::Chessgame() : p1{nullptr}, p2{nullptr}  
+Chessgame::Chessgame() : p1{nullptr}, p2{nullptr}
 {
     sb = new Scoreboard();
     td = new Textdisplay();
@@ -156,9 +160,12 @@ bool Chessgame::validateBoard()
     return valid;
 }
 
-void Chessgame::attachObservers() {
-    for (int i = 0; i < 8; i++) {
-        for (int j = 0; j < 8; j++) {
+void Chessgame::attachObservers()
+{
+    for (int i = 0; i < 8; i++)
+    {
+        for (int j = 0; j < 8; j++)
+        {
             board.getPiece(i, j)->attach(td);
         }
     }
@@ -287,8 +294,9 @@ void Chessgame::updateAttackingMoves(Colour c)
 bool Chessgame::inCheck()
 {
     Colour attacked = (turn == Colour::WHITE) ? Colour::BLACK : Colour::WHITE;
-    int kingRow = (attacked == Colour::WHITE) ? whiteKing.first : blackKing.first;
-    int kingCol = (attacked == Colour::WHITE) ? whiteKing.second : blackKing.second;
+    pair<int, int> kingCoords = findKing(attacked);
+    int kingRow = kingCoords.first;
+    int kingCol = kingCoords.second;
     if (inDanger(attacked, kingRow, kingCol) && !inCheckmate())
     {
         return true;
@@ -299,11 +307,14 @@ bool Chessgame::inCheck()
 vector<vector<int>> Chessgame::getAttackers(Colour c)
 {
     vector<vector<int>> attackers;
+    pair<int, int> kingCoords = findKing(c);
+    int kingRow = kingCoords.first;
+    int kingCol = kingCoords.second;
     if (c == Colour::BLACK)
     {
         for (auto move : whiteAttackingMoves)
         {
-            if (move[0] == blackKing.first && move[1] == blackKing.second)
+            if (move[0] == kingRow && move[1] == kingCol)
             {
                 attackers.push_back(move);
             }
@@ -313,7 +324,7 @@ vector<vector<int>> Chessgame::getAttackers(Colour c)
     {
         for (auto move : blackAttackingMoves)
         {
-            if (move[0] == whiteKing.first && move[1] == whiteKing.second)
+            if (move[0] == kingRow && move[1] == kingCol)
             {
                 attackers.push_back(move);
             }
@@ -386,8 +397,9 @@ bool Chessgame::inCheckmate()
         pair<int, int>{1, 0},
         pair<int, int>{1, 1},
     };
-    int kingRow = (attacked == Colour::WHITE) ? whiteKing.first : blackKing.first;
-    int kingCol = (attacked == Colour::WHITE) ? whiteKing.second : blackKing.second;
+    pair<int, int> kingCoords = findKing(attacked);
+    int kingRow = kingCoords.first;
+    int kingCol = kingCoords.second;
     Piece *currKing = board.getPiece(kingRow, kingCol);
     // No attackers
     if (attackers.size() == 0)
@@ -595,10 +607,13 @@ void Chessgame::move(string coord1, string coord2)
         return;
     }
 
-    if (turn == Colour::WHITE) {
+    if (turn == Colour::WHITE)
+    {
         p1->move(start, end);
         updateAttackingMoves(Colour::WHITE);
-    } else {
+    }
+    else
+    {
         p2->move(start, end);
         updateAttackingMoves(Colour::BLACK);
     }
