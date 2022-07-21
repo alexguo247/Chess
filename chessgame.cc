@@ -97,7 +97,7 @@ pair<int, int> Chessgame::findKing(Colour c)
             }
         }
     }
-    return pair<int,int>{-1, -1};
+    return pair<int, int>{-1, -1};
 }
 
 Chessgame::Chessgame() : p1{nullptr}, p2{nullptr}
@@ -175,8 +175,7 @@ void Chessgame::defaultConfiguration()
 {
     turn = Colour::WHITE;
     board.setup();
-    updateAttackingMoves(Colour::WHITE);
-    updateAttackingMoves(Colour::BLACK);
+    updateAttackingMoves();
 }
 
 void Chessgame::setup()
@@ -232,6 +231,7 @@ void Chessgame::game(string player1, string player2)
 {
     if (!hasSetup)
     {
+        cout << "DEFAULT CONFIG" << endl;
         defaultConfiguration();
     }
     p1 = new Human(&board, Colour::WHITE);
@@ -258,33 +258,33 @@ void Chessgame::resign()
     hasSetup = false;
 }
 
-void Chessgame::updateAttackingMoves(Colour c)
+void Chessgame::updateAttackingMoves()
 {
-    if (c == Colour::WHITE)
-    {
-        whiteAttackingMoves.clear();
-    }
-    else
-    {
-        blackAttackingMoves.clear();
-    }
+    whiteAttackingMoves.clear();
+    blackAttackingMoves.clear();
 
     for (int i = 0; i < 8; i++)
     {
         for (int j = 0; j < 8; j++)
         {
-            if (board.getPiece(i, j)->getColour() == c)
+            if (board.getPiece(i, j) == nullptr)
             {
-                for (auto a : board.getPiece(i, j)->getAttackMoves(&board))
+                continue;
+            }
+
+            Colour c = board.getPiece(i, j)->getColour();
+            vector<vector<int>> attackMoves = board.getPiece(i, j)->getAttackMoves(&board);
+            cout << "BOB" << i << j << endl;
+            for (auto a : attackMoves)
+            {
+                cout << "ATTACK" << endl;
+                if (c == Colour::WHITE)
                 {
-                    if (c == Colour::WHITE)
-                    {
-                        whiteAttackingMoves.push_back(a);
-                    }
-                    else
-                    {
-                        blackAttackingMoves.push_back(a);
-                    }
+                    whiteAttackingMoves.push_back(a);
+                }
+                else
+                {
+                    blackAttackingMoves.push_back(a);
                 }
             }
         }
@@ -609,13 +609,13 @@ void Chessgame::move(string coord1, string coord2)
     if (turn == Colour::WHITE)
     {
         p1->move(start, end);
-        updateAttackingMoves(Colour::WHITE);
     }
     else
     {
         p2->move(start, end);
-        updateAttackingMoves(Colour::BLACK);
     }
+
+    updateAttackingMoves();
 
     /*
     1 -> someone is in check

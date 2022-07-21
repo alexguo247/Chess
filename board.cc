@@ -93,6 +93,7 @@ void Board::setup()
     for (int i = 0; i < 8; i++)
     {
         grid[1][i] = new Pawn(Colour::BLACK, 1, i);
+        grid[6][i] = new Pawn(Colour::WHITE, 6, i);
     }
 
     for (int i = 0; i < 8; i++)
@@ -111,11 +112,11 @@ void Board::setup()
         }
         else if (i == 3)
         {
-            grid[7][i] = new Queen(Colour::BLACK, 7, i);
+            grid[7][i] = new Queen(Colour::WHITE, 7, i);
         }
         else
         {
-            grid[7][i] = new King(Colour::BLACK, 7, i);
+            grid[7][i] = new King(Colour::WHITE, 7, i);
         }
     }
 }

@@ -21,7 +21,7 @@ class Chessgame
     std::vector<std::vector<int>> whiteAttackingMoves;
     std::vector<std::vector<int>> blackAttackingMoves;
     std::pair<int, int> findKing(Colour);
-    void updateAttackingMoves(Colour);
+    void updateAttackingMoves();
     std::vector<std::vector<int>> getAttackers(Colour);
     bool canBlock(Colour, int, int);
     bool inDanger(Colour, int, int);

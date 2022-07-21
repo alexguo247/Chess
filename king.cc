@@ -58,6 +58,9 @@ vector<vector<int>> King::getAttackMoves(Board *b)
     {
         int newRow = row + d.first;
         int newCol = col + d.second;
+        if (newRow < 0 || newCol < 0 || newRow >= 8 || newCol >= 8) {
+            continue;
+        }
         if (b->getPiece(newRow, newCol) == nullptr || b->getPiece(newRow, newCol)->getColour() != colour)
         {
             attackMoves.push_back({newRow, newCol, row, col});
