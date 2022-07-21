@@ -10,6 +10,7 @@ class Chessgame
     Board board;
     Player *p1;
     Player *p2;
+    bool hasSetup;
     Colour turn;
     vector<vector<int>> whiteAttackingMoves;
     vector<vector<int>> blackAttackingMoves;
@@ -20,9 +21,12 @@ class Chessgame
     vector<vector<int>> getAttackers(Colour);
     bool canBlock(Colour, int, int);
     bool inDanger(Colour, int, int);
+    void defaultConfiguration();
+    bool validateBoard();
 
 public:
     Chessgame();
+    ~Chessgame();
     void game(string, string);
     void move(string, string);
     void resign();
