@@ -1,4 +1,5 @@
 #include "queen.h"
+#include "board.h"
 #include <cmath>
 
 using namespace std;

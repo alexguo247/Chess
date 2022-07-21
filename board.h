@@ -1,13 +1,10 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-#include "piece.h"
-#include "textdisplay.h"
 #include <vector>
 #include <stdbool.h>
 
 class Piece;
-class Textdisplay;
 
 class Board
 {

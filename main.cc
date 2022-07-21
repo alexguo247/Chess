@@ -29,5 +29,7 @@ int main()
             cout << "Not a valid command" << endl;
         }
     }
+    
+    delete chess;
     return 0;
 }
