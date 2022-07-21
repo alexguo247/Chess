@@ -61,7 +61,7 @@ void Board::setPiece(Piece *piece, int row, int col)
     grid[row][col] = piece;
 }
 
-void Board::setup(set<pair<int, int>> &blackAttackingMoves, set<pair<int, int>> &whiteAttackingMoves)
+void Board::setup(vector<vector<int>> &blackAttackingMoves, vector<vector<int>> &whiteAttackingMoves, pair<int, int> &blackKing, pair<int, int> &whiteKing)
 {
     // clean up old board
     clearBoard();
@@ -129,19 +129,19 @@ void Board::setup(set<pair<int, int>> &blackAttackingMoves, set<pair<int, int>> 
                 continue;
             }
 
-            vector<pair<int, int>> attackingMoves = grid[i][j]->getAttackMoves(this);
+            vector<vector<int>> attackingMoves = grid[i][j]->getAttackMoves(this);
             if (grid[i][j]->getColour() == Colour::BLACK)
             {
                 for (int k = 0; k < attackingMoves.size(); k++)
                 {
-                    blackAttackingMoves.insert(attackingMoves[k]);
+                    blackAttackingMoves.emplace_back(attackingMoves[k]);
                 }
             }
             else
             {
                 for (int k = 0; k < attackingMoves.size(); k++)
                 {
-                    whiteAttackingMoves.insert(attackingMoves[k]);
+                    whiteAttackingMoves.emplace_back(attackingMoves[k]);
                 }
             }
         }
