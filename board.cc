@@ -62,6 +62,106 @@ void Board::setPiece(Piece *piece, int row, int col)
     grid[row][col] = piece;
 }
 
+char getCharType(Piece *p)
+{
+    if (p == nullptr) {
+        return ' ';
+    }
+
+    // white is upper case
+    char type = ' ';
+    Colour c = p->getColour();
+    Type t = p->getType();
+
+    if (c == Colour::BLACK)
+    {
+        switch (t)
+        {
+        case Type::PAWN:
+            type = 'p';
+            break;
+        case Type::KNIGHT:
+            type = 'n';
+            break;
+        case Type::ROOK:
+            type = 'r';
+            break;
+        case Type::BISHOP:
+            type = 'b';
+            break;
+        case Type::QUEEN:
+            type = 'q';
+            break;
+        case Type::KING:
+            type = 'k';
+            break;
+        default:
+            break;
+        }
+    }
+    else if (c == Colour::WHITE)
+    {
+        switch (t)
+        {
+        case Type::PAWN:
+            type = 'P';
+            break;
+        case Type::KNIGHT:
+            type = 'N';
+            break;
+        case Type::ROOK:
+            type = 'R';
+            break;
+        case Type::BISHOP:
+            type = 'B';
+            break;
+        case Type::QUEEN:
+            type = 'Q';
+            break;
+        case Type::KING:
+            type = 'K';
+            break;
+        default:
+            break;
+        }
+    }
+
+    return type;
+}
+
+void Board::print()
+{
+    cout << endl;
+
+    int rowNum = 8;
+    for (int row = 0; row < 8; row++)
+    {
+        cout << rowNum << " ";
+        rowNum--;
+        for (int col = 0; col < 8; col++)
+        {
+            if (grid[row][col] == nullptr)
+            {
+                if ((row % 2 == 0 && col % 2 == 0) || (row % 2 != 0 && col % 2 != 0))
+                {
+                    cout << "_";
+                }
+                else
+                {
+                    cout << " ";
+                }
+            }
+            else
+            {
+                cout << getCharType(grid[row][col]);
+            }
+        }
+        cout << endl;
+    }
+
+    cout << endl;
+    cout << "  abcdefgh" << endl;
+}
 void Board::setup()
 {
     // clean up old board

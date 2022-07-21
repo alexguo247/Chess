@@ -9,7 +9,6 @@
 #include "queen.h"
 #include "knight.h"
 #include "pawn.h"
-#include "textdisplay.h"
 
 #include <iostream>
 #include <cmath>
@@ -103,14 +102,12 @@ pair<int, int> Chessgame::findKing(Colour c)
 Chessgame::Chessgame() : p1{nullptr}, p2{nullptr}
 {
     sb = new Scoreboard();
-    td = new Textdisplay();
 };
 
 Chessgame::~Chessgame()
 {
     delete sb;
     delete p1;
-    delete td;
     delete p2;
     board.clearBoard();
 }
@@ -158,19 +155,6 @@ bool Chessgame::validateBoard()
     }
 
     return valid;
-}
-
-void Chessgame::attachObservers()
-{
-    for (int i = 0; i < 8; i++)
-    {
-        for (int j = 0; j < 8; j++)
-        {
-            if (board.getPiece(i, j) != nullptr) {
-                board.getPiece(i, j)->attach(td);
-            }
-        }
-    }
 }
 
 void Chessgame::defaultConfiguration()
@@ -237,10 +221,7 @@ void Chessgame::game(string player1, string player2)
     }
     p1 = new Human(&board, Colour::WHITE);
     p2 = new Human(&board, Colour::BLACK);
-
-    td->setupFromBoard(&board);
-    attachObservers();
-    cout << *td;
+    board.print();
     // p1 = player1 == "human" ? new Human(&board, Colour::WHITE) : new Computer(&board, Colour::WHITE);
     // p2 = player2 == "human" ? new Human(&board, Colour::BLACK) : new Computer(&board, Colour::BLACK);
 }
@@ -262,6 +243,7 @@ void Chessgame::resign()
 
 void Chessgame::updateAttackingMoves()
 {
+    cout << "IN HERER" << endl;
     whiteAttackingMoves.clear();
     blackAttackingMoves.clear();
 
@@ -616,7 +598,7 @@ void Chessgame::move(string coord1, string coord2)
         p2->move(start, end);
     }
 
-    cout << *td << endl;;
+    board.print();
     updateAttackingMoves();
     /*
     1 -> someone is in check

@@ -1,1 +1,1 @@
-piece.o: piece.cc piece.h colour.h type.h subject.h board.h
+piece.o: piece.cc piece.h colour.h type.h board.h
