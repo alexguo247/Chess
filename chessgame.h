@@ -12,12 +12,15 @@ class Chessgame
     Player *p2;
     bool hasSetup;
     Colour turn;
+    vector<vector<int>> whiteAttackingMoves;
+    vector<vector<int>> blackAttackingMoves;
     Scoreboard *sb;
-    set<pair<int, int>> whiteAttackingMoves;
-    set<pair<int, int>> blackAttackingMoves;
     pair<int, int> blackKing;
     pair<int, int> whiteKing;
     void updateAttackingMoves(Colour);
+    vector<vector<int>> getAttackers(Colour);
+    bool canBlock(Colour, int, int);
+    bool inDanger(Colour, int, int);
     void defaultConfiguration();
     bool validateBoard();
 
@@ -28,6 +31,7 @@ public:
     void move(string, string);
     void resign();
     void setup();
+    bool inCheck();
+    bool inCheckmate();
+    bool inStalemate();
 };
-
-#endif;
