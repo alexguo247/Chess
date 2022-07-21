@@ -66,7 +66,7 @@ Piece* buildPiece(char pieceType, pair<int, int> pos) {
         case 'P':
             p = new Pawn(Colour::WHITE, pos.first, pos.second);
         case 'k':
-            p = new King(Colour::WHITE, pos.first, pos.second);
+            p = new King(Colour::BLACK, pos.first, pos.second);
         case 'r':
             p = new Rook(Colour::BLACK, pos.first, pos.second);
         case 'n':
