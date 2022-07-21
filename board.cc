@@ -61,7 +61,6 @@ void Board::setup(vector<vector<int>> &blackAttackingMoves, vector<vector<int>> 
 {
     // clean up old board
     clearBoard();
-    td = new Textdisplay();
 
     for (int i = 0; i < 8; i++)
     {

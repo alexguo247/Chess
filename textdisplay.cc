@@ -11,61 +11,10 @@ Textdisplay::Textdisplay()
 
         for (int j = 0; j < 8; j++)
         {
-            tempLine.emplace_back(' ');
+            tempLine.push_back(' ');
         }
-        theDis.emplace_back(tempLine);
+        theDis.push_back(tempLine);
     }
-
-    defaultSetup();
-}
-
-void Textdisplay::defaultSetup()
-{
-
-    // setting up white
-    theDis[0][0] = 'R';
-    theDis[0][7] = 'R';
-
-    theDis[0][1] = 'N';
-    theDis[0][6] = 'N';
-
-    theDis[0][2] = 'B';
-    theDis[0][5] = 'B';
-
-    theDis[0][3] = 'Q';
-    theDis[0][4] = 'K';
-
-    for (int i = 0; i < 8; i++)
-    {
-        theDis[1][i] = 'P';
-    }
-
-    // setting up black
-    theDis[7][0] = 'r';
-    theDis[7][7] = 'r';
-
-    theDis[7][1] = 'n';
-    theDis[7][6] = 'n';
-
-    theDis[7][2] = 'b';
-    theDis[7][5] = 'b';
-
-    theDis[7][3] = 'q';
-    theDis[7][4] = 'k';
-
-    for (int i = 0; i < 8; i++)
-    {
-        theDis[6][i] = 'p';
-    }
-}
-
-Textdisplay::~Textdisplay()
-{
-    // for (int i = 0; i < 8; i++)
-    // {
-    //     delete[] theDis[i];
-    // }
-    // delete[] theDis;
 }
 
 char Textdisplay::getCharType(Piece *p)
@@ -126,6 +75,15 @@ char Textdisplay::getCharType(Piece *p)
     }
 
     return type;
+}
+
+void Textdisplay::setupFromBoard(Board *b)
+{
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            theDis[i][j] = getCharType(b->getPiece(i, j));
+        }
+    }
 }
 
 void Textdisplay::notify(Piece *p, std::pair<int, int> oldLoc)
