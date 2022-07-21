@@ -10,7 +10,6 @@
 
 class Board
 {
-    Textdisplay *td;
     std::vector<std::vector<Piece *>> grid;
 public:
     Board();

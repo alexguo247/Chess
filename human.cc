@@ -4,7 +4,9 @@
 
 using namespace std; 
 
-void Human::move(pair<int, int> start, pair<int, int> end, pair<int, int> &kingPos) {
+Human::Human(Board* board, Colour c): Player(board, c) {};
+
+void Human::move(pair<int, int> start, pair<int, int> end) {
     Piece *p = b->getPiece(start.first, start.second);
 
     if (!p->checkMove(end, b)) {
@@ -12,7 +14,4 @@ void Human::move(pair<int, int> start, pair<int, int> end, pair<int, int> &kingP
     }
 
     p->move(end, b);
-    if (p->getType() == Type::KING) {
-        kingPos = end;
-    }
 };

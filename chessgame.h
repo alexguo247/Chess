@@ -12,14 +12,15 @@ class Chessgame
     Player *p2;
     bool hasSetup;
     Colour turn;
+    Textdisplay* td;
     Scoreboard *sb;
     set<pair<int, int>> whiteAttackingMoves;
     set<pair<int, int>> blackAttackingMoves;
-    pair<int, int> blackKing;
-    pair<int, int> whiteKing;
+    std::pair<int, int> findKing(Colour);
     void updateAttackingMoves(Colour);
     void defaultConfiguration();
     bool validateBoard();
+    void attachObservers();
 
 public:
     Chessgame();
