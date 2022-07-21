@@ -61,7 +61,7 @@ void Board::setPiece(Piece *piece, int row, int col)
     grid[row][col] = piece;
 }
 
-void Board::setup(vector<vector<int>> &blackAttackingMoves, vector<vector<int>> &whiteAttackingMoves)
+void Board::setup()
 {
     // clean up old board
     clearBoard();
@@ -116,33 +116,6 @@ void Board::setup(vector<vector<int>> &blackAttackingMoves, vector<vector<int>> 
         else
         {
             grid[7][i] = new King(Colour::BLACK, 7, i);
-        }
-    }
-
-    for (int i = 0; i < 8; i++)
-    {
-        for (int j = 0; j < 8; j++)
-        {
-            if (grid[i][j] == nullptr)
-            {
-                continue;
-            }
-
-            vector<vector<int>> attackingMoves = grid[i][j]->getAttackMoves(this);
-            if (grid[i][j]->getColour() == Colour::BLACK)
-            {
-                for (int k = 0; k < attackingMoves.size(); k++)
-                {
-                    blackAttackingMoves.emplace_back(attackingMoves[k]);
-                }
-            }
-            else
-            {
-                for (int k = 0; k < attackingMoves.size(); k++)
-                {
-                    whiteAttackingMoves.emplace_back(attackingMoves[k]);
-                }
-            }
         }
     }
 }

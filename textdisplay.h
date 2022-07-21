@@ -6,10 +6,12 @@
 #include <vector>
 
 #include "type.h"
+#include "board.h"
 #include "observer.h"
 #include "piece.h"
 
 class Piece;
+class Board;
 
 class Textdisplay : public Observer
 {

@@ -175,6 +175,8 @@ void Chessgame::defaultConfiguration()
 {
     turn = Colour::WHITE;
     board.setup(blackAttackingMoves, whiteAttackingMoves);
+    updateAttackingMoves(Colour::WHITE);
+    updateAttackingMoves(Colour::BLACK);
 }
 
 void Chessgame::setup()

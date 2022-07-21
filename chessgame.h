@@ -2,6 +2,7 @@
 #define CHESSGAME_H
 #include <string>
 #include <iostream>
+#include <vector>
 #include "board.h"
 #include "player.h"
 #include "scoreboard.h"
@@ -19,7 +20,7 @@ class Chessgame
     std::vector<std::vector<int>> blackAttackingMoves;
     std::pair<int, int> findKing(Colour);
     void updateAttackingMoves(Colour);
-    vector<vector<int>> getAttackers(Colour);
+    std::vector<std::vector<int>> getAttackers(Colour);
     bool canBlock(Colour, int, int);
     bool inDanger(Colour, int, int);
     void defaultConfiguration();
