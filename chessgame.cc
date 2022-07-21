@@ -85,28 +85,86 @@ Piece *buildPiece(char pieceType, pair<int, int> pos)
 }
 
 Chessgame::Chessgame() : p1{nullptr}, p2{nullptr}
+pair<int, int> Chessgame::findKing(Colour c) {
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            if (board.getPiece(i, j)->getType() == Type::KING && board.getPiece(i, j)->getColour() == c) {
+                return pair<int, int>{i, j};
+            }
+        }
+    }
+}
+
+Chessgame::Chessgame() : p1{nullptr}, p2{nullptr}  
 {
     sb = new Scoreboard();
+    td = new Textdisplay();
 };
 
 Chessgame::~Chessgame()
 {
     delete sb;
     delete p1;
+    delete td;
     delete p2;
     board.clearBoard();
 }
 
 bool Chessgame::validateBoard()
 {
+    bool valid = true;
+    int whiteKingCount = 0;
+    int blackKingCount = 0;
+    for (int i = 0; i < 8; i++)
+    {
+        for (int j = 0; j < 8; j++)
+        {
+            if (i == 0 || i == 7)
+            {
+                if (board.getPiece(i, j)->getType() == Type::PAWN)
+                {
+                    valid = false;
+                }
+            }
+            if (board.getPiece(i, j)->getType() == Type::KING)
+            {
+                if (board.getPiece(i, j)->getColour() == Colour::BLACK)
+                {
+                    if (inDanger(Colour::BLACK, i, j))
+                    {
+                        valid = false;
+                    }
+                    blackKingCount++;
+                }
+                else
+                {
+                    if (inDanger(Colour::WHITE, i, j))
+                    {
+                        valid = false;
+                    }
+                    whiteKingCount++;
+                }
+            }
+        }
+    }
+    if (whiteKingCount != 1 || blackKingCount != 1)
+    {
+        valid = false;
+    }
+    return valid;
+
+void Chessgame::attachObservers() {
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            board.getPiece(i, j)->attach(td);
+        }
+    }
+
 }
 
 void Chessgame::defaultConfiguration()
 {
     turn = Colour::WHITE;
-    whiteKing = pair<int, int>{7, 4};
-    blackKing = pair<int, int>{0, 4};
-
     board.setup(blackAttackingMoves, whiteAttackingMoves);
 }
 
@@ -167,6 +225,8 @@ void Chessgame::game(string player1, string player2)
     {
         defaultConfiguration();
     }
+    td->setupFromBoard(&board);
+    attachObservers();
 
     // p1 = player1 == "human" ? new Human(&board, Colour::WHITE) : new Computer(&board, Colour::WHITE);
     // p2 = player2 == "human" ? new Human(&board, Colour::BLACK) : new Computer(&board, Colour::BLACK);
@@ -533,14 +593,11 @@ void Chessgame::move(string coord1, string coord2)
         return;
     }
 
-    if (turn == Colour::WHITE)
-    {
-        p1->move(start, end, whiteKing);
+    if (turn == Colour::WHITE) {
+        p1->move(start, end);
         updateAttackingMoves(Colour::WHITE);
-    }
-    else
-    {
-        p2->move(start, end, blackKing);
+    } else {
+        p2->move(start, end);
         updateAttackingMoves(Colour::BLACK);
     }
 

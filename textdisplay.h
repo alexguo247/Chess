@@ -17,10 +17,9 @@ class Textdisplay : public Observer
 
 public:
     Textdisplay();
-    void defaultSetup();
+    void setupFromBoard(Board *);
     void notify(Piece *p, std::pair<int, int>);
     char getCharType(Piece *p);
     friend std::ostream &operator<<(std::ostream &out, const Textdisplay &td);
-    ~Textdisplay();
 };
 #endif

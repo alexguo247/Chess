@@ -14,19 +14,18 @@ class Chessgame
     Player *p2;
     bool hasSetup;
     Colour turn;
-    vector<vector<int>> whiteAttackingMoves;
-    vector<vector<int>> blackAttackingMoves;
+    Textdisplay* td;
     Scoreboard *sb;
-    std::vector<std::vector<int>> whiteAttackingMoves;
-    std::vector<std::vector<int>> blackAttackingMoves;
-    std::pair<int, int> blackKing;
-    std::pair<int, int> whiteKing;
+    set<std::pair<int, int>> whiteAttackingMoves;
+    set<std::pair<int, int>> blackAttackingMoves;
+    std::pair<int, int> findKing(Colour);
     void updateAttackingMoves(Colour);
     vector<vector<int>> getAttackers(Colour);
     bool canBlock(Colour, int, int);
     bool inDanger(Colour, int, int);
     void defaultConfiguration();
     bool validateBoard();
+    void attachObservers();
 
 public:
     Chessgame();

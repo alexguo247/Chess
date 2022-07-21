@@ -6,7 +6,8 @@
 class Human : public Player
 {
 public:
-    void move(std::pair<int, int>, std::pair<int, int>, std::pair<int, int> &) override;
+    Human(Board*, Colour);
+    void move(std::pair<int, int>, std::pair<int, int>) override;
 };
 
 #endif

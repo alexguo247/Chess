@@ -11,7 +11,6 @@ class Textdisplay;
 
 class Board
 {
-    Textdisplay *td;
     std::vector<std::vector<Piece *>> grid;
 
 public:
