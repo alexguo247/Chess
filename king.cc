@@ -39,9 +39,9 @@ bool King::checkMove(pair<int, int> n, Board *b)
     return false;
 }
 
-vector<vector<int, int>> King::getAttackMoves(Board *b)
+vector<vector<int>> King::getAttackMoves(Board *b)
 {
-    vector<vector<int, int>> attackMoves;
+    vector<vector<int>> attackMoves;
     vector<pair<int, int>> dirs{
         pair<int, int>{-1, -1},
         pair<int, int>{-1, 0},

@@ -13,7 +13,7 @@ protected:
 
 public:
     Player(Board *, Colour);
-    ~Player(); 
+    virtual ~Player(); 
     void virtual move(std::pair<int, int>, std::pair<int, int>) = 0;
 };
 

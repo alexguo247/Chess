@@ -8,6 +8,7 @@ class Observer
 {
 public:
     virtual void notify(Piece *, std::pair<int, int>) = 0;
+    virtual ~Observer() = default;
 };
 
 #endif
