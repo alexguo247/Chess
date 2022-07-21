@@ -57,7 +57,7 @@ vector<vector<int>> Knight::getAttackMoves(Board *b)
         int newCol = col + d.second;
         if (b->getPiece(newRow, newCol) == nullptr || b->getPiece(newRow, newCol)->getColour() != colour)
         {
-            attackMoves.emplace_back(newRow, newCol, row, col);
+            attackMoves.push_back({newRow, newCol, row, col});
         }
     }
     return attackMoves;
