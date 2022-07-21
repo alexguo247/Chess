@@ -12,29 +12,23 @@
 
 using namespace std;
 
+Board::Board() {
+    vector<Piece *> row;
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0 ; j < 8; j++) {
+            row.push_back(nullptr);
+        }
+        grid.push_back(row);
+        row = {};
+    }
+}
+
 Piece *Board::getPiece(int row, int col)
 {
     return grid[row][col];
 }
 
-void Board::setPiece(Piece *piece, int row, int col)
-{
-    if (grid[row][col] != nullptr)
-    {
-        delete grid[row][col];
-    }
-    grid[row][col] = piece;
-}
-
-void Board::printBoard()
-{
-    cout << grid;
-}
-
-void Board::setup(set<pair<int, int>> &blackAttackingMoves, set<pair<int, int>> &whiteAttackingMoves, pair<int, int> &blackKing, pair<int, int> &whiteKing)
-{
-    td = new Textdisplay();
-    // clean up old board
+void Board::clearBoard() {
     for (int i = 0; i < 8; i++)
     {
         for (int j = 0; j < 8; j++)
@@ -46,6 +40,27 @@ void Board::setup(set<pair<int, int>> &blackAttackingMoves, set<pair<int, int>> 
             }
         }
     }
+}
+
+void Board::deletePiece(int row, int col) {
+    delete grid[row][col];
+    grid[row][col] = nullptr;
+}
+
+void Board::setPiece(Piece *piece, int row, int col)
+{
+    if (grid[row][col] != nullptr)
+    {
+        delete grid[row][col];
+    }
+    grid[row][col] = piece;
+}
+
+void Board::setup(set<pair<int, int>> &blackAttackingMoves, set<pair<int, int>> &whiteAttackingMoves)
+{
+    // clean up old board
+    clearBoard();
+    td = new Textdisplay();
 
     for (int i = 0; i < 8; i++)
     {
@@ -99,9 +114,6 @@ void Board::setup(set<pair<int, int>> &blackAttackingMoves, set<pair<int, int>> 
             grid[7][i] = new King(Colour::BLACK, 7, i);
         }
     }
-
-    whiteKing = pair<int, int>{7, 4};
-    blackKing = pair<int, int>{0, 4};
 
     for (int i = 0; i < 8; i++)
     {
