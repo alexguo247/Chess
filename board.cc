@@ -12,10 +12,13 @@
 
 using namespace std;
 
-Board::Board() {
+Board::Board()
+{
     vector<Piece *> row;
-    for (int i = 0; i < 8; i++) {
-        for (int j = 0 ; j < 8; j++) {
+    for (int i = 0; i < 8; i++)
+    {
+        for (int j = 0; j < 8; j++)
+        {
             row.push_back(nullptr);
         }
         grid.push_back(row);
@@ -28,7 +31,8 @@ Piece *Board::getPiece(int row, int col)
     return grid[row][col];
 }
 
-void Board::clearBoard() {
+void Board::clearBoard()
+{
     for (int i = 0; i < 8; i++)
     {
         for (int j = 0; j < 8; j++)
@@ -42,7 +46,8 @@ void Board::clearBoard() {
     }
 }
 
-void Board::deletePiece(int row, int col) {
+void Board::deletePiece(int row, int col)
+{
     delete grid[row][col];
     grid[row][col] = nullptr;
 }

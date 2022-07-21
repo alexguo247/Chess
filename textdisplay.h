@@ -3,14 +3,17 @@
 
 #include <string>
 #include <iostream>
+#include <vector>
 
 #include "type.h"
+#include "observer.h"
 #include "piece.h"
+
+class Piece;
 
 class Textdisplay : public Observer
 {
-private:
-    vector<vector<char>> theDis;
+    std::vector<std::vector<char>> theDis;
 
 public:
     Textdisplay();

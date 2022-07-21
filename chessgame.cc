@@ -50,55 +50,58 @@ pair<int, int> convertCoord(string coord)
     return convertedCoordinate;
 }
 
-Piece* buildPiece(char pieceType, pair<int, int> pos) {
+Piece *buildPiece(char pieceType, pair<int, int> pos)
+{
     Piece *p;
-    switch (pieceType) {
-        case 'K':
-            p = new King(Colour::WHITE, pos.first, pos.second);
-        case 'R':
-            p = new Rook(Colour::WHITE, pos.first, pos.second);
-        case 'N':
-            p = new Knight(Colour::WHITE, pos.first, pos.second);
-        case 'B':
-            p = new Bishop(Colour::WHITE, pos.first, pos.second);
-        case 'Q':
-            p = new Queen(Colour::WHITE, pos.first, pos.second);
-        case 'P':
-            p = new Pawn(Colour::WHITE, pos.first, pos.second);
-        case 'k':
-            p = new King(Colour::BLACK, pos.first, pos.second);
-        case 'r':
-            p = new Rook(Colour::BLACK, pos.first, pos.second);
-        case 'n':
-            p = new Knight(Colour::BLACK, pos.first, pos.second);
-        case 'b':
-            p = new Bishop(Colour::BLACK, pos.first, pos.second);
-        case 'q':
-            p = new Queen(Colour::BLACK, pos.first, pos.second);
-        case 'p':
-            p = new Pawn(Colour::BLACK, pos.first, pos.second);
+    switch (pieceType)
+    {
+    case 'K':
+        p = new King(Colour::WHITE, pos.first, pos.second);
+    case 'R':
+        p = new Rook(Colour::WHITE, pos.first, pos.second);
+    case 'N':
+        p = new Knight(Colour::WHITE, pos.first, pos.second);
+    case 'B':
+        p = new Bishop(Colour::WHITE, pos.first, pos.second);
+    case 'Q':
+        p = new Queen(Colour::WHITE, pos.first, pos.second);
+    case 'P':
+        p = new Pawn(Colour::WHITE, pos.first, pos.second);
+    case 'k':
+        p = new King(Colour::BLACK, pos.first, pos.second);
+    case 'r':
+        p = new Rook(Colour::BLACK, pos.first, pos.second);
+    case 'n':
+        p = new Knight(Colour::BLACK, pos.first, pos.second);
+    case 'b':
+        p = new Bishop(Colour::BLACK, pos.first, pos.second);
+    case 'q':
+        p = new Queen(Colour::BLACK, pos.first, pos.second);
+    case 'p':
+        p = new Pawn(Colour::BLACK, pos.first, pos.second);
     }
     return p;
 }
 
-Chessgame::Chessgame() : p1{nullptr}, p2{nullptr}  
+Chessgame::Chessgame() : p1{nullptr}, p2{nullptr}
 {
     sb = new Scoreboard();
 };
 
-Chessgame::~Chessgame() {
+Chessgame::~Chessgame()
+{
     delete sb;
-    delete p1; 
+    delete p1;
     delete p2;
     board.clearBoard();
 }
 
-bool Chessgame::validateBoard() {
-
-
+bool Chessgame::validateBoard()
+{
 }
 
-void Chessgame::defaultConfiguration() {
+void Chessgame::defaultConfiguration()
+{
     turn = Colour::WHITE;
     whiteKing = pair<int, int>{7, 4};
     blackKing = pair<int, int>{0, 4};
@@ -106,35 +109,49 @@ void Chessgame::defaultConfiguration() {
     board.setup(blackAttackingMoves, whiteAttackingMoves);
 }
 
-void Chessgame::setup() {
+void Chessgame::setup()
+{
     defaultConfiguration();
-    string cmd; 
+    string cmd;
     char pieceType;
     string coord;
     pair<int, int> coordPair;
     cin >> cmd;
     bool exit = false;
 
-    Piece *p; 
+    Piece *p;
 
-    while (!exit) {
-        if (cmd == "black") {
+    while (!exit)
+    {
+        if (cmd == "black")
+        {
             turn = Colour::BLACK;
-        } else if (cmd == "white") {
+        }
+        else if (cmd == "white")
+        {
             turn = Colour::WHITE;
-        } else if (cmd == "+") {
+        }
+        else if (cmd == "+")
+        {
             cin >> pieceType;
             cin >> coord;
             coordPair = convertCoord(coord);
             board.setPiece(buildPiece(pieceType, coordPair), coordPair.first, coordPair.second);
-        } else if (cmd == "-") {
+        }
+        else if (cmd == "-")
+        {
             cin >> coord;
             coordPair = convertCoord(coord);
             board.deletePiece(coordPair.first, coordPair.second);
-        } else if (cmd == "done") {
-            if (validateBoard()) {
+        }
+        else if (cmd == "done")
+        {
+            if (validateBoard())
+            {
                 exit = true;
-            } else {
+            }
+            else
+            {
                 cout << "Board not in valid state. Can't leave setup!" << endl;
             }
         }
@@ -145,12 +162,15 @@ void Chessgame::setup() {
 
 void Chessgame::game(string player1, string player2)
 {
-    if (!hasSetup) {
+    if (!hasSetup)
+    {
         defaultConfiguration();
     }
 
-    p1 = player1 == "human" ? new Human(&board, Colour::WHITE) : new Computer(&board, Colour::WHITE);
-    p2 = player2 == "human" ? new Human(&board, Colour::BLACK) : new Computer(&board, Colour::BLACK);
+    // p1 = player1 == "human" ? new Human(&board, Colour::WHITE) : new Computer(&board, Colour::WHITE);
+    // p2 = player2 == "human" ? new Human(&board, Colour::BLACK) : new Computer(&board, Colour::BLACK);
+    // p1 = new Human(&board, Colour::WHITE);
+    // p2 = new Human(&board, Colour::BLACK);
 }
 
 void Chessgame::resign()
@@ -213,10 +233,13 @@ void Chessgame::move(string coord1, string coord2)
         return;
     }
 
-    if (turn == Colour::WHITE) {
+    if (turn == Colour::WHITE)
+    {
         p1->move(start, end, whiteKing);
         updateAttackingMoves(Colour::WHITE);
-    } else {
+    }
+    else
+    {
         p2->move(start, end, blackKing);
         updateAttackingMoves(Colour::BLACK);
     }
@@ -260,10 +283,12 @@ void Chessgame::move(string coord1, string coord2)
         hasSetup = false;
     }
 
-    if (turn == Colour::WHITE) {
+    if (turn == Colour::WHITE)
+    {
         turn = Colour::BLACK;
-    } else {
+    }
+    else
+    {
         turn = Colour::WHITE;
     }
-
 }
