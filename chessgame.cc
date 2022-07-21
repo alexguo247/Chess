@@ -82,33 +82,48 @@ Piece* buildPiece(char pieceType, pair<int, int> pos) {
     return p;
 }
 
+pair<int, int> Chessgame::findKing(Colour c) {
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            if (board.getPiece(i, j)->getType() == Type::KING && board.getPiece(i, j)->getColour() == c) {
+                return pair<int, int>{i, j};
+            }
+        }
+    }
+}
+
 Chessgame::Chessgame() : p1{nullptr}, p2{nullptr}  
 {
     sb = new Scoreboard();
+    td = new Textdisplay();
 };
 
 Chessgame::~Chessgame() {
     delete sb;
+    delete td;
     delete p1; 
     delete p2;
     board.clearBoard();
 }
 
-bool Chessgame::validateBoard() {
+bool Chessgame::validateBoard() {}
 
-
+void Chessgame::attachObservers() {
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            board.getPiece(i, j)->attach(td);
+        }
+    }
 }
 
 void Chessgame::defaultConfiguration() {
     turn = Colour::WHITE;
-    whiteKing = pair<int, int>{7, 4};
-    blackKing = pair<int, int>{0, 4};
-
     board.setup(blackAttackingMoves, whiteAttackingMoves);
 }
 
 void Chessgame::setup() {
     defaultConfiguration();
+
     string cmd; 
     char pieceType;
     string coord;
@@ -149,6 +164,8 @@ void Chessgame::game(string player1, string player2)
     if (!hasSetup) {
         defaultConfiguration();
     }
+    td->setupFromBoard(&board);
+    attachObservers();
 
     p1 = player1 == "human" ? new Human(&board, Colour::WHITE) : new Computer(&board, Colour::WHITE);
     p2 = player2 == "human" ? new Human(&board, Colour::BLACK) : new Computer(&board, Colour::BLACK);
@@ -514,10 +531,10 @@ void Chessgame::move(string coord1, string coord2)
     }
 
     if (turn == Colour::WHITE) {
-        p1->move(start, end, whiteKing);
+        p1->move(start, end);
         updateAttackingMoves(Colour::WHITE);
     } else {
-        p2->move(start, end, blackKing);
+        p2->move(start, end);
         updateAttackingMoves(Colour::BLACK);
     }
 
@@ -565,5 +582,4 @@ void Chessgame::move(string coord1, string coord2)
     } else {
         turn = Colour::WHITE;
     }
-
 }
