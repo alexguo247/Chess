@@ -42,6 +42,11 @@ void Board::clearBoard() {
     }
 }
 
+void Board::deletePiece(int row, int col) {
+    delete grid[row][col];
+    grid[row][col] = nullptr;
+}
+
 void Board::setPiece(Piece *piece, int row, int col)
 {
     if (grid[row][col] != nullptr)
@@ -51,7 +56,7 @@ void Board::setPiece(Piece *piece, int row, int col)
     grid[row][col] = piece;
 }
 
-void Board::setup(set<pair<int, int>> &blackAttackingMoves, set<pair<int, int>> &whiteAttackingMoves, pair<int, int> &blackKing, pair<int, int> &whiteKing)
+void Board::setup(set<pair<int, int>> &blackAttackingMoves, set<pair<int, int>> &whiteAttackingMoves)
 {
     // clean up old board
     clearBoard();
@@ -108,9 +113,6 @@ void Board::setup(set<pair<int, int>> &blackAttackingMoves, set<pair<int, int>> 
             grid[7][i] = new King(Colour::BLACK, 7, i);
         }
     }
-
-    whiteKing = pair<int, int>{7, 4};
-    blackKing = pair<int, int>{0, 4};
 
     for (int i = 0; i < 8; i++)
     {
