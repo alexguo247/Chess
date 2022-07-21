@@ -85,22 +85,22 @@ vector<vector<int>> Pawn::getAttackMoves(Board *b)
     {
         if (b->getPiece(row + 1, col + 1) == nullptr || b->getPiece(row + 1, col + 1)->getColour() != colour)
         {
-            attackMoves.emplace_back(row + 1, col + 1, row, col);
+            attackMoves.push_back({row + 1, col + 1, row, col});
         }
         if (b->getPiece(row + 1, col - 1) == nullptr || b->getPiece(row + 1, col - 1)->getColour() != colour)
         {
-            attackMoves.emplace_back(row + 1, col - 1, row, col);
+            attackMoves.push_back({row + 1, col - 1, row, col});
         }
     }
     else
     {
         if (b->getPiece(row - 1, col + 1) == nullptr || b->getPiece(row - 1, col + 1)->getColour() != colour)
         {
-            attackMoves.emplace_back(row - 1, col + 1, row, col);
+            attackMoves.push_back({row - 1, col + 1, row, col});
         }
         if (b->getPiece(row - 1, col - 1) == nullptr || b->getPiece(row - 1, col - 1)->getColour() != colour)
         {
-            attackMoves.emplace_back(row - 1, col - 1, row, col);
+            attackMoves.push_back({row - 1, col - 1, row, col});
         }
     }
     return attackMoves;

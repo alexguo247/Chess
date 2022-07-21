@@ -83,45 +83,45 @@ vector<vector<int>> Rook::getAttackMoves(Board *b)
     // Down
     while (currRow < 8 && b->getPiece(currRow, currCol) == nullptr)
     {
-        attackMoves.emplace_back(currRow, currCol, row, col);
+        attackMoves.push_back({currRow, currCol, row, col});
         currRow++;
     }
     if (currRow < 8 && b->getPiece(currRow, currCol)->getColour() != colour)
     {
-        attackMoves.emplace_back(currRow, currCol, row, col);
+        attackMoves.push_back({currRow, currCol, row, col});
     }
     currRow = row;
     // Up
     while (currRow >= 0 && b->getPiece(currRow, currCol) == nullptr)
     {
-        attackMoves.emplace_back(currRow, currCol, row, col);
+        attackMoves.push_back({currRow, currCol, row, col});
         currRow--;
     }
     if (currRow >= 0 && b->getPiece(currRow, currCol)->getColour() != colour)
     {
-        attackMoves.emplace_back(currRow, currCol, row, col);
+        attackMoves.push_back({currRow, currCol, row, col});
     }
     currRow = row;
     // Left
     while (currCol >= 0 && b->getPiece(currRow, currCol) == nullptr)
     {
-        attackMoves.emplace_back(currRow, currCol, row, col);
+        attackMoves.push_back({currRow, currCol, row, col});
         currCol--;
     }
     if (currCol >= 0 && b->getPiece(currRow, currCol)->getColour() != colour)
     {
-        attackMoves.emplace_back(currRow, currCol, row, col);
+        attackMoves.push_back({currRow, currCol, row, col});
     }
     currCol = col;
     // Right
     while (currCol < 8 && b->getPiece(currRow, currCol) == nullptr)
     {
-        attackMoves.emplace_back(currRow, currCol, row, col);
+        attackMoves.push_back({currRow, currCol, row, col});
         currCol++;
     }
     if (currCol < 8 && b->getPiece(currRow, currCol)->getColour() != colour)
     {
-        attackMoves.emplace_back(currRow, currCol, row, col);
+        attackMoves.push_back({currRow, currCol, row, col});
     }
     return attackMoves;
 }

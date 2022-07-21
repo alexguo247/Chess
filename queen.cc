@@ -128,97 +128,97 @@ vector<vector<int>> Queen::getAttackMoves(Board *b)
     // Down right
     while (currRow < 8 && currCol < 8 && b->getPiece(currRow, currCol) == nullptr)
     {
-        attackMoves.emplace_back(currRow, currCol, row, col);
+        attackMoves.push_back({currRow, currCol, row, col});
         currRow++;
         currCol++;
     }
     if (currRow < 8 && currCol < 8 && b->getPiece(currRow, currCol)->getColour() != colour)
     {
-        attackMoves.emplace_back(currRow, currCol, row, col);
+        attackMoves.push_back({currRow, currCol, row, col});
     }
     currRow = row;
     currCol = col;
     // Top left
     while (currRow >= 0 && currCol >= 0 && b->getPiece(currRow, currCol) == nullptr)
     {
-        attackMoves.emplace_back(currRow, currCol, row, col);
+        attackMoves.push_back({currRow, currCol, row, col});
         currRow--;
         currCol--;
     }
     if (currRow >= 0 && currCol >= 0 && b->getPiece(currRow, currCol)->getColour() != colour)
     {
-        attackMoves.emplace_back(currRow, currCol, row, col);
+        attackMoves.push_back({currRow, currCol, row, col});
     }
     currRow = row;
     currCol = col;
     // Bottom left
     while (currRow < 8 && currCol >= 0 && b->getPiece(currRow, currCol) == nullptr)
     {
-        attackMoves.emplace_back(currRow, currCol, row, col);
+        attackMoves.push_back({currRow, currCol, row, col});
         currRow++;
         currCol--;
     }
     if (currRow < 8 && currCol >= 0 && b->getPiece(currRow, currCol)->getColour() != colour)
     {
-        attackMoves.emplace_back(currRow, currCol, row, col);
+        attackMoves.push_back({currRow, currCol, row, col});
     }
     currRow = row;
     currCol = col;
     // Top right
     while (currRow >= 0 && currCol < 8 && b->getPiece(currRow, currCol) == nullptr)
     {
-        attackMoves.emplace_back(currRow, currCol, row, col);
+        attackMoves.push_back({currRow, currCol, row, col});
         currRow--;
         currCol++;
     }
     if (currRow >= 0 && currCol < 8 && b->getPiece(currRow, currCol)->getColour() != colour)
     {
-        attackMoves.emplace_back(currRow, currCol, row, col);
+        attackMoves.push_back({currRow, currCol, row, col});
     }
     currRow = row;
     currCol = col;
     // Down
     while (currRow < 8 && b->getPiece(currRow, currCol) == nullptr)
     {
-        attackMoves.emplace_back(currRow, currCol, row, col);
+        attackMoves.push_back({currRow, currCol, row, col});
         currRow++;
     }
     if (currRow < 8 && b->getPiece(currRow, currCol)->getColour() != colour)
     {
-        attackMoves.emplace_back(currRow, currCol, row, col);
+        attackMoves.push_back({currRow, currCol, row, col});
     }
     currRow = row;
     // Up
     while (currRow >= 0 && b->getPiece(currRow, currCol) == nullptr)
     {
-        attackMoves.emplace_back(currRow, currCol, row, col);
+        attackMoves.push_back({currRow, currCol, row, col});
         currRow--;
     }
     if (currRow >= 0 && b->getPiece(currRow, currCol)->getColour() != colour)
     {
-        attackMoves.emplace_back(currRow, currCol, row, col);
+        attackMoves.push_back({currRow, currCol, row, col});
     }
     currRow = row;
     // Left
     while (currCol >= 0 && b->getPiece(currRow, currCol) == nullptr)
     {
-        attackMoves.emplace_back(currRow, currCol, row, col);
+        attackMoves.push_back({currRow, currCol, row, col});
         currCol--;
     }
     if (currCol >= 0 && b->getPiece(currRow, currCol)->getColour() != colour)
     {
-        attackMoves.emplace_back(currRow, currCol, row, col);
+        attackMoves.push_back({currRow, currCol, row, col});
     }
     currCol = col;
     // Right
     while (currCol < 8 && b->getPiece(currRow, currCol) == nullptr)
     {
-        attackMoves.emplace_back(currRow, currCol, row, col);
+        attackMoves.push_back({currRow, currCol, row, col});
         currCol++;
     }
     if (currCol < 8 && b->getPiece(currRow, currCol)->getColour() != colour)
     {
-        attackMoves.emplace_back(currRow, currCol, row, col);
+        attackMoves.push_back({currRow, currCol, row, col});
     }
     return attackMoves;
 }
