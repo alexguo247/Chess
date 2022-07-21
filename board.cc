@@ -60,6 +60,7 @@ void Board::setup(set<pair<int, int>> &blackAttackingMoves, set<pair<int, int>> 
 {
     // clean up old board
     clearBoard();
+    td = new Textdisplay();
 
     for (int i = 0; i < 8; i++)
     {

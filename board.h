@@ -20,7 +20,7 @@ public:
     void deletePiece(int, int);
     void clearBoard();
     void setup(std::set<pair<int, int>> &, std::set<pair<int, int>> &);
+    void printBoard();
 };
 
 #endif
-

@@ -7,13 +7,14 @@
 #include "type.h"
 #include "piece.h"
 
-class Textdisplay: public Observer
+class Textdisplay : public Observer
 {
 private:
-    char **theDis;
+    vector<vector<char>> theDis;
 
 public:
     Textdisplay();
+    void defaultSetup();
     void notify(Piece *p, std::pair<int, int>);
     char getCharType(Piece *p);
     friend std::ostream &operator<<(std::ostream &out, const Textdisplay &td);
