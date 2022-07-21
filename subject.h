@@ -2,9 +2,11 @@
 #define SUBJECT_H
 
 #include "observer.h"
+#include "piece.h"
 #include <vector>
 
 class Observer;
+class Piece;
 
 class Subject
 {

@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-    Chessgame *chess;
+    Chessgame* chess = new Chessgame();
     string cmd;
 
     while (cin >> cmd) {

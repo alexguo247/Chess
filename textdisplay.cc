@@ -20,7 +20,7 @@ Textdisplay::Textdisplay()
 char Textdisplay::getCharType(Piece *p)
 {
     // white is upper case
-    char type;
+    char type = '\0';
     if (p->getColour() == Colour::BLACK)
     {
         switch (p->getType())

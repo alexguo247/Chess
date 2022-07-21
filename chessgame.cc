@@ -84,8 +84,6 @@ Piece *buildPiece(char pieceType, pair<int, int> pos)
     return p;
 }
 
-Chessgame::Chessgame() : p1{nullptr}, p2{nullptr} {};
-
 pair<int, int> Chessgame::findKing(Colour c)
 {
     for (int i = 0; i < 8; i++)
@@ -174,7 +172,9 @@ void Chessgame::attachObservers()
 void Chessgame::defaultConfiguration()
 {
     turn = Colour::WHITE;
-    board.setup(blackAttackingMoves, whiteAttackingMoves);
+    board.setup();
+    updateAttackingMoves(Colour::WHITE);
+    updateAttackingMoves(Colour::BLACK);
 }
 
 void Chessgame::setup()
@@ -186,8 +186,6 @@ void Chessgame::setup()
     pair<int, int> coordPair;
     cin >> cmd;
     bool exit = false;
-
-    Piece *p;
 
     while (!exit)
     {
@@ -487,7 +485,6 @@ bool Chessgame::inCheckmate()
         // Same diagonal (bishop / queen / pawn)
         else if (abs((double)(colDiff) / (rowDiff)) == 1.0)
         {
-            double slope = (double)colDiff / rowDiff;
             // Escape by moving away
             for (auto &d : dirs)
             {

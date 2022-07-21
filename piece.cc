@@ -1,4 +1,4 @@
-#include <piece.h>
+#include "piece.h"
 #include <string>
 
 using namespace std;
@@ -8,6 +8,8 @@ Type Piece::getType() { return type; }
 Colour Piece::getColour() { return colour; }
 
 pair<int, int> Piece::getPos() { return pair<int, int>{row, col}; }
+
+Piece::~Piece() {};
 
 void Piece::setPos(int x, int y) {
     row = x;
@@ -21,5 +23,3 @@ void Piece::move(pair<int, int> end, Board *b) {
     setPos(end.first, end.second);
     notifyObservers(this, old);
 }
-
-bool Piece::isRiskyMove(int r, int c, int nr, int nc) {}
