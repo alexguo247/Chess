@@ -1,4 +1,5 @@
 #include "piece.h"
+#include "board.h"
 #include <string>
 
 using namespace std;
@@ -6,6 +7,8 @@ using namespace std;
 Type Piece::getType() { return type; }
 
 Colour Piece::getColour() { return colour; }
+
+Piece::Piece(Colour c, Type t, int row, int col): colour{c}, type{t}, row{row}, col{col} {};
 
 pair<int, int> Piece::getPos() { return pair<int, int>{row, col}; }
 

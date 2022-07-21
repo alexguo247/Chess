@@ -1,4 +1,5 @@
 #include "rook.h"
+#include "board.h"
 #include <cmath>
 using namespace std;
 Rook::Rook(Colour c, int row, int col) : Piece(c, Type::ROOK, row, col){};

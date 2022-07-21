@@ -4,8 +4,10 @@
 #include <iostream>
 #include <vector>
 #include "board.h"
-#include "player.h"
+#include "textdisplay.h"
 #include "scoreboard.h"
+
+class Player;
 
 class Chessgame
 {

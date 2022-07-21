@@ -1,4 +1,5 @@
 #include "knight.h"
+#include "board.h"
 #include <cmath>
 using namespace std;
 

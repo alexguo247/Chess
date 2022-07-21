@@ -1,7 +1,7 @@
 #ifndef OBSERVER_H
 #define OBSERVER_H
+#include <utility>
 
-#include "piece.h"
 class Piece;
 
 class Observer

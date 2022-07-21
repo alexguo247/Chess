@@ -1,11 +1,11 @@
 #ifndef PIECE_H
 #define PIECE_H
 
-#include <string>
 #include "colour.h"
 #include "type.h"
-#include "board.h"
 #include "subject.h"
+
+#include <string>
 
 class Board;
 
@@ -18,7 +18,7 @@ protected:
     int col;
 
 public:
-    Piece(Colour c, Type t, int row, int col) : colour{c}, type{t}, row{row}, col{col} {};
+    Piece(Colour, Type, int, int);
     virtual ~Piece();
     virtual Colour getColour();                               // return the colour of the piece
     virtual Type getType();                                   // return the type of the piece

@@ -1,7 +1,9 @@
 #ifndef __PAWN_H__
 #define __PAWN_H__
 #include "colour.h"
-#include "board.h"
+#include "piece.h"
+
+class Board;
 
 class Pawn : public Piece
 {

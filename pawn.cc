@@ -1,4 +1,5 @@
 #include "pawn.h"
+#include "board.h"
 #include <cmath>
 using namespace std;
 

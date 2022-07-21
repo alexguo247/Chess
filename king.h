@@ -1,7 +1,9 @@
 #ifndef __KING_H__
 #define __KING_H__
 #include "colour.h"
-#include "board.h"
+#include "piece.h"
+
+class Board;
 
 class King : public Piece
 {

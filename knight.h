@@ -1,14 +1,16 @@
 #ifndef __KNIGHT_H__
 #define __KNIGHT_H__
 #include "colour.h"
-#include "board.h"
+#include "piece.h"
+
+class Board;
 
 class Knight : public Piece
 {
 public:
     Knight(Colour, int, int);
-    bool checkMove(std::pair<int, int>, Board *);
-    std::vector<std::vector<int>> getAttackMoves(Board *);
+    bool checkMove(std::pair<int, int>, Board *) override ;
+    std::vector<std::vector<int>> getAttackMoves(Board *) override;
 };
 
 #endif

@@ -9,6 +9,7 @@
 #include "queen.h"
 #include "knight.h"
 #include "pawn.h"
+#include "textdisplay.h"
 
 #include <iostream>
 #include <cmath>
@@ -96,6 +97,7 @@ pair<int, int> Chessgame::findKing(Colour c)
             }
         }
     }
+    return pair<int,int>{-1, -1};
 }
 
 Chessgame::Chessgame() : p1{nullptr}, p2{nullptr}
@@ -232,13 +234,13 @@ void Chessgame::game(string player1, string player2)
     {
         defaultConfiguration();
     }
-    td->setupFromBoard(&board);
-    attachObservers();
-
-    // p1 = player1 == "human" ? new Human(&board, Colour::WHITE) : new Computer(&board, Colour::WHITE);
-    // p2 = player2 == "human" ? new Human(&board, Colour::BLACK) : new Computer(&board, Colour::BLACK);
     p1 = new Human(&board, Colour::WHITE);
     p2 = new Human(&board, Colour::BLACK);
+
+    td->setupFromBoard(&board);
+    attachObservers();
+    // p1 = player1 == "human" ? new Human(&board, Colour::WHITE) : new Computer(&board, Colour::WHITE);
+    // p2 = player2 == "human" ? new Human(&board, Colour::BLACK) : new Computer(&board, Colour::BLACK);
 }
 
 void Chessgame::resign()
