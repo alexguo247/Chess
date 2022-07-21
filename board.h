@@ -8,13 +8,13 @@ class Piece;
 
 class Board
 {
-    std::vector<std::vector<Piece *>> grid;
-
 public:
+    std::vector<std::vector<Piece *>> grid;
     Board();
     Piece *getPiece(int, int);
     void setPiece(Piece *, int, int);
     bool isValid();
+    void print();
     void deletePiece(int, int);
     void clearBoard();
     void printBoard();

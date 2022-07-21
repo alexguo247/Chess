@@ -4,7 +4,6 @@
 #include <iostream>
 #include <vector>
 #include "board.h"
-#include "textdisplay.h"
 #include "scoreboard.h"
 
 class Player;
@@ -16,7 +15,6 @@ class Chessgame
     Player *p2;
     bool hasSetup;
     Colour turn;
-    Textdisplay* td;
     Scoreboard *sb;
     std::vector<std::vector<int>> whiteAttackingMoves;
     std::vector<std::vector<int>> blackAttackingMoves;
@@ -27,8 +25,6 @@ class Chessgame
     bool inDanger(Colour, int, int);
     void defaultConfiguration();
     bool validateBoard();
-    void attachObservers();
-
 public:
     Chessgame();
     ~Chessgame();

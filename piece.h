@@ -3,13 +3,12 @@
 
 #include "colour.h"
 #include "type.h"
-#include "subject.h"
 
 #include <string>
 
 class Board;
 
-class Piece : public Subject
+class Piece
 {
 protected:
     Colour colour;

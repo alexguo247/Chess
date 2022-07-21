@@ -21,15 +21,13 @@ void Piece::setPos(int x, int y) {
 }
 
 void Piece::move(pair<int, int> end, Board *b) {
-    cout << "PIECE MOVING" << endl;
     pair<int, int> old = pair<int, int> {row, col};
-
-    cout << observers.size() << endl;
     b->setPiece(this, end.first, end.second);
-    cout << "1 " << observers.size() << endl;
+    if (b->getPiece(end.first, end.second) == this) {
+        cout << "EQUALS THIS" << endl;
+    }
     setPos(end.first, end.second);
-    cout << "2 " << observers.size() << endl;
     b->setPiece(nullptr, old.first, old.second);
-    cout << "3 " << observers.size() << endl;
-    notifyObservers(this, old);
+    // if (b->getPiece(end))
+
 }
