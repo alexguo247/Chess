@@ -22,6 +22,8 @@ int main()
         else if (cmd == "move") {
             string start;
             string end;
+            cin >> start;
+            cin >> end;
             chess->move(start, end);
         } else if (cmd == "setup") {
             chess->setup();

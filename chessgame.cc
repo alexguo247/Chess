@@ -166,7 +166,9 @@ void Chessgame::attachObservers()
     {
         for (int j = 0; j < 8; j++)
         {
-            board.getPiece(i, j)->attach(td);
+            if (board.getPiece(i, j) != nullptr) {
+                board.getPiece(i, j)->attach(td);
+            }
         }
     }
 }
@@ -231,7 +233,6 @@ void Chessgame::game(string player1, string player2)
 {
     if (!hasSetup)
     {
-        cout << "DEFAULT CONFIG" << endl;
         defaultConfiguration();
     }
     p1 = new Human(&board, Colour::WHITE);
@@ -239,6 +240,7 @@ void Chessgame::game(string player1, string player2)
 
     td->setupFromBoard(&board);
     attachObservers();
+    cout << *td;
     // p1 = player1 == "human" ? new Human(&board, Colour::WHITE) : new Computer(&board, Colour::WHITE);
     // p2 = player2 == "human" ? new Human(&board, Colour::BLACK) : new Computer(&board, Colour::BLACK);
 }
@@ -274,10 +276,8 @@ void Chessgame::updateAttackingMoves()
 
             Colour c = board.getPiece(i, j)->getColour();
             vector<vector<int>> attackMoves = board.getPiece(i, j)->getAttackMoves(&board);
-            cout << "BOB" << i << j << endl;
             for (auto a : attackMoves)
             {
-                cout << "ATTACK" << endl;
                 if (c == Colour::WHITE)
                 {
                     whiteAttackingMoves.push_back(a);
@@ -608,6 +608,7 @@ void Chessgame::move(string coord1, string coord2)
 
     if (turn == Colour::WHITE)
     {
+        cout << "WHITE MOVING" << endl;
         p1->move(start, end);
     }
     else
@@ -615,46 +616,53 @@ void Chessgame::move(string coord1, string coord2)
         p2->move(start, end);
     }
 
+    cout << *td << endl;;
     updateAttackingMoves();
-
     /*
     1 -> someone is in check
     2 -> someone is in checkmate
     3 -> stalemate
     */
-    if (inCheck())
-    {
-        if (turn == Colour::WHITE)
-        {
-            cout << "Black is in check." << endl;
-        }
-        else
-        {
-            cout << "White is in check." << endl;
-        }
-    };
+//    cout << "before check" << endl;
+    // if (inCheck())
+    // {
+    //     if (turn == Colour::WHITE)
+    //     {
+    //         cout << "Black is in check." << endl;
+    //     }
+    //     else
+    //     {
+    //         cout << "White is in check." << endl;
+    //     }
+    // };
 
-    if (inCheckmate())
-    {
-        if (turn == Colour::WHITE)
-        {
-            cout << "Checkmate! White wins!" << endl;
-            sb->incrementScore(Colour::WHITE);
-        }
-        else
-        {
-            cout << "Checkmate! Black wins!" << endl;
-            sb->incrementScore(Colour::BLACK);
-        }
-        hasSetup = false;
-    }
+    // cout << "after check " << endl;
 
-    if (inStalemate())
-    {
-        cout << "Stalemate!" << endl;
-        sb->staleMate();
-        hasSetup = false;
-    }
+    // if (inCheckmate())
+    // {
+    //     if (turn == Colour::WHITE)
+    //     {
+    //         cout << "Checkmate! White wins!" << endl;
+    //         sb->incrementScore(Colour::WHITE);
+    //     }
+    //     else
+    //     {
+    //         cout << "Checkmate! Black wins!" << endl;
+    //         sb->incrementScore(Colour::BLACK);
+    //     }
+    //     hasSetup = false;
+    // }
+
+    // cout << "after checkmate" << endl;
+
+    // if (inStalemate())
+    // {
+    //     cout << "Stalemate!" << endl;
+    //     sb->staleMate();
+    //     hasSetup = false;
+    // }
+
+    // cout << "IN STALEMATE" << endl;
 
     if (turn == Colour::WHITE)
     {

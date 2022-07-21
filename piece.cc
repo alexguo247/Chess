@@ -1,6 +1,7 @@
 #include "piece.h"
 #include "board.h"
 #include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -20,9 +21,15 @@ void Piece::setPos(int x, int y) {
 }
 
 void Piece::move(pair<int, int> end, Board *b) {
+    cout << "PIECE MOVING" << endl;
     pair<int, int> old = pair<int, int> {row, col};
+
+    cout << observers.size() << endl;
     b->setPiece(this, end.first, end.second);
-    b->setPiece(nullptr, row, col);
+    cout << "1 " << observers.size() << endl;
     setPos(end.first, end.second);
+    cout << "2 " << observers.size() << endl;
+    b->setPiece(nullptr, old.first, old.second);
+    cout << "3 " << observers.size() << endl;
     notifyObservers(this, old);
 }

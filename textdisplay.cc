@@ -19,11 +19,18 @@ Textdisplay::Textdisplay()
 
 char Textdisplay::getCharType(Piece *p)
 {
+    if (p == nullptr) {
+        return ' ';
+    }
+
     // white is upper case
-    char type = '\0';
-    if (p->getColour() == Colour::BLACK)
+    char type = ' ';
+    Colour c = p->getColour();
+    Type t = p->getType();
+
+    if (c == Colour::BLACK)
     {
-        switch (p->getType())
+        switch (t)
         {
         case Type::PAWN:
             type = 'p';
@@ -47,9 +54,9 @@ char Textdisplay::getCharType(Piece *p)
             break;
         }
     }
-    else if (p->getColour() == Colour::WHITE)
+    else if (c == Colour::WHITE)
     {
-        switch (p->getType())
+        switch (t)
         {
         case Type::PAWN:
             type = 'P';
@@ -89,6 +96,8 @@ void Textdisplay::setupFromBoard(Board *b)
 void Textdisplay::notify(Piece *p, std::pair<int, int> oldLoc)
 {
     char temp = getCharType(p);
+    cout << temp << endl;
+    cout << "HELLLO FROM THE OTHER SIDE" << endl;
 
     theDis[oldLoc.first][oldLoc.second] = ' ';
     theDis[p->getPos().first][p->getPos().second] = temp;
@@ -96,8 +105,10 @@ void Textdisplay::notify(Piece *p, std::pair<int, int> oldLoc)
 
 ostream &operator<<(std::ostream &out, const Textdisplay &td)
 {
+    out << endl;
+
     int rowNum = 8;
-    for (int row = 7; row >= 0; row--)
+    for (int row = 0; row < 8; row++)
     {
         out << rowNum << " ";
         rowNum--;

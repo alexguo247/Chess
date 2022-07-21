@@ -57,6 +57,7 @@ void Board::setPiece(Piece *piece, int row, int col)
     if (grid[row][col] != nullptr)
     {
         delete grid[row][col];
+        grid[row][col] = nullptr;
     }
     grid[row][col] = piece;
 }

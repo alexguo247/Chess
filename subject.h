@@ -8,9 +8,8 @@ class Piece;
 
 class Subject
 {
-    std::vector<Observer *> observers;
-
 public:
+    std::vector<Observer *> observers;
     void attach(Observer *);
     void notifyObservers(Piece *, std::pair<int, int>);
 };
