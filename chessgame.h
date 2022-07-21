@@ -18,6 +18,9 @@ class Chessgame
     set<pair<int, int>> blackAttackingMoves;
     std::pair<int, int> findKing(Colour);
     void updateAttackingMoves(Colour);
+    vector<vector<int>> getAttackers(Colour);
+    bool canBlock(Colour, int, int);
+    bool inDanger(Colour, int, int);
     void defaultConfiguration();
     bool validateBoard();
     void attachObservers();
@@ -29,6 +32,7 @@ public:
     void move(string, string);
     void resign();
     void setup();
+    bool inCheck();
+    bool inCheckmate();
+    bool inStalemate();
 };
-
-#endif;
