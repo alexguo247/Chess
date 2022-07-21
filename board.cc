@@ -61,7 +61,7 @@ void Board::setPiece(Piece *piece, int row, int col)
     grid[row][col] = piece;
 }
 
-void Board::setup(vector<vector<int>> &blackAttackingMoves, vector<vector<int>> &whiteAttackingMoves, pair<int, int> &blackKing, pair<int, int> &whiteKing)
+void Board::setup(vector<vector<int>> &blackAttackingMoves, vector<vector<int>> &whiteAttackingMoves)
 {
     // clean up old board
     clearBoard();

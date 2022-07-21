@@ -21,7 +21,7 @@ public:
     void deletePiece(int, int);
     void clearBoard();
     void printBoard();
-    void setup(std::vector<vector<int>> &, std::vector<vector<int>> &, pair<int, int> &, pair<int, int> &);
+    void setup(std::vector<std::vector<int>> &, std::vector<std::vector<int>> &);
 };
 
 #endif

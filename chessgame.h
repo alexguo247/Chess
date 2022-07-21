@@ -1,6 +1,5 @@
 #ifndef CHESSGAME_H
 #define CHESSGAME_H
-#include <set>
 #include <string>
 #include <iostream>
 #include "board.h"
@@ -16,8 +15,8 @@ class Chessgame
     Colour turn;
     Textdisplay* td;
     Scoreboard *sb;
-    set<std::pair<int, int>> whiteAttackingMoves;
-    set<std::pair<int, int>> blackAttackingMoves;
+    std::vector<std::vector<int>> whiteAttackingMoves;
+    std::vector<std::vector<int>> blackAttackingMoves;
     std::pair<int, int> findKing(Colour);
     void updateAttackingMoves(Colour);
     vector<vector<int>> getAttackers(Colour);

@@ -84,7 +84,8 @@ Piece *buildPiece(char pieceType, pair<int, int> pos)
     return p;
 }
 
-Chessgame::Chessgame() : p1{nullptr}, p2{nullptr}
+Chessgame::Chessgame() : p1{nullptr}, p2{nullptr} {};
+
 pair<int, int> Chessgame::findKing(Colour c) {
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
@@ -151,7 +152,9 @@ bool Chessgame::validateBoard()
     {
         valid = false;
     }
+
     return valid;
+}
 
 void Chessgame::attachObservers() {
     for (int i = 0; i < 8; i++) {
@@ -159,7 +162,6 @@ void Chessgame::attachObservers() {
             board.getPiece(i, j)->attach(td);
         }
     }
-
 }
 
 void Chessgame::defaultConfiguration()
@@ -230,8 +232,8 @@ void Chessgame::game(string player1, string player2)
 
     // p1 = player1 == "human" ? new Human(&board, Colour::WHITE) : new Computer(&board, Colour::WHITE);
     // p2 = player2 == "human" ? new Human(&board, Colour::BLACK) : new Computer(&board, Colour::BLACK);
-    // p1 = new Human(&board, Colour::WHITE);
-    // p2 = new Human(&board, Colour::BLACK);
+    p1 = new Human(&board, Colour::WHITE);
+    p2 = new Human(&board, Colour::BLACK);
 }
 
 void Chessgame::resign()
@@ -270,11 +272,11 @@ void Chessgame::updateAttackingMoves(Colour c)
                 {
                     if (c == Colour::WHITE)
                     {
-                        whiteAttackingMoves.emplace_back(a);
+                        whiteAttackingMoves.push_back(a);
                     }
                     else
                     {
-                        blackAttackingMoves.emplace_back(a);
+                        blackAttackingMoves.push_back(a);
                     }
                 }
             }
