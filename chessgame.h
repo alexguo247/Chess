@@ -1,6 +1,8 @@
 #ifndef CHESSGAME_H
 #define CHESSGAME_H
 #include <set>
+#include <string>
+#include <iostream>
 #include "board.h"
 #include "player.h"
 #include "scoreboard.h"
@@ -14,8 +16,8 @@ class Chessgame
     Colour turn;
     Textdisplay* td;
     Scoreboard *sb;
-    set<pair<int, int>> whiteAttackingMoves;
-    set<pair<int, int>> blackAttackingMoves;
+    set<std::pair<int, int>> whiteAttackingMoves;
+    set<std::pair<int, int>> blackAttackingMoves;
     std::pair<int, int> findKing(Colour);
     void updateAttackingMoves(Colour);
     vector<vector<int>> getAttackers(Colour);
@@ -28,11 +30,13 @@ class Chessgame
 public:
     Chessgame();
     ~Chessgame();
-    void game(string, string);
-    void move(string, string);
+    void game(std::string, std::string);
+    void move(std::string, std::string);
     void resign();
     void setup();
     bool inCheck();
     bool inCheckmate();
     bool inStalemate();
 };
+
+#endif

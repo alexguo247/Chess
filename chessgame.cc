@@ -159,6 +159,7 @@ void Chessgame::attachObservers() {
             board.getPiece(i, j)->attach(td);
         }
     }
+
 }
 
 void Chessgame::defaultConfiguration()
@@ -227,8 +228,10 @@ void Chessgame::game(string player1, string player2)
     td->setupFromBoard(&board);
     attachObservers();
 
-    p1 = player1 == "human" ? new Human(&board, Colour::WHITE) : new Computer(&board, Colour::WHITE);
-    p2 = player2 == "human" ? new Human(&board, Colour::BLACK) : new Computer(&board, Colour::BLACK);
+    // p1 = player1 == "human" ? new Human(&board, Colour::WHITE) : new Computer(&board, Colour::WHITE);
+    // p2 = player2 == "human" ? new Human(&board, Colour::BLACK) : new Computer(&board, Colour::BLACK);
+    // p1 = new Human(&board, Colour::WHITE);
+    // p2 = new Human(&board, Colour::BLACK);
 }
 
 void Chessgame::resign()

@@ -6,9 +6,13 @@
 #include <vector>
 #include <stdbool.h>
 
+class Piece;
+class Textdisplay;
+
 class Board
 {
     std::vector<std::vector<Piece *>> grid;
+
 public:
     Board();
     Piece *getPiece(int, int);
