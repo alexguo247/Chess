@@ -19,15 +19,11 @@ void Piece::setPos(int x, int y) {
     row = x;
     col = y;
 }
-
-void Piece::move(pair<int, int> end, Board *b) {
-    pair<int, int> old = pair<int, int> {row, col};
-    b->setPiece(this, end.first, end.second);
-    if (b->getPiece(end.first, end.second) == this) {
-        cout << "EQUALS THIS" << endl;
-    }
-    setPos(end.first, end.second);
-    b->setPiece(nullptr, old.first, old.second);
-    // if (b->getPiece(end))
-
+Piece* Piece::operator=(const Piece *p2) {
+    cout << "HI" << endl;
+    this->colour = p2->colour;
+    this->type = p2->type;
+    this->row = p2->row;
+    this->col = p2->col;
+    return this;
 }

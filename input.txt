@@ -1,2 +1,5 @@
 game human human
 move e2 e3
+move e3 e4
+move e4 e5
+move a2 a3

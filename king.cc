@@ -40,7 +40,7 @@ bool King::checkMove(pair<int, int> n, Board *b)
     return false;
 }
 
-vector<vector<int>> King::getAttackMoves(Board *b)
+vector<vector<int>> King::getAttackMoves(Board &b)
 {
     vector<vector<int>> attackMoves;
     vector<pair<int, int>> dirs{
@@ -61,7 +61,7 @@ vector<vector<int>> King::getAttackMoves(Board *b)
         if (newRow < 0 || newCol < 0 || newRow >= 8 || newCol >= 8) {
             continue;
         }
-        if (b->getPiece(newRow, newCol) == nullptr || b->getPiece(newRow, newCol)->getColour() != colour)
+        if (b.getPiece(newRow, newCol) == nullptr || b.getPiece(newRow, newCol)->getColour() != colour)
         {
             attackMoves.push_back({newRow, newCol, row, col});
         }
