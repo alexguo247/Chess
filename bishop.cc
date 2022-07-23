@@ -80,8 +80,8 @@ bool Bishop::checkMove(pair<int, int> n, Board &b)
 vector<vector<int>> Bishop::getAttackMoves(Board &b)
 {
     vector<vector<int>> attackMoves;
-    int currRow = row;
-    int currCol = col;
+    int currRow = row + 1;
+    int currCol = col + 1;
     // Down right
     while (currRow < 8 && currCol < 8 && b.getPiece(currRow, currCol) == nullptr)
     {
@@ -93,8 +93,8 @@ vector<vector<int>> Bishop::getAttackMoves(Board &b)
     {
         attackMoves.push_back({currRow, currCol, row, col});
     }
-    currRow = row;
-    currCol = col;
+    currRow = row - 1;
+    currCol = col - 1;
     // Top left
     while (currRow >= 0 && currCol >= 0 && b.getPiece(currRow, currCol) == nullptr)
     {
@@ -106,8 +106,8 @@ vector<vector<int>> Bishop::getAttackMoves(Board &b)
     {
         attackMoves.push_back({currRow, currCol, row, col});
     }
-    currRow = row;
-    currCol = col;
+    currRow = row + 1;
+    currCol = col - 1;
     // Bottom left
     while (currRow < 8 && currCol >= 0 && b.getPiece(currRow, currCol) == nullptr)
     {
@@ -119,8 +119,8 @@ vector<vector<int>> Bishop::getAttackMoves(Board &b)
     {
         attackMoves.push_back({currRow, currCol, row, col});
     }
-    currRow = row;
-    currCol = col;
+    currRow = row - 1;
+    currCol = col + 1;
     // Top right
     while (currRow >= 0 && currCol < 8 && b.getPiece(currRow, currCol) == nullptr)
     {
