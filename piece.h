@@ -15,16 +15,17 @@ protected:
     Type type;
     int row;
     int col;
+    bool hasMoved;
 
 public:
-    Piece(Colour, Type, int, int);
+    Piece(Colour, Type, int, int, bool);
     virtual ~Piece();
-    Colour getColour();                               // return the colour of the piece
-    Type getType();                                   // return the type of the piece
-    std::pair<int, int> getPos();                     // return the position of the piece
-    void setPos(int, int);                            // set the position of the piece
+    Colour getColour();                                       // return the colour of the piece
+    Type getType();                                           // return the type of the piece
+    std::pair<int, int> getPos();                             // return the position of the piece
+    void setPos(int, int);                                    // set the position of the piece
     virtual bool checkMove(std::pair<int, int>, Board *) = 0; // check if move is valid
     virtual std::vector<std::vector<int>> getAttackMoves(Board &) = 0;
-    Piece* operator=(const Piece *);
+    virtual bool getHasMoved();
 };
 #endif

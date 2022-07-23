@@ -7,7 +7,7 @@ class Board;
 
 class Pawn : public Piece
 {
-    bool hasMoved;
+
     bool didDoubleMove;
 
 public:

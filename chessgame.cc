@@ -58,27 +58,27 @@ Piece *buildPiece(char pieceType, pair<int, int> pos)
     switch (pieceType)
     {
     case 'K':
-        p = new King(Colour::WHITE, pos.first, pos.second);
+        p = new King(Colour::WHITE, pos.first, pos.second, false);
     case 'R':
-        p = new Rook(Colour::WHITE, pos.first, pos.second);
+        p = new Rook(Colour::WHITE, pos.first, pos.second, false);
     case 'N':
-        p = new Knight(Colour::WHITE, pos.first, pos.second);
+        p = new Knight(Colour::WHITE, pos.first, pos.second, false);
     case 'B':
-        p = new Bishop(Colour::WHITE, pos.first, pos.second);
+        p = new Bishop(Colour::WHITE, pos.first, pos.second, false);
     case 'Q':
-        p = new Queen(Colour::WHITE, pos.first, pos.second);
+        p = new Queen(Colour::WHITE, pos.first, pos.second, false);
     case 'P':
         p = new Pawn(Colour::WHITE, pos.first, pos.second, false, false);
     case 'k':
-        p = new King(Colour::BLACK, pos.first, pos.second);
+        p = new King(Colour::BLACK, pos.first, pos.second, false);
     case 'r':
-        p = new Rook(Colour::BLACK, pos.first, pos.second);
+        p = new Rook(Colour::BLACK, pos.first, pos.second, false);
     case 'n':
-        p = new Knight(Colour::BLACK, pos.first, pos.second);
+        p = new Knight(Colour::BLACK, pos.first, pos.second, false);
     case 'b':
-        p = new Bishop(Colour::BLACK, pos.first, pos.second);
+        p = new Bishop(Colour::BLACK, pos.first, pos.second, false);
     case 'q':
-        p = new Queen(Colour::BLACK, pos.first, pos.second);
+        p = new Queen(Colour::BLACK, pos.first, pos.second, false);
     case 'p':
         p = new Pawn(Colour::BLACK, pos.first, pos.second, false, false);
     }

@@ -9,21 +9,19 @@ Type Piece::getType() { return type; }
 
 Colour Piece::getColour() { return colour; }
 
-Piece::Piece(Colour c, Type t, int row, int col): colour{c}, type{t}, row{row}, col{col} {};
+Piece::Piece(Colour c, Type t, int row, int col, bool hasMoved) : colour{c}, type{t}, row{row}, col{col}, hasMoved{hasMoved} {};
 
 pair<int, int> Piece::getPos() { return pair<int, int>{row, col}; }
 
-Piece::~Piece() {};
+Piece::~Piece(){};
 
-void Piece::setPos(int x, int y) {
+void Piece::setPos(int x, int y)
+{
     row = x;
     col = y;
 }
-Piece* Piece::operator=(const Piece *p2) {
-    cout << "HI" << endl;
-    this->colour = p2->colour;
-    this->type = p2->type;
-    this->row = p2->row;
-    this->col = p2->col;
-    return this;
+
+bool Piece::getHasMoved()
+{
+    return hasMoved;
 }
