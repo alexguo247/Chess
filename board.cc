@@ -64,7 +64,7 @@ void Board::move(pair<int, int> start, pair<int, int> end, char promotion) {
         }
     } else {
         // basic move
-        setOrCreatePiece(p, end.first, end.first, false, t, c);
+        setOrCreatePiece(p, end.first, end.second, false, t, c);
         deletePiece(start.first, start.second);
     }
 }
@@ -236,11 +236,11 @@ void Board::print()
             {
                 if ((row % 2 == 0 && col % 2 == 0) || (row % 2 != 0 && col % 2 != 0))
                 {
-                    cout << "_";
+                    cout << " ";
                 }
                 else
                 {
-                    cout << " ";
+                    cout << "_";
                 }
             }
             else

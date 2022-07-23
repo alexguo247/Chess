@@ -2,4 +2,4 @@
 chess
 *.o
 *.d
-input.txt
+*.txt

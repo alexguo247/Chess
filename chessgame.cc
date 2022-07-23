@@ -95,7 +95,6 @@ void Chessgame::setup()
 
     while (!exit)
     {
-        cout << cmd << endl;
         if (cmd == "black")
         {
             turn = Colour::BLACK;
@@ -146,11 +145,21 @@ void Chessgame::game(string player1, string player2)
     hasSetup = false;
     gameIsRunning = true;
 
-    p1 = new Human(&board, Colour::WHITE);
-    p2 = new Human(&board, Colour::BLACK);
+    if (player1 == "human") {
+        p1 = new Human(&board, Colour::WHITE);
+    } else {
+        cout << "Invalid player 1 type!" << endl;
+        return;
+    }
+
+    if (player2 == "human") {
+        p2 = new Human(&board, Colour::BLACK);
+    } else {
+        cout << "Invalid player 2 type!" << endl;
+        return;
+    }
+
     board.print();
-    // p1 = player1 == "human" ? new Human(&board, Colour::WHITE) : new Computer(&board, Colour::WHITE);
-    // p2 = player2 == "human" ? new Human(&board, Colour::BLACK) : new Computer(&board, Colour::BLACK);
 }
 
 void Chessgame::resign()
@@ -175,16 +184,19 @@ void Chessgame::resign()
     gameIsRunning = false;
 }
 
-void Chessgame::move(string coord1, string coord2)
+void Chessgame::move(string coord1, string coord2, char promotion)
 {
-
     pair<int, int> start = convertCoord(coord1);
     pair<int, int> end = convertCoord(coord2);
 
     Piece *piece = board.getPiece(start.first, start.second);
-    if (piece == nullptr || piece->getColour() != turn)
-    {
-        cout << "Invalid starting position!" << endl;
+    if (piece == nullptr) {
+        cout << "No piece to move at that square! Move again." << endl;
+        return;
+    }
+
+    if (piece ->getColour() != turn) {
+        cout << "Moving piece of opposite colour is not allowed! Move again." << endl;
         return;
     }
 
@@ -242,4 +254,9 @@ void Chessgame::move(string coord1, string coord2)
     {
         turn = Colour::WHITE;
     }
+}
+
+void Chessgame::printScoreboard()
+{
+    sb->print();
 }
