@@ -26,14 +26,14 @@ bool King::checkMove(pair<int, int> n, Board &b)
             {
                 if (n.second - col == 2)
                 {
-                    if (b.getPiece(7, 5) == nullptr && b.getPiece(7, 6) == nullptr && b.getPiece(7,7) != nullptr && !b.getPiece(7, 7)->getHasMoved() && b.getPiece(7, 7)->getType() == Type::ROOK)
+                    if (b.getPiece(7, 5) == nullptr && b.getPiece(7, 6) == nullptr && b.getPiece(7, 7) != nullptr && !b.getPiece(7, 7)->getHasMoved() && b.getPiece(7, 7)->getType() == Type::ROOK)
                     {
                         return true;
                     }
                 }
                 else
                 {
-                    if (b.getPiece(7, 1) == nullptr && b.getPiece(7, 2) == nullptr && b.getPiece(7, 3) == nullptr && b.getPiece(7,0) != nullptr && !b.getPiece(7, 0)->getHasMoved() && b.getPiece(7,7)->getType() == Type::ROOK)
+                    if (b.getPiece(7, 1) == nullptr && b.getPiece(7, 2) == nullptr && b.getPiece(7, 3) == nullptr && b.getPiece(7, 0) != nullptr && !b.getPiece(7, 0)->getHasMoved() && b.getPiece(7, 7)->getType() == Type::ROOK)
                     {
                         return true;
                     }

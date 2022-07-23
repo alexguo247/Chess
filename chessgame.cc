@@ -578,12 +578,12 @@ bool Chessgame::inCheckmate()
 
 bool Chessgame::inStalemate()
 {
-    if (turn == Colour::WHITE && blackAttackingMoves.size() == 0)
+    if (turn == Colour::WHITE && blackAttackingMoves.size() == 0 && !inCheck())
     {
 
         return true;
     }
-    else if (turn == Colour::BLACK && whiteAttackingMoves.size() == 0)
+    else if (turn == Colour::BLACK && whiteAttackingMoves.size() == 0 && !inCheck())
     {
         return true;
     }
