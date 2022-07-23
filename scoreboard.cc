@@ -26,6 +26,7 @@ void Scoreboard::staleMate()
 
 void Scoreboard::print()
 {
+    cout << endl;
     cout << "Final Score:" << endl;
     cout << "White:" << white << endl;
     cout << "Black:" << black << endl;

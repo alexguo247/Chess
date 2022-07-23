@@ -601,11 +601,15 @@ void Chessgame::move(string coord1, string coord2, char promotion)
 
     if (turn == Colour::WHITE)
     {
-        p1->move(&board, start, end, promotion);
+        if (!p1->move(&board, start, end, promotion)) {
+            return; 
+        }
     }
     else
     {
-        p2->move(&board, start, end, promotion);
+        if (!p2->move(&board, start, end, promotion)) {
+            return;
+        }
     }
 
     board.print();

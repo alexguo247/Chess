@@ -19,7 +19,7 @@ public:
     Type getTypeChar(char);
     char getCharType(Piece *);
     void print();
-    void move(std::pair<int, int>, std::pair<int, int>, char);
+    bool move(std::pair<int, int>, std::pair<int, int>, char); // false if error
     void deletePiece(int, int);
     void clearBoard();
     void setup();

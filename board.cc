@@ -31,12 +31,12 @@ Piece *Board::getPiece(int row, int col)
     return grid[row][col];
 }
 
-void Board::move(pair<int, int> start, pair<int, int> end, char promotion) {
+bool Board::move(pair<int, int> start, pair<int, int> end, char promotion) {
     Piece *p = getPiece(start.first, start.second);
 
     if (!p->checkMove(end, *this)) {
-        cout << "Invalid move!";
-        return;
+        cout << "Invalid move! Move again." << endl;
+        return false;
     }
 
     Type t = p->getType();
@@ -57,7 +57,8 @@ void Board::move(pair<int, int> start, pair<int, int> end, char promotion) {
     } else if (p->getType() == Type::PAWN && (end.first == 0 || end.first == 7)) {
         // promotion
         if (promotion == '\0' || promotion == 'k' || promotion == 'K') {
-            cout << "Invalid promotion type!" << endl;
+            cout << "Invalid promotion type! Move again." << endl;
+            return false; 
         } else {
             setOrCreatePiece(nullptr, end.first, end.second, true, getTypeChar(promotion), c);
             deletePiece(start.first, start.second);
@@ -67,6 +68,7 @@ void Board::move(pair<int, int> start, pair<int, int> end, char promotion) {
         setOrCreatePiece(p, end.first, end.second, false, t, c);
         deletePiece(start.first, start.second);
     }
+    return true;
 }
 
 void Board::clearBoard()
