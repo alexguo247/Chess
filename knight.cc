@@ -29,7 +29,7 @@ bool Knight::checkMove(pair<int, int> n, Board *b)
 
     for (auto &d : dirs)
     {
-        if (n.first == row + d.first && n.second == col + d.second && b->getPiece(n.first, n.second) == nullptr)
+        if (n.first == row + d.first && n.second == col + d.second && (b->getPiece(n.first, n.second) == nullptr || (b->getPiece(n.first, n.second) != nullptr && b->getPiece(n.first, n.second)->getColour() != colour)))
         {
             return true;
         }
