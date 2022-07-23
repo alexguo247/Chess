@@ -31,51 +31,6 @@ Piece *Board::getPiece(int row, int col)
     return grid[row][col];
 }
 
-Piece *Board::buildPiece(char pieceType, pair<int, int> pos)
-{
-    Piece *p;
-    switch (pieceType)
-    {
-    case 'K':
-        p = new King(Colour::WHITE, pos.first, pos.second, false);
-        break;
-    case 'R':
-        p = new Rook(Colour::WHITE, pos.first, pos.second, false);
-        break;
-    case 'N':
-        p = new Knight(Colour::WHITE, pos.first, pos.second, false);
-        break;
-    case 'B':
-        p = new Bishop(Colour::WHITE, pos.first, pos.second, false);
-        break;
-    case 'Q':
-        p = new Queen(Colour::WHITE, pos.first, pos.second, false);
-        break;
-    case 'P':
-        p = new Pawn(Colour::WHITE, pos.first, pos.second, false, false);
-        break;
-    case 'k':
-        p = new King(Colour::BLACK, pos.first, pos.second, false);
-        break;
-    case 'r':
-        p = new Rook(Colour::BLACK, pos.first, pos.second, false);
-        break;
-    case 'n':
-        p = new Knight(Colour::BLACK, pos.first, pos.second, false);
-        break;
-    case 'b':
-        p = new Bishop(Colour::BLACK, pos.first, pos.second, false);
-        break;
-    case 'q':
-        p = new Queen(Colour::BLACK, pos.first, pos.second, false);
-        break;
-    case 'p':
-        p = new Pawn(Colour::BLACK, pos.first, pos.second, false, false);
-        break;
-    }
-    return p;
-}
-
 void Board::move(pair<int, int> start, pair<int, int> end, char promotion) {
     Piece *p = getPiece(start.first, start.second);
 
