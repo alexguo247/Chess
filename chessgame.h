@@ -25,6 +25,7 @@ class Chessgame
     bool inDanger(Colour, int, int);
     void defaultConfiguration();
     bool validateBoard();
+
 public:
     Chessgame();
     ~Chessgame();
@@ -35,6 +36,7 @@ public:
     bool inCheck();
     bool inCheckmate();
     bool inStalemate();
+    void printScoreboard();
 };
 
 #endif

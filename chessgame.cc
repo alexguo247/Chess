@@ -103,7 +103,7 @@ pair<int, int> Chessgame::findKing(Colour c)
     {
         for (int j = 0; j < 8; j++)
         {
-            if (board.getPiece(i, j)->getType() == Type::KING && board.getPiece(i, j)->getColour() == c)
+            if (board.getPiece(i, j) != nullptr && board.getPiece(i, j)->getType() == Type::KING && board.getPiece(i, j)->getColour() == c)
             {
                 return pair<int, int>{i, j};
             }
@@ -358,7 +358,7 @@ bool Chessgame::canBlock(Colour c, int row, int col)
     {
         for (auto move : blackAttackingMoves)
         {
-            if (move[0] == row && move[1] == col)
+            if (move[0] == row && move[1] == col && board.getPiece(move[2], move[3])->getType() != Type::KING)
             {
                 return true;
             }
@@ -368,7 +368,7 @@ bool Chessgame::canBlock(Colour c, int row, int col)
     {
         for (auto move : whiteAttackingMoves)
         {
-            if (move[0] == row && move[1] == col)
+            if (move[0] == row && move[1] == col && board.getPiece(move[2], move[3])->getType() != Type::KING)
             {
                 return true;
             }
@@ -423,7 +423,7 @@ bool Chessgame::inCheckmate()
                 }
             }
             // Escape by blocking
-            if (colDiff > 0)
+            if (colDiff > 1)
             {
                 for (int i = attackerCol; i > kingCol; i--)
                 {
@@ -458,7 +458,7 @@ bool Chessgame::inCheckmate()
                 }
             }
             // Escape by blocking
-            if (rowDiff > 0)
+            if (rowDiff > 1)
             {
                 for (int i = attackerRow; i > kingRow; i--)
                 {
@@ -494,7 +494,7 @@ bool Chessgame::inCheckmate()
             }
             // Escape by blocking
             // Down right
-            if (rowDiff > 0 && colDiff > 0)
+            if (rowDiff > 1 && colDiff > 1)
             {
                 int i = 1;
                 while (kingRow + i <= attackerRow)
@@ -507,20 +507,21 @@ bool Chessgame::inCheckmate()
                 }
             }
             // Up right
-            else if (rowDiff < 0 && colDiff > 0)
+            else if (rowDiff < 1 && colDiff > 1)
             {
                 int i = 1;
                 while (kingRow - i >= attackerRow)
                 {
                     if (canBlock(attacked, kingRow - i, kingCol + i))
                     {
+                        cout << kingRow - i << kingCol + i << endl;
                         isCheckmate = false;
                     }
                     i++;
                 }
             }
             // Down left
-            else if (rowDiff > 0 && colDiff < 0)
+            else if (rowDiff > 1 && colDiff < 1)
             {
                 int i = 1;
                 while (kingRow + i <= attackerRow)
@@ -533,7 +534,7 @@ bool Chessgame::inCheckmate()
                 }
             }
             // Up left
-            else
+            else if (rowDiff < 1 && colDiff < 1)
             {
                 int i = 1;
                 while (kingRow - i >= attackerRow)
@@ -580,6 +581,7 @@ bool Chessgame::inStalemate()
 {
     if (turn == Colour::WHITE && blackAttackingMoves.size() == 0)
     {
+
         return true;
     }
     else if (turn == Colour::BLACK && whiteAttackingMoves.size() == 0)
@@ -613,58 +615,55 @@ void Chessgame::move(string coord1, string coord2)
 
     board.print();
     this->updateAttackingMoves();
-    //     /*
-    //     1 -> someone is in check
-    //     2 -> someone is in checkmate
-    //     3 -> stalemate
-    //     */
-    // //    cout << "before check" << endl;
-    //     // if (inCheck())
-    //     // {
-    //     //     if (turn == Colour::WHITE)
-    //     //     {
-    //     //         cout << "Black is in check." << endl;
-    //     //     }
-    //     //     else
-    //     //     {
-    //     //         cout << "White is in check." << endl;
-    //     //     }
-    //     // };
+    /*
+    1 -> someone is in check
+    2 -> someone is in checkmate
+    3 -> stalemate
+    */
+    if (inCheck())
+    {
+        if (turn == Colour::WHITE)
+        {
+            cout << "Black is in check." << endl;
+        }
+        else
+        {
+            cout << "White is in check." << endl;
+        }
+    };
+    if (inCheckmate())
+    {
+        if (turn == Colour::WHITE)
+        {
+            cout << "Checkmate! White wins!" << endl;
+            sb->incrementScore(Colour::WHITE);
+        }
+        else
+        {
+            cout << "Checkmate! Black wins!" << endl;
+            sb->incrementScore(Colour::BLACK);
+        }
+        hasSetup = false;
+    }
 
-    //     // cout << "after check " << endl;
+    if (inStalemate())
+    {
+        cout << "Stalemate!" << endl;
+        sb->staleMate();
+        hasSetup = false;
+    }
 
-    //     // if (inCheckmate())
-    //     // {
-    //     //     if (turn == Colour::WHITE)
-    //     //     {
-    //     //         cout << "Checkmate! White wins!" << endl;
-    //     //         sb->incrementScore(Colour::WHITE);
-    //     //     }
-    //     //     else
-    //     //     {
-    //     //         cout << "Checkmate! Black wins!" << endl;
-    //     //         sb->incrementScore(Colour::BLACK);
-    //     //     }
-    //     //     hasSetup = false;
-    //     // }
+    if (turn == Colour::WHITE)
+    {
+        turn = Colour::BLACK;
+    }
+    else
+    {
+        turn = Colour::WHITE;
+    }
+}
 
-    //     // cout << "after checkmate" << endl;
-
-    //     // if (inStalemate())
-    //     // {
-    //     //     cout << "Stalemate!" << endl;
-    //     //     sb->staleMate();
-    //     //     hasSetup = false;
-    //     // }
-
-    //     // cout << "IN STALEMATE" << endl;
-
-    //     if (turn == Colour::WHITE)
-    //     {
-    //         turn = Colour::BLACK;
-    //     }
-    //     else
-    //     {
-    //         turn = Colour::WHITE;
-    //     }
+void Chessgame::printScoreboard()
+{
+    sb->print();
 }
