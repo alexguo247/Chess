@@ -26,6 +26,7 @@ public:
     void move(std::string, std::string, char);
     void resign();
     void setup();
+    void printScoreboard();
 };
 
 #endif
