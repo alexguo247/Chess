@@ -1,7 +1,7 @@
 #ifndef __ROOK_H__
 #define __ROOK_H__
 #include "piece.h"
-#include "board.h"
+class Board;
 
 class Rook : public Piece
 {
