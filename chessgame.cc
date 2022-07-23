@@ -514,7 +514,6 @@ bool Chessgame::inCheckmate()
                 {
                     if (canBlock(attacked, kingRow - i, kingCol + i))
                     {
-                        cout << kingRow - i << kingCol + i << endl;
                         isCheckmate = false;
                     }
                     i++;
