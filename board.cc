@@ -67,17 +67,25 @@ void Board::setPiece(Piece *piece, int row, int col)
     {
     case Type::KING:
         grid[row][col] = new King(c, row, col, true);
+        break;
     case Type::BISHOP:
         grid[row][col] = new Bishop(c, row, col, true);
+        break;
     case Type::ROOK:
         grid[row][col] = new Rook(c, row, col, true);
+        break;
     case Type::KNIGHT:
         grid[row][col] = new Knight(c, row, col, true);
+        break;
     case Type::QUEEN:
         grid[row][col] = new Queen(c, row, col, true);
+        break;
     case Type::PAWN:
         bool doubleMove = static_cast<Pawn *>(piece)->hasDoubleMoved();
         grid[row][col] = new Pawn(c, row, col, true, doubleMove);
+        break;
+    default:
+        break;
     }
 }
 
