@@ -19,7 +19,6 @@ public:
     Type getTypeChar(char);
     char getCharType(Piece *);
     void print();
-    Piece *buildPiece(char, std::pair<int, int>);
     void move(std::pair<int, int>, std::pair<int, int>, char);
     void deletePiece(int, int);
     void clearBoard();

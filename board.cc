@@ -56,13 +56,14 @@ void Board::move(pair<int, int> start, pair<int, int> end, char promotion) {
         deletePiece(start.first, start.second);
     } else if (p->getType() == Type::PAWN && (end.first == 0 || end.first == 7)) {
         // promotion
-        if (promotion == 'k' || promotion == 'K') {
+        if (promotion == '\0' || promotion == 'k' || promotion == 'K') {
             cout << "Invalid promotion type!" << endl;
         } else {
             setOrCreatePiece(nullptr, end.first, end.second, true, getTypeChar(promotion), c);
             deletePiece(start.first, start.second);
         }
     } else {
+        // basic move
         setOrCreatePiece(p, end.first, end.first, false, t, c);
         deletePiece(start.first, start.second);
     }
