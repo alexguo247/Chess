@@ -1,3 +1,5 @@
 .vscode
+chess
 *.o
 *.d
+input.txt
