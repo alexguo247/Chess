@@ -29,7 +29,7 @@ bool Bishop::checkMove(pair<int, int> n, Board &b)
         return false;
     }
 
-    if (!causesCheck(b, n))
+    if (causesCheck(b, n))
     {
         return false;
     }

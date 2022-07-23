@@ -219,7 +219,6 @@ void Chessgame::move(string coord1, string coord2, char promotion)
 
     board.print();
     board.updateAttackingMoves();
-
     if (board.inCheck(turn))
     {
         if (turn == Colour::WHITE)
