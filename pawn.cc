@@ -102,24 +102,42 @@ vector<vector<int>> Pawn::getAttackMoves(Board &b)
     vector<vector<int>> attackMoves = {};
     if (colour == Colour::BLACK)
     {
-        if ((row + 1 < 8 && col + 1 < 8) && (b.getPiece(row + 1, col + 1) == nullptr || b.getPiece(row + 1, col + 1)->getColour() != colour))
+        // Attack moves
+        if (row + 1 < 8 && col + 1 < 8 && b.getPiece(row + 1, col + 1) != nullptr && b.getPiece(row + 1, col + 1)->getColour() != colour)
         {
             attackMoves.push_back({row + 1, col + 1, row, col});
         }
-        if ((row + 1 < 8 && col - 1 >= 0) && (b.getPiece(row + 1, col - 1) == nullptr || b.getPiece(row + 1, col - 1)->getColour() != colour))
+        if (row + 1 < 8 && col - 1 >= 0 && b.getPiece(row + 1, col - 1) != nullptr && b.getPiece(row + 1, col - 1)->getColour() != colour)
         {
             attackMoves.push_back({row + 1, col - 1, row, col});
+        }
+        if (row + 1 < 8 && b.getPiece(row + 1, col) == nullptr)
+        {
+            attackMoves.push_back({row + 1, col, row, col});
+        }
+        if (row + 2 < 8 && b.getPiece(row + 1, col) == nullptr && b.getPiece(row + 2, col) == nullptr && !hasMoved)
+        {
+            attackMoves.push_back({row + 2, col, row, col});
         }
     }
     else
     {
-        if ((row - 1 >= 0 && col + 1 < 8) && (b.getPiece(row - 1, col + 1) == nullptr || b.getPiece(row - 1, col + 1)->getColour() != colour))
+        // Attack moves
+        if (row - 1 >= 0 && col + 1 < 8 && b.getPiece(row - 1, col + 1) != nullptr && b.getPiece(row - 1, col + 1)->getColour() != colour)
         {
             attackMoves.push_back(vector<int>{row - 1, col + 1, row, col});
         }
-        if ((row - 1 >= 0 && col - 1 >= 0) && (b.getPiece(row - 1, col - 1) == nullptr || b.getPiece(row - 1, col - 1)->getColour() != colour))
+        if (row - 1 >= 0 && col - 1 >= 0 && b.getPiece(row - 1, col - 1) != nullptr && b.getPiece(row - 1, col - 1)->getColour() != colour)
         {
             attackMoves.push_back(vector<int>{row - 1, col - 1, row, col});
+        }
+        if (row - 1 < 8 && b.getPiece(row - 1, col) == nullptr)
+        {
+            attackMoves.push_back({row - 1, col, row, col});
+        }
+        if (row - 2 < 8 && b.getPiece(row - 1, col) == nullptr && b.getPiece(row - 2, col) == nullptr && !hasMoved)
+        {
+            attackMoves.push_back({row - 2, col, row, col});
         }
     }
     return attackMoves;
