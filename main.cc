@@ -22,9 +22,11 @@ int main()
         else if (cmd == "move") {
             string start;
             string end;
+            char promotion = '\0';
             cin >> start;
             cin >> end;
-            chess->move(start, end);
+            cin >> promotion;
+            chess->move(start, end, promotion);
         } else if (cmd == "setup") {
             chess->setup();
         } else {
