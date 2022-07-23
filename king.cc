@@ -16,28 +16,73 @@ bool King::checkMove(pair<int, int> n, Board *b)
         return false;
     }
 
-    vector<pair<int, int>> dirs{
-        pair<int, int>{-1, -1},
-        pair<int, int>{-1, 0},
-        pair<int, int>{-1, 1},
-        pair<int, int>{0, -1},
-        pair<int, int>{0, 1},
-        pair<int, int>{1, -1},
-        pair<int, int>{1, 0},
-        pair<int, int>{1, 1},
-    };
-
-    for (auto &d : dirs)
+    // Castling
+    if (row == n.first && abs(n.second - col) == 2)
     {
-        if (n.first == row + d.first && n.second == col + d.second && (b->getPiece(n.first, n.second) == nullptr || b->getPiece(n.first, n.second)->getColour() != colour))
+        // Castling check
+        if (!hasMoved)
         {
-            return true;
+            if (this->getColour() == Colour::WHITE)
+            {
+                if (n.second - col == 2)
+                {
+                    if (b->getPiece(7, 5) == nullptr && b->getPiece(7, 6) == nullptr && !b->getPiece(7, 7)->getHasMoved())
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    if (b->getPiece(7, 1) == nullptr && b->getPiece(7, 2) == nullptr && b->getPiece(7, 3) == nullptr && !b->getPiece(7, 0)->getHasMoved())
+                    {
+                        return true;
+                    }
+                }
+            }
+            else
+            {
+                if (n.second - col == 2)
+                {
+                    if (b->getPiece(0, 5) == nullptr && b->getPiece(0, 6) == nullptr && !b->getPiece(0, 7)->getHasMoved())
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    if (b->getPiece(0, 1) == nullptr && b->getPiece(0, 2) == nullptr && b->getPiece(0, 3) == nullptr && !b->getPiece(0, 0)->getHasMoved())
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        else
+        {
+            return false;
         }
     }
-
-    // TODO: check if castling
-
-    return false;
+    else
+    {
+        vector<pair<int, int>> dirs{
+            pair<int, int>{-1, -1},
+            pair<int, int>{-1, 0},
+            pair<int, int>{-1, 1},
+            pair<int, int>{0, -1},
+            pair<int, int>{0, 1},
+            pair<int, int>{1, -1},
+            pair<int, int>{1, 0},
+            pair<int, int>{1, 1},
+        };
+        for (auto &d : dirs)
+        {
+            if (n.first == row + d.first && n.second == col + d.second && (b->getPiece(n.first, n.second) == nullptr || b->getPiece(n.first, n.second)->getColour() != colour))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 vector<vector<int>> King::getAttackMoves(Board *b)
@@ -58,7 +103,8 @@ vector<vector<int>> King::getAttackMoves(Board *b)
     {
         int newRow = row + d.first;
         int newCol = col + d.second;
-        if (newRow < 0 || newCol < 0 || newRow >= 8 || newCol >= 8) {
+        if (newRow < 0 || newCol < 0 || newRow >= 8 || newCol >= 8)
+        {
             continue;
         }
         if (b->getPiece(newRow, newCol) == nullptr || b->getPiece(newRow, newCol)->getColour() != colour)

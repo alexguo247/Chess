@@ -7,7 +7,6 @@ class Board;
 
 class Pawn : public Piece
 {
-    bool hasMoved;
 
 public:
     Pawn(Colour, int, int);

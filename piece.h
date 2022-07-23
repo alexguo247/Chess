@@ -11,6 +11,7 @@ class Board;
 class Piece
 {
 protected:
+    bool hasMoved;
     Colour colour;
     Type type;
     int row;
@@ -26,5 +27,6 @@ public:
     virtual void move(std::pair<int, int>, Board *);          // move the peice from old location to the new location
     virtual bool checkMove(std::pair<int, int>, Board *) = 0; // check if move is valid
     virtual std::vector<std::vector<int>> getAttackMoves(Board *) = 0;
+    virtual bool getHasMoved();
 };
 #endif
