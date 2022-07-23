@@ -4,7 +4,7 @@
 #include <iostream>
 using namespace std;
 
-Rook::Rook(Colour c, int row, int col) : Piece(c, Type::ROOK, row, col){};
+Rook::Rook(Colour c, int row, int col, bool hasMoved) : Piece(c, Type::ROOK, row, col, hasMoved){};
 
 bool Rook::checkMove(pair<int, int> n, Board *b)
 {
@@ -78,7 +78,7 @@ bool Rook::checkMove(pair<int, int> n, Board *b)
     return true;
 }
 
-vector<vector<int>> Rook::getAttackMoves(Board& b)
+vector<vector<int>> Rook::getAttackMoves(Board &b)
 {
     vector<vector<int>> attackMoves;
 

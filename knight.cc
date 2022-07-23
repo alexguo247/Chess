@@ -3,7 +3,7 @@
 #include <cmath>
 using namespace std;
 
-Knight::Knight(Colour c, int row, int col) : Piece(c, Type::KNIGHT, row, col){};
+Knight::Knight(Colour c, int row, int col, bool hasMoved) : Piece(c, Type::KNIGHT, row, col, hasMoved){};
 
 bool Knight::checkMove(pair<int, int> n, Board *b)
 {
@@ -56,7 +56,8 @@ vector<vector<int>> Knight::getAttackMoves(Board &b)
     {
         int newRow = row + d.first;
         int newCol = col + d.second;
-        if (newRow < 0 || newCol < 0 || newRow >= 8 || newCol >= 8) {
+        if (newRow < 0 || newCol < 0 || newRow >= 8 || newCol >= 8)
+        {
             continue;
         }
 

@@ -3,7 +3,7 @@
 
 #include <cmath>
 using namespace std;
-Bishop::Bishop(Colour c, int row, int col) : Piece(c, Type::BISHOP, row, col){};
+Bishop::Bishop(Colour c, int row, int col, bool hasMoved) : Piece(c, Type::BISHOP, row, col, hasMoved){};
 
 bool Bishop::checkMove(pair<int, int> n, Board *b)
 {

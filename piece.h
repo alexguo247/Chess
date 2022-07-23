@@ -11,14 +11,14 @@ class Board;
 class Piece
 {
 protected:
-    bool hasMoved;
     Colour colour;
     Type type;
     int row;
     int col;
+    bool hasMoved;
 
 public:
-    Piece(Colour, Type, int, int);
+    Piece(Colour, Type, int, int, bool);
     virtual ~Piece();
     Colour getColour();                                       // return the colour of the piece
     Type getType();                                           // return the type of the piece

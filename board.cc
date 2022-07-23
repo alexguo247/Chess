@@ -26,7 +26,7 @@ Board::Board()
     }
 }
 
-Piece* Board::getPiece(int row, int col)
+Piece *Board::getPiece(int row, int col)
 {
     return grid[row][col];
 }
@@ -63,26 +63,27 @@ void Board::setPiece(Piece *piece, int row, int col)
     Type t = piece->getType();
     Colour c = piece->getColour();
 
-    switch (t) {
-        case Type::KING:
-            grid[row][col] = new King(c, row, col);
-        case Type::BISHOP:
-            grid[row][col] = new Bishop(c, row, col);
-        case Type::ROOK:
-            grid[row][col] = new Rook(c, row, col);
-        case Type::KNIGHT:
-            grid[row][col] = new Knight(c, row, col);
-        case Type::QUEEN:
-            grid[row][col] = new Queen(c, row, col);
-        case Type::PAWN:
-            grid[row][col] = new Pawn(c, row, col, true);
+    switch (t)
+    {
+    case Type::KING:
+        grid[row][col] = new King(c, row, col, true);
+    case Type::BISHOP:
+        grid[row][col] = new Bishop(c, row, col, true);
+    case Type::ROOK:
+        grid[row][col] = new Rook(c, row, col, true);
+    case Type::KNIGHT:
+        grid[row][col] = new Knight(c, row, col, true);
+    case Type::QUEEN:
+        grid[row][col] = new Queen(c, row, col, true);
+    case Type::PAWN:
+        grid[row][col] = new Pawn(c, row, col, true);
     }
 }
 
-
 char getCharType(Piece *p)
 {
-    if (p == nullptr) {
+    if (p == nullptr)
+    {
         return ' ';
     }
 
@@ -190,23 +191,23 @@ void Board::setup()
     {
         if (i == 0 || i == 7)
         {
-            grid[0][i] = new Rook(Colour::BLACK, 0, i);
+            grid[0][i] = new Rook(Colour::BLACK, 0, i, false);
         }
         else if (i == 1 || i == 6)
         {
-            grid[0][i] = new Knight(Colour::BLACK, 0, i);
+            grid[0][i] = new Knight(Colour::BLACK, 0, i, false);
         }
         else if (i == 2 || i == 5)
         {
-            grid[0][i] = new Bishop(Colour::BLACK, 0, i);
+            grid[0][i] = new Bishop(Colour::BLACK, 0, i, false);
         }
         else if (i == 3)
         {
-            grid[0][i] = new Queen(Colour::BLACK, 0, i);
+            grid[0][i] = new Queen(Colour::BLACK, 0, i, false);
         }
         else
         {
-            grid[0][i] = new King(Colour::BLACK, 0, i);
+            grid[0][i] = new King(Colour::BLACK, 0, i, false);
         }
     }
 
@@ -220,23 +221,23 @@ void Board::setup()
     {
         if (i == 0 || i == 7)
         {
-            grid[7][i] = new Rook(Colour::WHITE, 7, i);
+            grid[7][i] = new Rook(Colour::WHITE, 7, i, false);
         }
         else if (i == 1 || i == 6)
         {
-            grid[7][i] = new Knight(Colour::WHITE, 7, i);
+            grid[7][i] = new Knight(Colour::WHITE, 7, i, false);
         }
         else if (i == 2 || i == 5)
         {
-            grid[7][i] = new Bishop(Colour::WHITE, 7, i);
+            grid[7][i] = new Bishop(Colour::WHITE, 7, i, false);
         }
         else if (i == 3)
         {
-            grid[7][i] = new Queen(Colour::WHITE, 7, i);
+            grid[7][i] = new Queen(Colour::WHITE, 7, i, false);
         }
         else
         {
-            grid[7][i] = new King(Colour::WHITE, 7, i);
+            grid[7][i] = new King(Colour::WHITE, 7, i, false);
         }
     }
 }

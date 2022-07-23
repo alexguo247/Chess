@@ -3,7 +3,7 @@
 #include <cmath>
 using namespace std;
 
-King::King(Colour c, int row, int col) : Piece(c, Type::KING, row, col){};
+King::King(Colour c, int row, int col, bool hasMoved) : Piece(c, Type::KING, row, col, hasMoved){};
 
 bool King::checkMove(pair<int, int> n, Board *b)
 {
@@ -61,6 +61,7 @@ bool King::checkMove(pair<int, int> n, Board *b)
         {
             return false;
         }
+        return false;
     }
     else
     {

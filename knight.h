@@ -8,8 +8,8 @@ class Board;
 class Knight : public Piece
 {
 public:
-    Knight(Colour, int, int);
-    bool checkMove(std::pair<int, int>, Board *) override ;
+    Knight(Colour, int, int, bool);
+    bool checkMove(std::pair<int, int>, Board *) override;
     std::vector<std::vector<int>> getAttackMoves(Board &) override;
 };
 

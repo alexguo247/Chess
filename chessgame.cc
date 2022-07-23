@@ -58,27 +58,27 @@ Piece *buildPiece(char pieceType, pair<int, int> pos)
     switch (pieceType)
     {
     case 'K':
-        p = new King(Colour::WHITE, pos.first, pos.second);
+        p = new King(Colour::WHITE, pos.first, pos.second, false);
     case 'R':
-        p = new Rook(Colour::WHITE, pos.first, pos.second);
+        p = new Rook(Colour::WHITE, pos.first, pos.second, false);
     case 'N':
-        p = new Knight(Colour::WHITE, pos.first, pos.second);
+        p = new Knight(Colour::WHITE, pos.first, pos.second, false);
     case 'B':
-        p = new Bishop(Colour::WHITE, pos.first, pos.second);
+        p = new Bishop(Colour::WHITE, pos.first, pos.second, false);
     case 'Q':
-        p = new Queen(Colour::WHITE, pos.first, pos.second);
+        p = new Queen(Colour::WHITE, pos.first, pos.second, false);
     case 'P':
         p = new Pawn(Colour::WHITE, pos.first, pos.second, false);
     case 'k':
-        p = new King(Colour::BLACK, pos.first, pos.second);
+        p = new King(Colour::BLACK, pos.first, pos.second, false);
     case 'r':
-        p = new Rook(Colour::BLACK, pos.first, pos.second);
+        p = new Rook(Colour::BLACK, pos.first, pos.second, false);
     case 'n':
-        p = new Knight(Colour::BLACK, pos.first, pos.second);
+        p = new Knight(Colour::BLACK, pos.first, pos.second, false);
     case 'b':
-        p = new Bishop(Colour::BLACK, pos.first, pos.second);
+        p = new Bishop(Colour::BLACK, pos.first, pos.second, false);
     case 'q':
-        p = new Queen(Colour::BLACK, pos.first, pos.second);
+        p = new Queen(Colour::BLACK, pos.first, pos.second, false);
     case 'p':
         p = new Pawn(Colour::BLACK, pos.first, pos.second, false);
     }
@@ -578,7 +578,7 @@ bool Chessgame::inStalemate()
 
 void Chessgame::move(string coord1, string coord2)
 {
-    
+
     pair<int, int> start = convertCoord(coord1);
     pair<int, int> end = convertCoord(coord2);
 
@@ -597,61 +597,61 @@ void Chessgame::move(string coord1, string coord2)
     {
         p2->move(&board, start, end);
     }
-    
+
     board.print();
     this->updateAttackingMoves();
-//     /*
-//     1 -> someone is in check
-//     2 -> someone is in checkmate
-//     3 -> stalemate
-//     */
-// //    cout << "before check" << endl;
-//     // if (inCheck())
-//     // {
-//     //     if (turn == Colour::WHITE)
-//     //     {
-//     //         cout << "Black is in check." << endl;
-//     //     }
-//     //     else
-//     //     {
-//     //         cout << "White is in check." << endl;
-//     //     }
-//     // };
+    //     /*
+    //     1 -> someone is in check
+    //     2 -> someone is in checkmate
+    //     3 -> stalemate
+    //     */
+    // //    cout << "before check" << endl;
+    //     // if (inCheck())
+    //     // {
+    //     //     if (turn == Colour::WHITE)
+    //     //     {
+    //     //         cout << "Black is in check." << endl;
+    //     //     }
+    //     //     else
+    //     //     {
+    //     //         cout << "White is in check." << endl;
+    //     //     }
+    //     // };
 
-//     // cout << "after check " << endl;
+    //     // cout << "after check " << endl;
 
-//     // if (inCheckmate())
-//     // {
-//     //     if (turn == Colour::WHITE)
-//     //     {
-//     //         cout << "Checkmate! White wins!" << endl;
-//     //         sb->incrementScore(Colour::WHITE);
-//     //     }
-//     //     else
-//     //     {
-//     //         cout << "Checkmate! Black wins!" << endl;
-//     //         sb->incrementScore(Colour::BLACK);
-//     //     }
-//     //     hasSetup = false;
-//     // }
+    //     // if (inCheckmate())
+    //     // {
+    //     //     if (turn == Colour::WHITE)
+    //     //     {
+    //     //         cout << "Checkmate! White wins!" << endl;
+    //     //         sb->incrementScore(Colour::WHITE);
+    //     //     }
+    //     //     else
+    //     //     {
+    //     //         cout << "Checkmate! Black wins!" << endl;
+    //     //         sb->incrementScore(Colour::BLACK);
+    //     //     }
+    //     //     hasSetup = false;
+    //     // }
 
-//     // cout << "after checkmate" << endl;
+    //     // cout << "after checkmate" << endl;
 
-//     // if (inStalemate())
-//     // {
-//     //     cout << "Stalemate!" << endl;
-//     //     sb->staleMate();
-//     //     hasSetup = false;
-//     // }
+    //     // if (inStalemate())
+    //     // {
+    //     //     cout << "Stalemate!" << endl;
+    //     //     sb->staleMate();
+    //     //     hasSetup = false;
+    //     // }
 
-//     // cout << "IN STALEMATE" << endl;
+    //     // cout << "IN STALEMATE" << endl;
 
-//     if (turn == Colour::WHITE)
-//     {
-//         turn = Colour::BLACK;
-//     }
-//     else
-//     {
-//         turn = Colour::WHITE;
-//     }
+    //     if (turn == Colour::WHITE)
+    //     {
+    //         turn = Colour::BLACK;
+    //     }
+    //     else
+    //     {
+    //         turn = Colour::WHITE;
+    //     }
 }

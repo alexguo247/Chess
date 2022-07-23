@@ -5,7 +5,7 @@
 #include <vector>
 using namespace std;
 
-Pawn::Pawn(Colour c, int row, int col, bool hasMoved) : Piece(c, Type::PAWN, row, col), hasMoved{hasMoved} {};
+Pawn::Pawn(Colour c, int row, int col, bool hasMoved) : Piece(c, Type::PAWN, row, col, hasMoved){};
 
 bool Pawn::checkMove(pair<int, int> n, Board *b)
 {

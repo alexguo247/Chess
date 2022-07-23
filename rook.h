@@ -6,7 +6,7 @@ class Board;
 class Rook : public Piece
 {
 public:
-    Rook(Colour, int, int);
+    Rook(Colour, int, int, bool);
     bool checkMove(std::pair<int, int>, Board *) override;
     std::vector<std::vector<int>> getAttackMoves(Board &) override;
 };

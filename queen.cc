@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Queen::Queen(Colour c, int row, int col) : Piece(c, Type::QUEEN, row, col){};
+Queen::Queen(Colour c, int row, int col, bool hasMoved) : Piece(c, Type::QUEEN, row, col, hasMoved){};
 
 bool Queen::checkMove(pair<int, int> n, Board *b)
 {
