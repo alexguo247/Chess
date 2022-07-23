@@ -141,6 +141,7 @@ void Chessgame::game(string player1, string player2)
 {
     if (!hasSetup)
     {
+        cout << "here" << endl;
         defaultConfiguration();
     }
 
@@ -212,13 +213,15 @@ void Chessgame::move(string coord1, string coord2, char promotion)
 
     if (turn == Colour::WHITE)
     {
-        if (!p1->move(&board, start, end, promotion)) {
-            return; 
+        if (!p1->move(&board, start, end, promotion))
+        {
+            return;
         }
     }
     else
     {
-        if (!p2->move(&board, start, end, promotion)) {
+        if (!p2->move(&board, start, end, promotion))
+        {
             return;
         }
     }

@@ -746,42 +746,28 @@ bool Board::causesCheck(Piece *p, pair<int, int> n)
 {
     Colour colour = p->getColour();
     Type type = p->getType();
+    int currRow = p->getPos().first;
+    int currCol = p->getPos().second;
     pair<int, int> kingPos = findKing(colour);
     if (inDanger(colour, kingPos.first, kingPos.second))
     {
         return true;
     }
-
-    int currRow = p->getPos().first;
-    int currCol = p->getPos().second;
-    if (getPiece(n.first, n.second) != nullptr)
+    Board b = Board{};
+    for (int i = 0; i < grid.size(); i++)
     {
-        Type takingType = getPiece(n.first, n.second)->getType();
-        Colour takingColour = getPiece(n.first, n.second)->getColour();
-        if (takingColour == colour)
+        for (int j = 0; j < grid[i].size(); j++)
         {
-            return true;
+            if (getPiece(i, j) != nullptr)
+            {
+                b.setOrCreatePiece(nullptr, i, j, true, grid[i][j]->getType(), grid[i][j]->getColour());
+            }
         }
-        // Takes the piece
-        setOrCreatePiece(p, n.first, n.second, false, type, colour);
-        // Delete original piece
-        deletePiece(currRow, currCol);
-        p = nullptr;
-        updateAttackingMoves();
-        bool ret = inDanger(colour, kingPos.first, kingPos.second);
-        setOrCreatePiece(nullptr, currRow, currCol, true, type, colour);
-        setOrCreatePiece(nullptr, n.first, n.second, true, takingType, takingColour);
-        return ret;
     }
-    else
-    {
-        setOrCreatePiece(p, n.first, n.second, false, type, colour);
-        deletePiece(currRow, currCol);
-        p = nullptr;
-        updateAttackingMoves();
-        bool ret = inDanger(colour, kingPos.first, kingPos.second);
-        setOrCreatePiece(nullptr, currRow, currCol, true, type, colour);
-        return ret;
-    }
-    return false;
+    b.setOrCreatePiece(nullptr, n.first, n.second, true, type, colour);
+    b.deletePiece(currRow, currCol);
+    b.updateAttackingMoves();
+    bool ret = b.inDanger(colour, kingPos.first, kingPos.second);
+    b.clearBoard();
+    return ret;
 }

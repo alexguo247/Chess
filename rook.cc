@@ -89,23 +89,23 @@ vector<vector<int>> Rook::getAttackMoves(Board &b)
     int currRow = row + 1;
     int currCol = col;
     // Down
-    while (currRow < 8 && b.getPiece(currRow, currCol) == nullptr)
+    while (currRow < 8 && b.getPiece(currRow, currCol) == nullptr && !b.causesCheck(this, {currRow, currCol}))
     {
         attackMoves.push_back({currRow, currCol, row, col});
         currRow++;
     }
-    if (currRow < 8 && b.getPiece(currRow, currCol)->getColour() != colour)
+    if (currRow < 8 && b.getPiece(currRow, currCol)->getColour() != colour && !b.causesCheck(this, {currRow, currCol}))
     {
         attackMoves.push_back({currRow, currCol, row, col});
     }
     currRow = row - 1;
     // Up
-    while (currRow >= 0 && b.getPiece(currRow, currCol) == nullptr)
+    while (currRow >= 0 && b.getPiece(currRow, currCol) == nullptr && !b.causesCheck(this, {currRow, currCol}))
     {
         attackMoves.push_back({currRow, currCol, row, col});
         currRow--;
     }
-    if (currRow >= 0 && b.getPiece(currRow, currCol)->getColour() != colour)
+    if (currRow >= 0 && b.getPiece(currRow, currCol)->getColour() != colour && !b.causesCheck(this, {currRow, currCol}))
     {
         attackMoves.push_back({currRow, currCol, row, col});
     }
@@ -114,23 +114,23 @@ vector<vector<int>> Rook::getAttackMoves(Board &b)
     currCol = col - 1;
 
     // Left
-    while (currCol >= 0 && b.getPiece(currRow, currCol) == nullptr)
+    while (currCol >= 0 && b.getPiece(currRow, currCol) == nullptr && !b.causesCheck(this, {currRow, currCol}))
     {
         attackMoves.push_back({currRow, currCol, row, col});
         currCol--;
     }
-    if (currCol >= 0 && b.getPiece(currRow, currCol)->getColour() != colour)
+    if (currCol >= 0 && b.getPiece(currRow, currCol)->getColour() != colour && !b.causesCheck(this, {currRow, currCol}))
     {
         attackMoves.push_back({currRow, currCol, row, col});
     }
     currCol = col + 1;
     // Right
-    while (currCol < 8 && b.getPiece(currRow, currCol) == nullptr)
+    while (currCol < 8 && b.getPiece(currRow, currCol) == nullptr && !b.causesCheck(this, {currRow, currCol}))
     {
         attackMoves.push_back({currRow, currCol, row, col});
         currCol++;
     }
-    if (currCol < 8 && b.getPiece(currRow, currCol)->getColour() != colour)
+    if (currCol < 8 && b.getPiece(currRow, currCol)->getColour() != colour && !b.causesCheck(this, {currRow, currCol}))
     {
         attackMoves.push_back({currRow, currCol, row, col});
     }
