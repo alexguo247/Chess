@@ -76,7 +76,8 @@ void Board::setPiece(Piece *piece, int row, int col)
     case Type::QUEEN:
         grid[row][col] = new Queen(c, row, col);
     case Type::PAWN:
-        grid[row][col] = new Pawn(c, row, col, true, false);
+        bool doubleMove = static_cast<Pawn *>(piece)->hasDoubleMoved();
+        grid[row][col] = new Pawn(c, row, col, true, doubleMove);
     }
 }
 

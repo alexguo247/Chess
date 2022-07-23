@@ -124,3 +124,8 @@ vector<vector<int>> Pawn::getAttackMoves(Board &b)
     }
     return attackMoves;
 }
+
+bool Pawn::hasDoubleMoved()
+{
+    return didDoubleMove;
+}
