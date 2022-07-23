@@ -7,8 +7,9 @@ using namespace std;
 
 Pawn::Pawn(Colour c, int row, int col, bool hasMoved, bool didDoubleMove) : Piece(c, Type::PAWN, row, col, hasMoved), didDoubleMove{didDoubleMove} {};
 
-Pawn::setDidDoubleMove(bool didDoubleMove) {
-    hasDoubleMoved = didDoubleMove;
+void Pawn::setDidDoubleMove(bool d)
+{
+    didDoubleMove = d;
 }
 
 bool Pawn::checkMove(pair<int, int> n, Board &b)
