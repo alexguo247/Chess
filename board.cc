@@ -413,7 +413,7 @@ bool Board::validateBoard()
     return valid;
 }
 
-void Board::updateAttackingMoves()
+void Board::updateAttackingMoves(Colour turn, bool flag)
 {
     whiteAttackingMoves.clear();
     blackAttackingMoves.clear();
@@ -425,10 +425,26 @@ void Board::updateAttackingMoves()
             {
                 continue;
             }
-
             Colour c = getPiece(i, j)->getColour();
-            vector<vector<int>> attackMoves = getPiece(i, j)->getAttackMoves(*this);
-
+            vector<vector<int>> attackMoves;
+            if (getPiece(i, j)->getType() == Type::PAWN)
+            {
+                Piece *p = getPiece(i, j);
+                if (turn == c)
+                {
+                    attackMoves = static_cast<Pawn *>(p)->getActualMoves(*this, flag);
+                    p = nullptr;
+                }
+                else
+                {
+                    attackMoves = static_cast<Pawn *>(p)->getAttackMoves(*this, flag);
+                    p = nullptr;
+                }
+            }
+            else
+            {
+                attackMoves = getPiece(i, j)->getAttackMoves(*this, flag);
+            }
             for (auto a : attackMoves)
             {
                 if (c == Colour::WHITE)
@@ -737,6 +753,12 @@ bool Board::inCheckmate(Colour turn)
 
 bool Board::inStalemate(Colour turn)
 {
+    Colour opposing = turn == Colour::WHITE ? Colour::BLACK : Colour::WHITE;
+    updateAttackingMoves(opposing, true);
+    for (auto a : blackAttackingMoves)
+    {
+        cout << a[0] << a[1] << "  " << a[2] << a[3] << endl;
+    }
     if (turn == Colour::WHITE && blackAttackingMoves.size() == 0)
     {
         return true;
@@ -772,7 +794,7 @@ bool Board::causesCheck(Piece *p, pair<int, int> n)
     }
     b.setOrCreatePiece(nullptr, n.first, n.second, true, type, colour);
     b.deletePiece(currRow, currCol);
-    b.updateAttackingMoves();
+    b.updateAttackingMoves(colour, false);
     bool ret = b.inDanger(colour, kingPos.first, kingPos.second);
     b.clearBoard();
     return ret;

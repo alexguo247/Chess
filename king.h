@@ -10,7 +10,7 @@ class King : public Piece
 public:
     King(Colour, int, int, bool);
     bool checkMove(std::pair<int, int>, Board &) override;
-    std::vector<std::vector<int>> getAttackMoves(Board &) override;
+    std::vector<std::vector<int>> getAttackMoves(Board &, bool) override;
 };
 
 #endif

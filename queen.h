@@ -10,7 +10,7 @@ class Queen : public Piece
 public:
     Queen(Colour, int, int, bool);
     bool checkMove(std::pair<int, int>, Board &);
-    std::vector<std::vector<int>> getAttackMoves(Board &);
+    std::vector<std::vector<int>> getAttackMoves(Board &, bool);
 };
 
 #endif

@@ -70,7 +70,7 @@ void Chessgame::defaultConfiguration()
 {
     turn = Colour::WHITE;
     board.setup();
-    board.updateAttackingMoves();
+    board.updateAttackingMoves(turn, true);
 }
 
 void Chessgame::setup()
@@ -141,7 +141,6 @@ void Chessgame::game(string player1, string player2)
 {
     if (!hasSetup)
     {
-        cout << "here" << endl;
         defaultConfiguration();
     }
 
@@ -227,7 +226,8 @@ void Chessgame::move(string coord1, string coord2, char promotion)
     }
 
     board.print();
-    board.updateAttackingMoves();
+    board.updateAttackingMoves(turn, true);
+
     if (board.inCheck(turn))
     {
         if (turn == Colour::WHITE)

@@ -11,13 +11,13 @@ class Piece;
 
 class Board
 {
-    std::vector<std::vector<int>> whiteAttackingMoves;
-    std::vector<std::vector<int>> blackAttackingMoves;
     std::vector<std::vector<int>> getAttackers(Colour);
     bool canBlock(Colour, int, int);
 
 public:
     std::vector<std::vector<Piece *>> grid;
+    std::vector<std::vector<int>> whiteAttackingMoves;
+    std::vector<std::vector<int>> blackAttackingMoves;
     Board();
     Piece *getPiece(int, int);
     void setOrCreatePiece(Piece *, int, int, bool, Type, Colour);
@@ -29,7 +29,7 @@ public:
     void deletePiece(int, int);
     void clearBoard();
     void setup();
-    void updateAttackingMoves();
+    void updateAttackingMoves(Colour, bool);
     bool validateBoard();
     std::pair<int, int> findKing(Colour);
     bool inDanger(Colour, int, int);
