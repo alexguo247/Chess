@@ -52,51 +52,6 @@ pair<int, int> convertCoord(string coord)
     return convertedCoordinate;
 }
 
-Piece *buildPiece(char pieceType, pair<int, int> pos)
-{
-    Piece *p;
-    switch (pieceType)
-    {
-    case 'K':
-        p = new King(Colour::WHITE, pos.first, pos.second, false);
-        break;
-    case 'R':
-        p = new Rook(Colour::WHITE, pos.first, pos.second, false);
-        break;
-    case 'N':
-        p = new Knight(Colour::WHITE, pos.first, pos.second, false);
-        break;
-    case 'B':
-        p = new Bishop(Colour::WHITE, pos.first, pos.second, false);
-        break;
-    case 'Q':
-        p = new Queen(Colour::WHITE, pos.first, pos.second, false);
-        break;
-    case 'P':
-        p = new Pawn(Colour::WHITE, pos.first, pos.second, false, false);
-        break;
-    case 'k':
-        p = new King(Colour::BLACK, pos.first, pos.second, false);
-        break;
-    case 'r':
-        p = new Rook(Colour::BLACK, pos.first, pos.second, false);
-        break;
-    case 'n':
-        p = new Knight(Colour::BLACK, pos.first, pos.second, false);
-        break;
-    case 'b':
-        p = new Bishop(Colour::BLACK, pos.first, pos.second, false);
-        break;
-    case 'q':
-        p = new Queen(Colour::BLACK, pos.first, pos.second, false);
-        break;
-    case 'p':
-        p = new Pawn(Colour::BLACK, pos.first, pos.second, false, false);
-        break;
-    }
-    return p;
-}
-
 pair<int, int> Chessgame::findKing(Colour c)
 {
     for (int i = 0; i < 8; i++)
@@ -134,6 +89,10 @@ bool Chessgame::validateBoard()
     {
         for (int j = 0; j < 8; j++)
         {
+            if (board.getPiece(i, j) == nullptr) {
+                continue;
+            }
+
             if (i == 0 || i == 7)
             {
                 if (board.getPiece(i, j)->getType() == Type::PAWN)
@@ -179,7 +138,18 @@ void Chessgame::defaultConfiguration()
 
 void Chessgame::setup()
 {
-    defaultConfiguration();
+    if (gameIsRunning)
+    {
+        cout << "Cannot enter setup mode while game is running!" << endl;
+        return;
+    }
+
+    // if board has not been setup before use default configuration
+    if (!hasSetup)
+    {
+        defaultConfiguration();
+    }
+
     string cmd;
     char pieceType;
     string coord;
@@ -189,6 +159,7 @@ void Chessgame::setup()
 
     while (!exit)
     {
+        cout << cmd << endl;
         if (cmd == "black")
         {
             turn = Colour::BLACK;
@@ -202,7 +173,7 @@ void Chessgame::setup()
             cin >> pieceType;
             cin >> coord;
             coordPair = convertCoord(coord);
-            board.setPiece(buildPiece(pieceType, coordPair), coordPair.first, coordPair.second);
+            board.setOrCreatePiece(nullptr, coordPair.first, coordPair.second, true, board.getTypeChar(pieceType), isupper(pieceType) ? Colour::WHITE : Colour::BLACK);
         }
         else if (cmd == "-")
         {
@@ -215,15 +186,18 @@ void Chessgame::setup()
             if (validateBoard())
             {
                 exit = true;
+                break; 
             }
             else
             {
                 cout << "Board not in valid state. Can't leave setup!" << endl;
             }
         }
+        cin >> cmd;
     }
 
     hasSetup = true;
+    board.print();
 }
 
 void Chessgame::game(string player1, string player2)
@@ -232,6 +206,10 @@ void Chessgame::game(string player1, string player2)
     {
         defaultConfiguration();
     }
+
+    hasSetup = false;
+    gameIsRunning = true;
+
     p1 = new Human(&board, Colour::WHITE);
     p2 = new Human(&board, Colour::BLACK);
     board.print();
@@ -241,6 +219,11 @@ void Chessgame::game(string player1, string player2)
 
 void Chessgame::resign()
 {
+    if (!gameIsRunning) {
+        cout << "Can't resign, game has not started!" << endl;
+        return;
+    }
+
     if (turn == Colour::WHITE)
     {
         cout << "Black wins!" << endl;
@@ -251,7 +234,8 @@ void Chessgame::resign()
         cout << "White wins!" << endl;
         sb->incrementScore(Colour::WHITE);
     }
-    hasSetup = false;
+
+    gameIsRunning = false;
 }
 
 void Chessgame::updateAttackingMoves()
@@ -589,9 +573,8 @@ bool Chessgame::inStalemate()
     return false;
 }
 
-void Chessgame::move(string coord1, string coord2)
+void Chessgame::move(string coord1, string coord2, char promotion)
 {
-
     pair<int, int> start = convertCoord(coord1);
     pair<int, int> end = convertCoord(coord2);
 
@@ -604,67 +587,58 @@ void Chessgame::move(string coord1, string coord2)
 
     if (turn == Colour::WHITE)
     {
-        p1->move(&board, start, end);
+        p1->move(&board, start, end, promotion);
     }
     else
     {
-        p2->move(&board, start, end);
+        p2->move(&board, start, end, promotion);
     }
 
     board.print();
     this->updateAttackingMoves();
-    //     /*
-    //     1 -> someone is in check
-    //     2 -> someone is in checkmate
-    //     3 -> stalemate
-    //     */
-    // //    cout << "before check" << endl;
-    //     // if (inCheck())
-    //     // {
-    //     //     if (turn == Colour::WHITE)
-    //     //     {
-    //     //         cout << "Black is in check." << endl;
-    //     //     }
-    //     //     else
-    //     //     {
-    //     //         cout << "White is in check." << endl;
-    //     //     }
-    //     // };
 
-    //     // cout << "after check " << endl;
+    if (inCheck())
+    {
+        if (turn == Colour::WHITE)
+        {
+            cout << "Black is in check." << endl;
+        }
+        else
+        {
+            cout << "White is in check." << endl;
+        }
+    };
 
-    //     // if (inCheckmate())
-    //     // {
-    //     //     if (turn == Colour::WHITE)
-    //     //     {
-    //     //         cout << "Checkmate! White wins!" << endl;
-    //     //         sb->incrementScore(Colour::WHITE);
-    //     //     }
-    //     //     else
-    //     //     {
-    //     //         cout << "Checkmate! Black wins!" << endl;
-    //     //         sb->incrementScore(Colour::BLACK);
-    //     //     }
-    //     //     hasSetup = false;
-    //     // }
+    if (inCheckmate())
+    {
+        if (turn == Colour::WHITE)
+        {
+            cout << "Checkmate! White wins!" << endl;
+            sb->incrementScore(Colour::WHITE);
+        }
+        else
+        {
+            cout << "Checkmate! Black wins!" << endl;
+            sb->incrementScore(Colour::BLACK);
+        }
+        gameIsRunning = false;
+        return;
+    }
 
-    //     // cout << "after checkmate" << endl;
+    if (inStalemate())
+    {
+        cout << "Stalemate!" << endl;
+        sb->staleMate();
+        gameIsRunning = false;
+        return;
+    }
 
-    //     // if (inStalemate())
-    //     // {
-    //     //     cout << "Stalemate!" << endl;
-    //     //     sb->staleMate();
-    //     //     hasSetup = false;
-    //     // }
-
-    //     // cout << "IN STALEMATE" << endl;
-
-    //     if (turn == Colour::WHITE)
-    //     {
-    //         turn = Colour::BLACK;
-    //     }
-    //     else
-    //     {
-    //         turn = Colour::WHITE;
-    //     }
+    if (turn == Colour::WHITE)
+    {
+        turn = Colour::BLACK;
+    }
+    else
+    {
+        turn = Colour::WHITE;
+    }
 }

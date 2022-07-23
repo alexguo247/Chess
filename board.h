@@ -2,6 +2,8 @@
 #define BOARD_H
 
 #include <vector>
+#include "type.h"
+#include "colour.h"
 #include <stdbool.h>
 
 class Piece;
@@ -12,9 +14,12 @@ public:
     std::vector<std::vector<Piece *>> grid;
     Board();
     Piece *getPiece(int, int);
-    void setPiece(Piece *, int, int);
+    void setOrCreatePiece(Piece *, int, int, bool, Type, Colour);
     bool isValid();
+    Type getTypeChar(char);
+    char getCharType(Piece *);
     void print();
+    void move(std::pair<int, int>, std::pair<int, int>, char);
     void deletePiece(int, int);
     void clearBoard();
     void setup();
