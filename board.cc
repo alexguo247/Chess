@@ -31,10 +31,11 @@ Piece *Board::getPiece(int row, int col)
     return grid[row][col];
 }
 
-void Board::move(pair<int, int> start, pair<int, int> end, char promotion) {
+void Board::move(pair<int, int> start, pair<int, int> end, char promotion)
+{
     Piece *p = getPiece(start.first, start.second);
-
-    if (!p->checkMove(end, *this)) {
+    if (!p->checkMove(end, *this))
+    {
         cout << "Invalid move!";
         return;
     }
@@ -42,27 +43,37 @@ void Board::move(pair<int, int> start, pair<int, int> end, char promotion) {
     Type t = p->getType();
     Colour c = p->getColour();
 
-    if (t == Type::KING && end.second - start.second == 2) {
+    if (t == Type::KING && end.second - start.second == 2)
+    {
         // castle right side
         setOrCreatePiece(p, end.first, end.second, false, t, c);
         setOrCreatePiece(getPiece(start.first, 7), start.first, 5, false, t, c);
         deletePiece(start.first, 7);
         deletePiece(start.first, start.second);
-    } else if (p->getType() == Type::KING && start.second - end.second == 2) {
+    }
+    else if (p->getType() == Type::KING && start.second - end.second == 2)
+    {
         // castle left side
         setOrCreatePiece(p, end.first, end.second, false, t, c);
         setOrCreatePiece(getPiece(start.first, 0), start.first, 3, false, t, c);
         deletePiece(start.first, 0);
         deletePiece(start.first, start.second);
-    } else if (p->getType() == Type::PAWN && (end.first == 0 || end.first == 7)) {
+    }
+    else if (p->getType() == Type::PAWN && (end.first == 0 || end.first == 7))
+    {
         // promotion
-        if (promotion == '\0' || promotion == 'k' || promotion == 'K') {
+        if (promotion == '\0' || promotion == 'k' || promotion == 'K')
+        {
             cout << "Invalid promotion type!" << endl;
-        } else {
+        }
+        else
+        {
             setOrCreatePiece(nullptr, end.first, end.second, true, getTypeChar(promotion), c);
             deletePiece(start.first, start.second);
         }
-    } else {
+    }
+    else
+    {
         // basic move
         setOrCreatePiece(p, end.first, end.second, false, t, c);
         deletePiece(start.first, start.second);
@@ -101,10 +112,13 @@ void Board::setOrCreatePiece(Piece *piece, int row, int col, bool isCreate, Type
     Type t;
     Colour c;
 
-    if (isCreate) {
+    if (isCreate)
+    {
         t = createType;
         c = createColour;
-    } else {
+    }
+    else
+    {
         t = piece->getType();
         c = piece->getColour();
     }
@@ -127,9 +141,12 @@ void Board::setOrCreatePiece(Piece *piece, int row, int col, bool isCreate, Type
         grid[row][col] = new Queen(c, row, col, true);
         break;
     case Type::PAWN:
-        if (piece == nullptr) {
+        if (piece == nullptr)
+        {
             grid[row][col] = new Pawn(c, row, col, false, false);
-        } else {
+        }
+        else
+        {
             bool doubleMove = static_cast<Pawn *>(piece)->hasDoubleMoved();
             grid[row][col] = new Pawn(c, row, col, true, doubleMove);
         }
@@ -137,18 +154,30 @@ void Board::setOrCreatePiece(Piece *piece, int row, int col, bool isCreate, Type
     }
 }
 
-Type Board::getTypeChar(char p) {
-    if (p == 'p' || p == 'P') {
+Type Board::getTypeChar(char p)
+{
+    if (p == 'p' || p == 'P')
+    {
         return Type::PAWN;
-    } else if (p == 'k' || p == 'K') {
+    }
+    else if (p == 'k' || p == 'K')
+    {
         return Type::KING;
-    } else if (p == 'q' || p == 'Q') {
+    }
+    else if (p == 'q' || p == 'Q')
+    {
         return Type::QUEEN;
-    } else if (p == 'r' || p == 'R') {
+    }
+    else if (p == 'r' || p == 'R')
+    {
         return Type::ROOK;
-    } else if (p == 'n' || p == 'N') {
+    }
+    else if (p == 'n' || p == 'N')
+    {
         return Type::KNIGHT;
-    } else {
+    }
+    else
+    {
         return Type::BISHOP;
     }
 }
@@ -321,7 +350,7 @@ pair<int, int> Board::findKing(Colour c)
     {
         for (int j = 0; j < 8; j++)
         {
-            if (getPiece(i, j)->getType() == Type::KING && getPiece(i, j)->getColour() == c)
+            if (getPiece(i, j) != nullptr && getPiece(i, j)->getType() == Type::KING && getPiece(i, j)->getColour() == c)
             {
                 return pair<int, int>{i, j};
             }
@@ -706,6 +735,50 @@ bool Board::inStalemate(Colour turn)
     else if (turn == Colour::BLACK && whiteAttackingMoves.size() == 0)
     {
         return true;
+    }
+    return false;
+}
+
+bool Board::causesCheck(Piece *p, pair<int, int> n)
+{
+    Colour colour = p->getColour();
+    Type type = p->getType();
+    pair<int, int> kingPos = findKing(colour);
+    if (inDanger(colour, kingPos.first, kingPos.second))
+    {
+        return true;
+    }
+
+    int currRow = p->getPos().first;
+    int currCol = p->getPos().second;
+    if (getPiece(n.first, n.second) != nullptr)
+    {
+        Type takingType = getPiece(n.first, n.second)->getType();
+        Colour takingColour = getPiece(n.first, n.second)->getColour();
+        if (takingColour == colour)
+        {
+            return true;
+        }
+        // Takes the piece
+        setOrCreatePiece(p, n.first, n.second, false, type, colour);
+        // Delete original piece
+        deletePiece(currRow, currCol);
+        p = nullptr;
+        updateAttackingMoves();
+        bool ret = inDanger(colour, kingPos.first, kingPos.second);
+        setOrCreatePiece(nullptr, currRow, currCol, true, type, colour);
+        setOrCreatePiece(nullptr, n.first, n.second, true, takingType, takingColour);
+        return ret;
+    }
+    else
+    {
+        setOrCreatePiece(p, n.first, n.second, false, type, colour);
+        deletePiece(currRow, currCol);
+        p = nullptr;
+        updateAttackingMoves();
+        bool ret = inDanger(colour, kingPos.first, kingPos.second);
+        setOrCreatePiece(nullptr, currRow, currCol, true, type, colour);
+        return ret;
     }
     return false;
 }

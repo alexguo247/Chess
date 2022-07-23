@@ -36,6 +36,7 @@ public:
     bool inCheck(Colour);
     bool inCheckmate(Colour);
     bool inStalemate(Colour);
+    bool causesCheck(Piece *, std::pair<int, int>);
 };
 
 #endif

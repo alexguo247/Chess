@@ -15,7 +15,7 @@ bool Knight::checkMove(pair<int, int> n, Board &b)
     {
         return false;
     }
-    if (!causesCheck(b, n))
+    if (b.causesCheck(this, n))
     {
         return false;
     }

@@ -27,6 +27,5 @@ public:
     virtual bool checkMove(std::pair<int, int>, Board &) = 0; // check if move is valid
     virtual std::vector<std::vector<int>> getAttackMoves(Board &) = 0;
     virtual bool getHasMoved();
-    bool causesCheck(Board &, std::pair<int, int>);
 };
 #endif
