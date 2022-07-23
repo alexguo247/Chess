@@ -383,10 +383,11 @@ bool Chessgame::inCheckmate()
     int kingRow = kingCoords.first;
     int kingCol = kingCoords.second;
     Piece *currKing = board.getPiece(kingRow, kingCol);
+    bool isCheckmate = true;
     // No attackers
     if (attackers.size() == 0)
     {
-        return false;
+        isCheckmate = false;
     }
     // 1 attacker
     else if (attackers.size() == 1)
@@ -406,7 +407,7 @@ bool Chessgame::inCheckmate()
                 int nc = kingRow + d.second;
                 if (currKing->checkMove({nr, nc}, &board) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
                 {
-                    return false;
+                    isCheckmate = false;
                 }
             }
             // Escape by blocking
@@ -416,7 +417,7 @@ bool Chessgame::inCheckmate()
                 {
                     if (canBlock(attacked, attackerRow, i))
                     {
-                        return false;
+                        isCheckmate = false;
                     }
                 }
             }
@@ -426,7 +427,7 @@ bool Chessgame::inCheckmate()
                 {
                     if (canBlock(attacked, attackerRow, i))
                     {
-                        return false;
+                        isCheckmate = false;
                     }
                 }
             }
@@ -441,7 +442,7 @@ bool Chessgame::inCheckmate()
                 int nc = kingRow + d.second;
                 if (currKing->checkMove({nr, nc}, &board) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
                 {
-                    return false;
+                    isCheckmate = false;
                 }
             }
             // Escape by blocking
@@ -451,7 +452,7 @@ bool Chessgame::inCheckmate()
                 {
                     if (canBlock(attacked, i, attackerCol))
                     {
-                        return false;
+                        isCheckmate = false;
                     }
                 }
             }
@@ -461,7 +462,7 @@ bool Chessgame::inCheckmate()
                 {
                     if (canBlock(attacked, i, attackerCol))
                     {
-                        return false;
+                        isCheckmate = false;
                     }
                 }
             }
@@ -476,7 +477,7 @@ bool Chessgame::inCheckmate()
                 int nc = kingRow + d.second;
                 if (currKing->checkMove({nr, nc}, &board) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
                 {
-                    return false;
+                    isCheckmate = false;
                 }
             }
             // Escape by blocking
@@ -488,7 +489,7 @@ bool Chessgame::inCheckmate()
                 {
                     if (canBlock(attacked, kingRow + i, kingCol + i))
                     {
-                        return false;
+                        isCheckmate = false;
                     }
                     i++;
                 }
@@ -501,7 +502,7 @@ bool Chessgame::inCheckmate()
                 {
                     if (canBlock(attacked, kingRow - i, kingCol + i))
                     {
-                        return false;
+                        isCheckmate = false;
                     }
                     i++;
                 }
@@ -514,7 +515,7 @@ bool Chessgame::inCheckmate()
                 {
                     if (canBlock(attacked, kingRow + i, kingCol - i))
                     {
-                        return false;
+                        isCheckmate = false;
                     }
                     i++;
                 }
@@ -527,7 +528,7 @@ bool Chessgame::inCheckmate()
                 {
                     if (canBlock(attacked, kingRow - i, kingCol - i))
                     {
-                        return false;
+                        isCheckmate = false;
                     }
                     i++;
                 }
@@ -542,7 +543,7 @@ bool Chessgame::inCheckmate()
                 int nc = kingRow + d.second;
                 if (currKing->checkMove({nr, nc}, &board) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
                 {
-                    return false;
+                    isCheckmate = false;
                 }
             }
         }
@@ -556,11 +557,11 @@ bool Chessgame::inCheckmate()
             int nc = kingRow + d.second;
             if (currKing->checkMove({nr, nc}, &board) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
             {
-                return false;
+                isCheckmate = false;
             }
         }
     }
-    return true;
+    return isCheckmate;
 }
 
 bool Chessgame::inStalemate()
