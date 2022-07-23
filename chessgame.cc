@@ -97,21 +97,6 @@ Piece *buildPiece(char pieceType, pair<int, int> pos)
     return p;
 }
 
-pair<int, int> Chessgame::findKing(Colour c)
-{
-    for (int i = 0; i < 8; i++)
-    {
-        for (int j = 0; j < 8; j++)
-        {
-            if (board.getPiece(i, j)->getType() == Type::KING && board.getPiece(i, j)->getColour() == c)
-            {
-                return pair<int, int>{i, j};
-            }
-        }
-    }
-    return pair<int, int>{-1, -1};
-}
-
 Chessgame::Chessgame() : p1{nullptr}, p2{nullptr}
 {
     sb = new Scoreboard();
@@ -125,56 +110,11 @@ Chessgame::~Chessgame()
     board.clearBoard();
 }
 
-bool Chessgame::validateBoard()
-{
-    bool valid = true;
-    int whiteKingCount = 0;
-    int blackKingCount = 0;
-    for (int i = 0; i < 8; i++)
-    {
-        for (int j = 0; j < 8; j++)
-        {
-            if (i == 0 || i == 7)
-            {
-                if (board.getPiece(i, j)->getType() == Type::PAWN)
-                {
-                    valid = false;
-                }
-            }
-            if (board.getPiece(i, j)->getType() == Type::KING)
-            {
-                if (board.getPiece(i, j)->getColour() == Colour::BLACK)
-                {
-                    if (inDanger(Colour::BLACK, i, j))
-                    {
-                        valid = false;
-                    }
-                    blackKingCount++;
-                }
-                else
-                {
-                    if (inDanger(Colour::WHITE, i, j))
-                    {
-                        valid = false;
-                    }
-                    whiteKingCount++;
-                }
-            }
-        }
-    }
-    if (whiteKingCount != 1 || blackKingCount != 1)
-    {
-        valid = false;
-    }
-
-    return valid;
-}
-
 void Chessgame::defaultConfiguration()
 {
     turn = Colour::WHITE;
     board.setup();
-    updateAttackingMoves();
+    board.updateAttackingMoves();
 }
 
 void Chessgame::setup()
@@ -212,7 +152,7 @@ void Chessgame::setup()
         }
         else if (cmd == "done")
         {
-            if (validateBoard())
+            if (board.validateBoard())
             {
                 exit = true;
             }
@@ -254,341 +194,6 @@ void Chessgame::resign()
     hasSetup = false;
 }
 
-void Chessgame::updateAttackingMoves()
-{
-    whiteAttackingMoves.clear();
-    blackAttackingMoves.clear();
-    for (int i = 0; i < 8; i++)
-    {
-        for (int j = 0; j < 8; j++)
-        {
-            if (board.getPiece(i, j) == nullptr)
-            {
-                continue;
-            }
-
-            Colour c = board.getPiece(i, j)->getColour();
-            vector<vector<int>> attackMoves = board.getPiece(i, j)->getAttackMoves(board);
-
-            for (auto a : attackMoves)
-            {
-                if (c == Colour::WHITE)
-                {
-                    whiteAttackingMoves.push_back(a);
-                }
-                else
-                {
-                    blackAttackingMoves.push_back(a);
-                }
-            }
-        }
-    }
-}
-
-bool Chessgame::inCheck()
-{
-    Colour attacked = (turn == Colour::WHITE) ? Colour::BLACK : Colour::WHITE;
-    pair<int, int> kingCoords = findKing(attacked);
-    int kingRow = kingCoords.first;
-    int kingCol = kingCoords.second;
-    if (inDanger(attacked, kingRow, kingCol) && !inCheckmate())
-    {
-        return true;
-    }
-    return false;
-}
-
-vector<vector<int>> Chessgame::getAttackers(Colour c)
-{
-    vector<vector<int>> attackers;
-    pair<int, int> kingCoords = findKing(c);
-    int kingRow = kingCoords.first;
-    int kingCol = kingCoords.second;
-    if (c == Colour::BLACK)
-    {
-        for (auto move : whiteAttackingMoves)
-        {
-            if (move[0] == kingRow && move[1] == kingCol)
-            {
-                attackers.push_back(move);
-            }
-        }
-    }
-    else
-    {
-        for (auto move : blackAttackingMoves)
-        {
-            if (move[0] == kingRow && move[1] == kingCol)
-            {
-                attackers.push_back(move);
-            }
-        }
-    }
-    return attackers;
-}
-
-bool Chessgame::inDanger(Colour c, int row, int col)
-{
-    if (c == Colour::BLACK)
-    {
-        for (auto move : whiteAttackingMoves)
-        {
-            if (move[0] == row && move[1] == col)
-            {
-                return true;
-            }
-        }
-    }
-    else
-    {
-        for (auto move : blackAttackingMoves)
-        {
-            if (move[0] == row && move[1] == col)
-            {
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
-bool Chessgame::canBlock(Colour c, int row, int col)
-{
-    if (c == Colour::BLACK)
-    {
-        for (auto move : blackAttackingMoves)
-        {
-            if (move[0] == row && move[1] == col)
-            {
-                return true;
-            }
-        }
-    }
-    else
-    {
-        for (auto move : whiteAttackingMoves)
-        {
-            if (move[0] == row && move[1] == col)
-            {
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
-bool Chessgame::inCheckmate()
-{
-    Colour attacked = (turn == Colour::WHITE) ? Colour::BLACK : Colour::WHITE;
-    vector<vector<int>> attackers = getAttackers(attacked);
-    vector<pair<int, int>> dirs{
-        pair<int, int>{-1, -1},
-        pair<int, int>{-1, 0},
-        pair<int, int>{-1, 1},
-        pair<int, int>{0, -1},
-        pair<int, int>{0, 1},
-        pair<int, int>{1, -1},
-        pair<int, int>{1, 0},
-        pair<int, int>{1, 1},
-    };
-    pair<int, int> kingCoords = findKing(attacked);
-    int kingRow = kingCoords.first;
-    int kingCol = kingCoords.second;
-    Piece *currKing = board.getPiece(kingRow, kingCol);
-    bool isCheckmate = true;
-    // No attackers
-    if (attackers.size() == 0)
-    {
-        isCheckmate = false;
-    }
-    // 1 attacker
-    else if (attackers.size() == 1)
-    {
-        int attackerRow = attackers[0][2];
-        int attackerCol = attackers[0][3];
-        int rowDiff = attackerRow - kingRow;
-        int colDiff = attackerCol - kingCol;
-
-        // Same row (rook / queen)
-        if (rowDiff == 0)
-        {
-            // Escape by moving away
-            for (auto &d : dirs)
-            {
-                int nr = kingRow + d.first;
-                int nc = kingRow + d.second;
-                if (currKing->checkMove({nr, nc}, board) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
-                {
-                    isCheckmate = false;
-                }
-            }
-            // Escape by blocking
-            if (colDiff > 0)
-            {
-                for (int i = attackerCol; i > kingCol; i--)
-                {
-                    if (canBlock(attacked, attackerRow, i))
-                    {
-                        isCheckmate = false;
-                    }
-                }
-            }
-            else
-            {
-                for (int i = attackerCol; i < kingCol; i++)
-                {
-                    if (canBlock(attacked, attackerRow, i))
-                    {
-                        isCheckmate = false;
-                    }
-                }
-            }
-        }
-        // Same column (rook / queen)
-        else if (colDiff == 0)
-        {
-            // Escape by moving away
-            for (auto &d : dirs)
-            {
-                int nr = kingRow + d.first;
-                int nc = kingRow + d.second;
-                if (currKing->checkMove({nr, nc}, board) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
-                {
-                    isCheckmate = false;
-                }
-            }
-            // Escape by blocking
-            if (rowDiff > 0)
-            {
-                for (int i = attackerRow; i > kingRow; i--)
-                {
-                    if (canBlock(attacked, i, attackerCol))
-                    {
-                        isCheckmate = false;
-                    }
-                }
-            }
-            else
-            {
-                for (int i = attackerRow; i < kingRow; i++)
-                {
-                    if (canBlock(attacked, i, attackerCol))
-                    {
-                        isCheckmate = false;
-                    }
-                }
-            }
-        }
-        // Same diagonal (bishop / queen / pawn)
-        else if (abs((double)(colDiff) / (rowDiff)) == 1.0)
-        {
-            // Escape by moving away
-            for (auto &d : dirs)
-            {
-                int nr = kingRow + d.first;
-                int nc = kingRow + d.second;
-                if (currKing->checkMove({nr, nc}, board) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
-                {
-                    isCheckmate = false;
-                }
-            }
-            // Escape by blocking
-            // Down right
-            if (rowDiff > 0 && colDiff > 0)
-            {
-                int i = 1;
-                while (kingRow + i <= attackerRow)
-                {
-                    if (canBlock(attacked, kingRow + i, kingCol + i))
-                    {
-                        isCheckmate = false;
-                    }
-                    i++;
-                }
-            }
-            // Up right
-            else if (rowDiff < 0 && colDiff > 0)
-            {
-                int i = 1;
-                while (kingRow - i >= attackerRow)
-                {
-                    if (canBlock(attacked, kingRow - i, kingCol + i))
-                    {
-                        isCheckmate = false;
-                    }
-                    i++;
-                }
-            }
-            // Down left
-            else if (rowDiff > 0 && colDiff < 0)
-            {
-                int i = 1;
-                while (kingRow + i <= attackerRow)
-                {
-                    if (canBlock(attacked, kingRow + i, kingCol - i))
-                    {
-                        isCheckmate = false;
-                    }
-                    i++;
-                }
-            }
-            // Up left
-            else
-            {
-                int i = 1;
-                while (kingRow - i >= attackerRow)
-                {
-                    if (canBlock(attacked, kingRow - i, kingCol - i))
-                    {
-                        isCheckmate = false;
-                    }
-                    i++;
-                }
-            }
-        }
-        // Horse
-        else
-        {
-            for (auto &d : dirs)
-            {
-                int nr = kingRow + d.first;
-                int nc = kingRow + d.second;
-                if (currKing->checkMove({nr, nc}, board) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
-                {
-                    isCheckmate = false;
-                }
-            }
-        }
-    }
-    // 2 attackers
-    else
-    {
-        for (auto &d : dirs)
-        {
-            int nr = kingRow + d.first;
-            int nc = kingRow + d.second;
-            if (currKing->checkMove({nr, nc}, board) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
-            {
-                isCheckmate = false;
-            }
-        }
-    }
-    return isCheckmate;
-}
-
-bool Chessgame::inStalemate()
-{
-    if (turn == Colour::WHITE && blackAttackingMoves.size() == 0)
-    {
-        return true;
-    }
-    else if (turn == Colour::BLACK && whiteAttackingMoves.size() == 0)
-    {
-        return true;
-    }
-    return false;
-}
-
 void Chessgame::move(string coord1, string coord2)
 {
 
@@ -612,59 +217,59 @@ void Chessgame::move(string coord1, string coord2)
     }
 
     board.print();
-    this->updateAttackingMoves();
-    //     /*
-    //     1 -> someone is in check
-    //     2 -> someone is in checkmate
-    //     3 -> stalemate
-    //     */
-    // //    cout << "before check" << endl;
-    //     // if (inCheck())
-    //     // {
-    //     //     if (turn == Colour::WHITE)
-    //     //     {
-    //     //         cout << "Black is in check." << endl;
-    //     //     }
-    //     //     else
-    //     //     {
-    //     //         cout << "White is in check." << endl;
-    //     //     }
-    //     // };
+    board.updateAttackingMoves();
+    /*
+    1 -> someone is in check
+    2 -> someone is in checkmate
+    3 -> stalemate
+    */
+    //    cout << "before check" << endl;
+    if (board.inCheck(turn))
+    {
+        if (turn == Colour::WHITE)
+        {
+            cout << "Black is in check." << endl;
+        }
+        else
+        {
+            cout << "White is in check." << endl;
+        }
+    };
 
-    //     // cout << "after check " << endl;
+    cout << "after check " << endl;
 
-    //     // if (inCheckmate())
-    //     // {
-    //     //     if (turn == Colour::WHITE)
-    //     //     {
-    //     //         cout << "Checkmate! White wins!" << endl;
-    //     //         sb->incrementScore(Colour::WHITE);
-    //     //     }
-    //     //     else
-    //     //     {
-    //     //         cout << "Checkmate! Black wins!" << endl;
-    //     //         sb->incrementScore(Colour::BLACK);
-    //     //     }
-    //     //     hasSetup = false;
-    //     // }
+    if (board.inCheckmate(turn))
+    {
+        if (turn == Colour::WHITE)
+        {
+            cout << "Checkmate! White wins!" << endl;
+            sb->incrementScore(Colour::WHITE);
+        }
+        else
+        {
+            cout << "Checkmate! Black wins!" << endl;
+            sb->incrementScore(Colour::BLACK);
+        }
+        hasSetup = false;
+    }
 
-    //     // cout << "after checkmate" << endl;
+    cout << "after checkmate" << endl;
 
-    //     // if (inStalemate())
-    //     // {
-    //     //     cout << "Stalemate!" << endl;
-    //     //     sb->staleMate();
-    //     //     hasSetup = false;
-    //     // }
+    if (board.inStalemate(turn))
+    {
+        cout << "Stalemate!" << endl;
+        sb->staleMate();
+        hasSetup = false;
+    }
 
-    //     // cout << "IN STALEMATE" << endl;
+    cout << "IN STALEMATE" << endl;
 
-    //     if (turn == Colour::WHITE)
-    //     {
-    //         turn = Colour::BLACK;
-    //     }
-    //     else
-    //     {
-    //         turn = Colour::WHITE;
-    //     }
+    if (turn == Colour::WHITE)
+    {
+        turn = Colour::BLACK;
+    }
+    else
+    {
+        turn = Colour::WHITE;
+    }
 }
