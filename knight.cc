@@ -15,7 +15,11 @@ bool Knight::checkMove(pair<int, int> n, Board &b)
     {
         return false;
     }
-
+    pair<int, int> kingPos = b.findKing(colour);
+    if (b.inDanger(colour, kingPos.first, kingPos.second))
+    {
+        return false;
+    }
     vector<pair<int, int>> dirs{
         pair<int, int>{-1, -2},
         pair<int, int>{-2, -1},

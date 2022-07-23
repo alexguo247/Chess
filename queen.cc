@@ -20,6 +20,11 @@ bool Queen::checkMove(pair<int, int> n, Board &b)
     {
         return false;
     }
+    pair<int, int> kingPos = b.findKing(colour);
+    if (b.inDanger(colour, kingPos.first, kingPos.second))
+    {
+        return false;
+    }
     // If the ending spot is the same colour
     if (b.getPiece(n.first, n.second) != nullptr && b.getPiece(n.first, n.second)->getColour() == colour)
     {

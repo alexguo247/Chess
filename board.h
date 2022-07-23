@@ -14,7 +14,6 @@ class Board
     std::vector<std::vector<int>> whiteAttackingMoves;
     std::vector<std::vector<int>> blackAttackingMoves;
     std::vector<std::vector<int>> getAttackers(Colour);
-    std::pair<int, int> findKing(Colour);
     bool canBlock(Colour, int, int);
 
 public:
@@ -32,6 +31,7 @@ public:
     void setup();
     void updateAttackingMoves();
     bool validateBoard();
+    std::pair<int, int> findKing(Colour);
     bool inDanger(Colour, int, int);
     bool inCheck(Colour);
     bool inCheckmate(Colour);

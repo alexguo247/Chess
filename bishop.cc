@@ -20,6 +20,12 @@ bool Bishop::checkMove(pair<int, int> n, Board &b)
         return false;
     }
 
+    pair<int, int> kingPos = b.findKing(colour);
+    if (b.inDanger(colour, kingPos.first, kingPos.second))
+    {
+        return false;
+    }
+
     int rowDiff = n.first - row;
     int colDiff = n.second - col;
 
@@ -27,6 +33,39 @@ bool Bishop::checkMove(pair<int, int> n, Board &b)
     if (b.getPiece(n.first, n.second) != nullptr && b.getPiece(n.first, n.second)->getColour() == colour)
     {
         return false;
+    }
+
+    int currRow = row;
+    int currCol = col;
+    if (b.getPiece(n.first, n.second) != nullptr)
+    {
+        Type t = b.getPiece(n.first, n.second)->getType();
+        Colour c = b.getPiece(n.first, n.second)->getColour();
+        b.setOrCreatePiece(this, n.first, n.second, false, type, colour);
+        if (b.inDanger(colour, kingPos.first, kingPos.second))
+        {
+            b.setOrCreatePiece(this, currRow, currCol, false, type, colour);
+            b.setOrCreatePiece(nullptr, n.first, n.second, true, t, c);
+            return false;
+        }
+        else
+        {
+            b.setOrCreatePiece(this, currRow, currCol, false, type, colour);
+            b.setOrCreatePiece(nullptr, n.first, n.second, true, t, c);
+        }
+    }
+    else
+    {
+        b.setOrCreatePiece(this, n.first, n.second, false, type, colour);
+        if (b.inDanger(colour, kingPos.first, kingPos.second))
+        {
+            b.setOrCreatePiece(this, currRow, currCol, false, type, colour);
+            return false;
+        }
+        else
+        {
+            b.setOrCreatePiece(this, currRow, currCol, false, type, colour);
+        }
     }
 
     // Down right diagonal

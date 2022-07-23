@@ -20,7 +20,11 @@ bool Rook::checkMove(pair<int, int> n, Board &b)
     {
         return false;
     }
-
+    pair<int, int> kingPos = b.findKing(colour);
+    if (b.inDanger(colour, kingPos.first, kingPos.second))
+    {
+        return false;
+    }
     int rowDiff = n.first - row;
     int colDiff = n.second - col;
 
