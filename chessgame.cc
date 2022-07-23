@@ -122,7 +122,7 @@ void Chessgame::setup()
             if (board.validateBoard())
             {
                 exit = true;
-                break; 
+                break;
             }
             else
             {
@@ -155,7 +155,8 @@ void Chessgame::game(string player1, string player2)
 
 void Chessgame::resign()
 {
-    if (!gameIsRunning) {
+    if (!gameIsRunning)
+    {
         cout << "Can't resign, game has not started!" << endl;
         return;
     }
