@@ -26,12 +26,12 @@ bool Piece::getHasMoved()
     return hasMoved;
 }
 
-bool Piece::causesCheck(Board &b)
+bool Piece::causesCheck(Board &b, pair<int, int> n)
 {
     pair<int, int> kingPos = b.findKing(colour);
     if (b.inDanger(colour, kingPos.first, kingPos.second))
     {
-        return false;
+        return true;
     }
 
     int currRow = row;
@@ -40,12 +40,16 @@ bool Piece::causesCheck(Board &b)
     {
         Type t = b.getPiece(n.first, n.second)->getType();
         Colour c = b.getPiece(n.first, n.second)->getColour();
+        if (c == colour)
+        {
+            return true;
+        }
         b.setOrCreatePiece(this, n.first, n.second, false, type, colour);
         if (b.inDanger(colour, kingPos.first, kingPos.second))
         {
             b.setOrCreatePiece(this, currRow, currCol, false, type, colour);
             b.setOrCreatePiece(nullptr, n.first, n.second, true, t, c);
-            return false;
+            return true;
         }
         else
         {
@@ -59,11 +63,12 @@ bool Piece::causesCheck(Board &b)
         if (b.inDanger(colour, kingPos.first, kingPos.second))
         {
             b.setOrCreatePiece(this, currRow, currCol, false, type, colour);
-            return false;
+            return true;
         }
         else
         {
             b.setOrCreatePiece(this, currRow, currCol, false, type, colour);
         }
     }
+    return false;
 }

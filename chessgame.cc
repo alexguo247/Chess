@@ -145,16 +145,22 @@ void Chessgame::game(string player1, string player2)
     hasSetup = false;
     gameIsRunning = true;
 
-    if (player1 == "human") {
+    if (player1 == "human")
+    {
         p1 = new Human(&board, Colour::WHITE);
-    } else {
+    }
+    else
+    {
         cout << "Invalid player 1 type!" << endl;
         return;
     }
 
-    if (player2 == "human") {
+    if (player2 == "human")
+    {
         p2 = new Human(&board, Colour::BLACK);
-    } else {
+    }
+    else
+    {
         cout << "Invalid player 2 type!" << endl;
         return;
     }
@@ -190,23 +196,25 @@ void Chessgame::move(string coord1, string coord2, char promotion)
     pair<int, int> end = convertCoord(coord2);
 
     Piece *piece = board.getPiece(start.first, start.second);
-    if (piece == nullptr) {
+    if (piece == nullptr)
+    {
         cout << "No piece to move at that square! Move again." << endl;
         return;
     }
 
-    if (piece ->getColour() != turn) {
+    if (piece->getColour() != turn)
+    {
         cout << "Moving piece of opposite colour is not allowed! Move again." << endl;
         return;
     }
 
     if (turn == Colour::WHITE)
     {
-        p1->move(&board, start, end);
+        p1->move(&board, start, end, promotion);
     }
     else
     {
-        p2->move(&board, start, end);
+        p2->move(&board, start, end, promotion);
     }
 
     board.print();

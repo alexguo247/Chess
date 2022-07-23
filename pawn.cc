@@ -17,8 +17,7 @@ bool Pawn::checkMove(pair<int, int> n, Board &b)
     {
         return false;
     }
-    pair<int, int> kingPos = b.findKing(colour);
-    if (b.inDanger(colour, kingPos.first, kingPos.second))
+    if (!causesCheck(b, n))
     {
         return false;
     }
