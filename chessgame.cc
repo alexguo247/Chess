@@ -405,7 +405,7 @@ bool Chessgame::inCheckmate()
             {
                 int nr = kingRow + d.first;
                 int nc = kingRow + d.second;
-                if (currKing->checkMove({nr, nc}, &board) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
+                if (currKing->checkMove({nr, nc}, board) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
                 {
                     isCheckmate = false;
                 }
@@ -440,7 +440,7 @@ bool Chessgame::inCheckmate()
             {
                 int nr = kingRow + d.first;
                 int nc = kingRow + d.second;
-                if (currKing->checkMove({nr, nc}, &board) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
+                if (currKing->checkMove({nr, nc}, board) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
                 {
                     isCheckmate = false;
                 }
@@ -475,7 +475,7 @@ bool Chessgame::inCheckmate()
             {
                 int nr = kingRow + d.first;
                 int nc = kingRow + d.second;
-                if (currKing->checkMove({nr, nc}, &board) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
+                if (currKing->checkMove({nr, nc}, board) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
                 {
                     isCheckmate = false;
                 }
@@ -541,7 +541,7 @@ bool Chessgame::inCheckmate()
             {
                 int nr = kingRow + d.first;
                 int nc = kingRow + d.second;
-                if (currKing->checkMove({nr, nc}, &board) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
+                if (currKing->checkMove({nr, nc}, board) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
                 {
                     isCheckmate = false;
                 }
@@ -555,7 +555,7 @@ bool Chessgame::inCheckmate()
         {
             int nr = kingRow + d.first;
             int nc = kingRow + d.second;
-            if (currKing->checkMove({nr, nc}, &board) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
+            if (currKing->checkMove({nr, nc}, board) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
             {
                 isCheckmate = false;
             }

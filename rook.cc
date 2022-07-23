@@ -6,7 +6,7 @@ using namespace std;
 
 Rook::Rook(Colour c, int row, int col, bool hasMoved) : Piece(c, Type::ROOK, row, col, hasMoved){};
 
-bool Rook::checkMove(pair<int, int> n, Board *b)
+bool Rook::checkMove(pair<int, int> n, Board &b)
 {
     if (row == n.first && col == n.second)
     {
@@ -25,7 +25,7 @@ bool Rook::checkMove(pair<int, int> n, Board *b)
     int colDiff = n.second - col;
 
     // If the ending spot is the same colour
-    if (b->getPiece(n.first, n.second)->getColour() == colour)
+    if (b.getPiece(n.first, n.second)->getColour() == colour)
     {
         return false;
     }
@@ -35,7 +35,7 @@ bool Rook::checkMove(pair<int, int> n, Board *b)
     {
         for (int i = 1; i < rowDiff; i++)
         {
-            if (b->getPiece(row + i, col) != nullptr)
+            if (b.getPiece(row + i, col) != nullptr)
             {
                 return false;
             }
@@ -46,7 +46,7 @@ bool Rook::checkMove(pair<int, int> n, Board *b)
     {
         for (int i = 1; i < (-1 * rowDiff); i++)
         {
-            if (b->getPiece(row - i, col) != nullptr)
+            if (b.getPiece(row - i, col) != nullptr)
             {
                 return false;
             }
@@ -57,7 +57,7 @@ bool Rook::checkMove(pair<int, int> n, Board *b)
     {
         for (int i = 1; i < (-1 * colDiff); i++)
         {
-            if (b->getPiece(row, col - i) != nullptr)
+            if (b.getPiece(row, col - i) != nullptr)
             {
                 return false;
             }
@@ -68,7 +68,7 @@ bool Rook::checkMove(pair<int, int> n, Board *b)
     {
         for (int i = 1; i < colDiff; i++)
         {
-            if (b->getPiece(row, col + i) != nullptr)
+            if (b.getPiece(row, col + i) != nullptr)
             {
                 return false;
             }

@@ -24,7 +24,7 @@ public:
     Type getType();                                           // return the type of the piece
     std::pair<int, int> getPos();                             // return the position of the piece
     void setPos(int, int);                                    // set the position of the piece
-    virtual bool checkMove(std::pair<int, int>, Board *) = 0; // check if move is valid
+    virtual bool checkMove(std::pair<int, int>, Board &) = 0; // check if move is valid
     virtual std::vector<std::vector<int>> getAttackMoves(Board &) = 0;
     virtual bool getHasMoved();
 };

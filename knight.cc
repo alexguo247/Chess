@@ -5,7 +5,7 @@ using namespace std;
 
 Knight::Knight(Colour c, int row, int col, bool hasMoved) : Piece(c, Type::KNIGHT, row, col, hasMoved){};
 
-bool Knight::checkMove(pair<int, int> n, Board *b)
+bool Knight::checkMove(pair<int, int> n, Board &b)
 {
     if (row == n.first && col == n.second)
     {
@@ -29,7 +29,7 @@ bool Knight::checkMove(pair<int, int> n, Board *b)
 
     for (auto &d : dirs)
     {
-        if (n.first == row + d.first && n.second == col + d.second && b->getPiece(n.first, n.second) == nullptr)
+        if (n.first == row + d.first && n.second == col + d.second && b.getPiece(n.first, n.second) == nullptr)
         {
             return true;
         }
