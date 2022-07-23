@@ -11,6 +11,7 @@
 #include "pawn.h"
 
 #include <iostream>
+#include <sstream>
 #include <cmath>
 #include <vector>
 
@@ -86,15 +87,18 @@ void Chessgame::setup()
         defaultConfiguration();
     }
 
+    string line;
     string cmd;
-    char pieceType;
     string coord;
     pair<int, int> coordPair;
-    cin >> cmd;
+    char pieceType;
     bool exit = false;
 
     while (!exit)
     {
+        getline(cin, line);
+        stringstream input(line);
+        input >> cmd;
         if (cmd == "black")
         {
             turn = Colour::BLACK;
@@ -105,14 +109,14 @@ void Chessgame::setup()
         }
         else if (cmd == "+")
         {
-            cin >> pieceType;
-            cin >> coord;
+            input >> pieceType;
+            input >> coord;
             coordPair = convertCoord(coord);
             board.setOrCreatePiece(nullptr, coordPair.first, coordPair.second, true, board.getTypeChar(pieceType), isupper(pieceType) ? Colour::WHITE : Colour::BLACK);
         }
         else if (cmd == "-")
         {
-            cin >> coord;
+            input >> coord;
             coordPair = convertCoord(coord);
             board.deletePiece(coordPair.first, coordPair.second);
         }
@@ -128,11 +132,9 @@ void Chessgame::setup()
                 cout << "Board not in valid state. Can't leave setup!" << endl;
             }
         }
-        cin >> cmd;
     }
 
     hasSetup = true;
-    board.print();
 }
 
 void Chessgame::game(string player1, string player2)
@@ -210,11 +212,15 @@ void Chessgame::move(string coord1, string coord2, char promotion)
 
     if (turn == Colour::WHITE)
     {
-        p1->move(&board, start, end, promotion);
+        if (!p1->move(&board, start, end, promotion)) {
+            return; 
+        }
     }
     else
     {
-        p2->move(&board, start, end, promotion);
+        if (!p2->move(&board, start, end, promotion)) {
+            return;
+        }
     }
 
     board.print();
