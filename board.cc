@@ -26,7 +26,7 @@ Board::Board()
     }
 }
 
-Piece* Board::getPiece(int row, int col)
+Piece *Board::getPiece(int row, int col)
 {
     return grid[row][col];
 }
@@ -63,26 +63,27 @@ void Board::setPiece(Piece *piece, int row, int col)
     Type t = piece->getType();
     Colour c = piece->getColour();
 
-    switch (t) {
-        case Type::KING:
-            grid[row][col] = new King(c, row, col);
-        case Type::BISHOP:
-            grid[row][col] = new Bishop(c, row, col);
-        case Type::ROOK:
-            grid[row][col] = new Rook(c, row, col);
-        case Type::KNIGHT:
-            grid[row][col] = new Knight(c, row, col);
-        case Type::QUEEN:
-            grid[row][col] = new Queen(c, row, col);
-        case Type::PAWN:
-            grid[row][col] = new Pawn(c, row, col, true);
+    switch (t)
+    {
+    case Type::KING:
+        grid[row][col] = new King(c, row, col);
+    case Type::BISHOP:
+        grid[row][col] = new Bishop(c, row, col);
+    case Type::ROOK:
+        grid[row][col] = new Rook(c, row, col);
+    case Type::KNIGHT:
+        grid[row][col] = new Knight(c, row, col);
+    case Type::QUEEN:
+        grid[row][col] = new Queen(c, row, col);
+    case Type::PAWN:
+        grid[row][col] = new Pawn(c, row, col, true, false);
     }
 }
 
-
 char getCharType(Piece *p)
 {
-    if (p == nullptr) {
+    if (p == nullptr)
+    {
         return ' ';
     }
 
@@ -212,8 +213,8 @@ void Board::setup()
 
     for (int i = 0; i < 8; i++)
     {
-        grid[1][i] = new Pawn(Colour::BLACK, 1, i, false);
-        grid[6][i] = new Pawn(Colour::WHITE, 6, i, false);
+        grid[1][i] = new Pawn(Colour::BLACK, 1, i, false, false);
+        grid[6][i] = new Pawn(Colour::WHITE, 6, i, false, false);
     }
 
     for (int i = 0; i < 8; i++)
