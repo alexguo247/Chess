@@ -19,6 +19,11 @@ bool Queen::checkMove(pair<int, int> n, Board &b)
     if ((abs((double)(n.second - col) / (n.first - row)) != 1.0) && row != n.first && col != n.second) {
         return false;
     }
+     // If the ending spot is the same colour
+    if (b.getPiece(n.first, n.second)->getColour() == colour)
+    {
+        return false;
+    }
 
     int rowDiff = n.first - row;
     int colDiff = n.second - col;
