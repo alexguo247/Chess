@@ -12,6 +12,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <vector>
 
 using namespace std;
 
@@ -67,7 +68,7 @@ Piece *buildPiece(char pieceType, pair<int, int> pos)
     case 'Q':
         p = new Queen(Colour::WHITE, pos.first, pos.second);
     case 'P':
-        p = new Pawn(Colour::WHITE, pos.first, pos.second);
+        p = new Pawn(Colour::WHITE, pos.first, pos.second, false);
     case 'k':
         p = new King(Colour::BLACK, pos.first, pos.second);
     case 'r':
@@ -79,7 +80,7 @@ Piece *buildPiece(char pieceType, pair<int, int> pos)
     case 'q':
         p = new Queen(Colour::BLACK, pos.first, pos.second);
     case 'p':
-        p = new Pawn(Colour::BLACK, pos.first, pos.second);
+        p = new Pawn(Colour::BLACK, pos.first, pos.second, false);
     }
     return p;
 }
@@ -243,10 +244,8 @@ void Chessgame::resign()
 
 void Chessgame::updateAttackingMoves()
 {
-    cout << "IN HERER" << endl;
     whiteAttackingMoves.clear();
     blackAttackingMoves.clear();
-
     for (int i = 0; i < 8; i++)
     {
         for (int j = 0; j < 8; j++)
@@ -257,7 +256,8 @@ void Chessgame::updateAttackingMoves()
             }
 
             Colour c = board.getPiece(i, j)->getColour();
-            vector<vector<int>> attackMoves = board.getPiece(i, j)->getAttackMoves(&board);
+            vector<vector<int>> attackMoves = board.getPiece(i, j)->getAttackMoves(board);
+
             for (auto a : attackMoves)
             {
                 if (c == Colour::WHITE)
@@ -578,6 +578,7 @@ bool Chessgame::inStalemate()
 
 void Chessgame::move(string coord1, string coord2)
 {
+    
     pair<int, int> start = convertCoord(coord1);
     pair<int, int> end = convertCoord(coord2);
 
@@ -590,68 +591,67 @@ void Chessgame::move(string coord1, string coord2)
 
     if (turn == Colour::WHITE)
     {
-        cout << "WHITE MOVING" << endl;
-        p1->move(start, end);
+        p1->move(&board, start, end);
     }
     else
     {
-        p2->move(start, end);
+        p2->move(&board, start, end);
     }
-
+    
     board.print();
-    updateAttackingMoves();
-    /*
-    1 -> someone is in check
-    2 -> someone is in checkmate
-    3 -> stalemate
-    */
-//    cout << "before check" << endl;
-    // if (inCheck())
-    // {
-    //     if (turn == Colour::WHITE)
-    //     {
-    //         cout << "Black is in check." << endl;
-    //     }
-    //     else
-    //     {
-    //         cout << "White is in check." << endl;
-    //     }
-    // };
+    this->updateAttackingMoves();
+//     /*
+//     1 -> someone is in check
+//     2 -> someone is in checkmate
+//     3 -> stalemate
+//     */
+// //    cout << "before check" << endl;
+//     // if (inCheck())
+//     // {
+//     //     if (turn == Colour::WHITE)
+//     //     {
+//     //         cout << "Black is in check." << endl;
+//     //     }
+//     //     else
+//     //     {
+//     //         cout << "White is in check." << endl;
+//     //     }
+//     // };
 
-    // cout << "after check " << endl;
+//     // cout << "after check " << endl;
 
-    // if (inCheckmate())
-    // {
-    //     if (turn == Colour::WHITE)
-    //     {
-    //         cout << "Checkmate! White wins!" << endl;
-    //         sb->incrementScore(Colour::WHITE);
-    //     }
-    //     else
-    //     {
-    //         cout << "Checkmate! Black wins!" << endl;
-    //         sb->incrementScore(Colour::BLACK);
-    //     }
-    //     hasSetup = false;
-    // }
+//     // if (inCheckmate())
+//     // {
+//     //     if (turn == Colour::WHITE)
+//     //     {
+//     //         cout << "Checkmate! White wins!" << endl;
+//     //         sb->incrementScore(Colour::WHITE);
+//     //     }
+//     //     else
+//     //     {
+//     //         cout << "Checkmate! Black wins!" << endl;
+//     //         sb->incrementScore(Colour::BLACK);
+//     //     }
+//     //     hasSetup = false;
+//     // }
 
-    // cout << "after checkmate" << endl;
+//     // cout << "after checkmate" << endl;
 
-    // if (inStalemate())
-    // {
-    //     cout << "Stalemate!" << endl;
-    //     sb->staleMate();
-    //     hasSetup = false;
-    // }
+//     // if (inStalemate())
+//     // {
+//     //     cout << "Stalemate!" << endl;
+//     //     sb->staleMate();
+//     //     hasSetup = false;
+//     // }
 
-    // cout << "IN STALEMATE" << endl;
+//     // cout << "IN STALEMATE" << endl;
 
-    if (turn == Colour::WHITE)
-    {
-        turn = Colour::BLACK;
-    }
-    else
-    {
-        turn = Colour::WHITE;
-    }
+//     if (turn == Colour::WHITE)
+//     {
+//         turn = Colour::BLACK;
+//     }
+//     else
+//     {
+//         turn = Colour::WHITE;
+//     }
 }

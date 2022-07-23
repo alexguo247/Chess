@@ -17,7 +17,6 @@ public:
     void print();
     void deletePiece(int, int);
     void clearBoard();
-    void printBoard();
     void setup();
 };
 

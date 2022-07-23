@@ -1,9 +1,11 @@
 #include "pawn.h"
 #include "board.h"
+#include <iostream>
 #include <cmath>
+#include <vector>
 using namespace std;
 
-Pawn::Pawn(Colour c, int row, int col) : Piece(c, Type::PAWN, row, col){};
+Pawn::Pawn(Colour c, int row, int col, bool hasMoved) : Piece(c, Type::PAWN, row, col), hasMoved{hasMoved} {};
 
 bool Pawn::checkMove(pair<int, int> n, Board *b)
 {
@@ -76,29 +78,29 @@ bool Pawn::checkMove(pair<int, int> n, Board *b)
     return false;
 }
 
-vector<vector<int>> Pawn::getAttackMoves(Board *b)
+vector<vector<int>> Pawn::getAttackMoves(Board &b)
 {
-    vector<vector<int>> attackMoves;
+    vector<vector<int>> attackMoves = {};
     if (colour == Colour::BLACK)
     {
-        if ((row + 1 < 8 && col + 1 < 8) && (b->getPiece(row + 1, col + 1) == nullptr || b->getPiece(row + 1, col + 1)->getColour() != colour))
+        if ((row + 1 < 8 && col + 1 < 8) && (b.getPiece(row + 1, col + 1) == nullptr || b.getPiece(row + 1, col + 1)->getColour() != colour))
         {
             attackMoves.push_back({row + 1, col + 1, row, col});
         }
-        if ((row + 1 < 8 && col - 1 >= 0) && (b->getPiece(row + 1, col - 1) == nullptr || b->getPiece(row + 1, col - 1)->getColour() != colour))
+        if ((row + 1 < 8 && col - 1 >= 0) && (b.getPiece(row + 1, col - 1) == nullptr || b.getPiece(row + 1, col - 1)->getColour() != colour))
         {
             attackMoves.push_back({row + 1, col - 1, row, col});
         }
     }
     else
     {
-        if ((row - 1 >= 0 && col + 1 < 8) && (b->getPiece(row - 1, col + 1) == nullptr || b->getPiece(row - 1, col + 1)->getColour() != colour))
+        if ((row - 1 >= 0 && col + 1 < 8) && (b.getPiece(row - 1, col + 1) == nullptr || b.getPiece(row - 1, col + 1)->getColour() != colour))
         {
-            attackMoves.push_back({row - 1, col + 1, row, col});
+            attackMoves.push_back(vector<int>{row - 1, col + 1, row, col});
         }
-        if ((row - 1 >= 0 && col - 1 >= 0) && (b->getPiece(row - 1, col - 1) == nullptr || b->getPiece(row - 1, col - 1)->getColour() != colour))
+        if ((row - 1 >= 0 && col - 1 >= 0) && (b.getPiece(row - 1, col - 1) == nullptr || b.getPiece(row - 1, col - 1)->getColour() != colour))
         {
-            attackMoves.push_back({row - 1, col - 1, row, col});
+            attackMoves.push_back(vector<int>{row - 1, col - 1, row, col});
         }
     }
     return attackMoves;

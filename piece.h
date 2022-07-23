@@ -20,13 +20,12 @@ protected:
 public:
     Piece(Colour, Type, int, int);
     virtual ~Piece();
-    virtual Colour getColour();                               // return the colour of the piece
-    virtual Type getType();                                   // return the type of the piece
-    virtual std::pair<int, int> getPos();                     // return the position of the piece
-    virtual void setPos(int, int);                            // set the position of the piece
-    virtual void move(std::pair<int, int>, Board *);          // move the peice from old location to the new location
+    Colour getColour();                                       // return the colour of the piece
+    Type getType();                                           // return the type of the piece
+    std::pair<int, int> getPos();                             // return the position of the piece
+    void setPos(int, int);                                    // set the position of the piece
     virtual bool checkMove(std::pair<int, int>, Board *) = 0; // check if move is valid
-    virtual std::vector<std::vector<int>> getAttackMoves(Board *) = 0;
+    virtual std::vector<std::vector<int>> getAttackMoves(Board &) = 0;
     virtual bool getHasMoved();
 };
 #endif

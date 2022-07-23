@@ -3,6 +3,7 @@
 #include <cmath>
 #include <iostream>
 using namespace std;
+
 Rook::Rook(Colour c, int row, int col) : Piece(c, Type::ROOK, row, col){};
 
 bool Rook::checkMove(pair<int, int> n, Board *b)
@@ -77,51 +78,52 @@ bool Rook::checkMove(pair<int, int> n, Board *b)
     return true;
 }
 
-vector<vector<int>> Rook::getAttackMoves(Board *b)
+vector<vector<int>> Rook::getAttackMoves(Board& b)
 {
     vector<vector<int>> attackMoves;
+
     int currRow = row;
     int currCol = col;
     // Down
-    while (currRow < 8 && b->getPiece(currRow, currCol) == nullptr)
+    while (currRow < 8 && b.getPiece(currRow, currCol) == nullptr)
     {
         attackMoves.push_back({currRow, currCol, row, col});
         currRow++;
     }
-    if (currRow < 8 && b->getPiece(currRow, currCol)->getColour() != colour)
+    if (currRow < 8 && b.getPiece(currRow, currCol)->getColour() != colour)
     {
         attackMoves.push_back({currRow, currCol, row, col});
     }
     currRow = row;
     // Up
-    while (currRow >= 0 && b->getPiece(currRow, currCol) == nullptr)
+    while (currRow >= 0 && b.getPiece(currRow, currCol) == nullptr)
     {
         attackMoves.push_back({currRow, currCol, row, col});
         currRow--;
     }
-    if (currRow >= 0 && b->getPiece(currRow, currCol)->getColour() != colour)
+    if (currRow >= 0 && b.getPiece(currRow, currCol)->getColour() != colour)
     {
         attackMoves.push_back({currRow, currCol, row, col});
     }
     currRow = row;
     // Left
-    while (currCol >= 0 && b->getPiece(currRow, currCol) == nullptr)
+    while (currCol >= 0 && b.getPiece(currRow, currCol) == nullptr)
     {
         attackMoves.push_back({currRow, currCol, row, col});
         currCol--;
     }
-    if (currCol >= 0 && b->getPiece(currRow, currCol)->getColour() != colour)
+    if (currCol >= 0 && b.getPiece(currRow, currCol)->getColour() != colour)
     {
         attackMoves.push_back({currRow, currCol, row, col});
     }
     currCol = col;
     // Right
-    while (currCol < 8 && b->getPiece(currRow, currCol) == nullptr)
+    while (currCol < 8 && b.getPiece(currRow, currCol) == nullptr)
     {
         attackMoves.push_back({currRow, currCol, row, col});
         currCol++;
     }
-    if (currCol < 8 && b->getPiece(currRow, currCol)->getColour() != colour)
+    if (currCol < 8 && b.getPiece(currRow, currCol)->getColour() != colour)
     {
         attackMoves.push_back({currRow, currCol, row, col});
     }
