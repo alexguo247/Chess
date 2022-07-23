@@ -8,6 +8,7 @@
 #include "pawn.h"
 #include <cmath>
 #include <set>
+#include <cmath>
 #include <iostream>
 
 using namespace std;
@@ -43,6 +44,11 @@ bool Board::move(pair<int, int> start, pair<int, int> end, char promotion)
 
     Type t = p->getType();
     Colour c = p->getColour();
+
+    if (t == Type::PAWN && abs(end.first - start.first) == 2)
+    {
+        static_cast<Pawn *>(p)->setDidDoubleMove(true);
+    }
 
     if (t == Type::KING && end.second - start.second == 2)
     {
