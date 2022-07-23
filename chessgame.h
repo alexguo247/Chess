@@ -29,7 +29,7 @@ public:
     Chessgame();
     ~Chessgame();
     void game(std::string, std::string);
-    void move(std::string, std::string);
+    void move(std::string, std::string, char);
     void resign();
     void setup();
     bool inCheck();

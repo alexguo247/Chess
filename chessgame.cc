@@ -52,51 +52,6 @@ pair<int, int> convertCoord(string coord)
     return convertedCoordinate;
 }
 
-Piece *buildPiece(char pieceType, pair<int, int> pos)
-{
-    Piece *p;
-    switch (pieceType)
-    {
-    case 'K':
-        p = new King(Colour::WHITE, pos.first, pos.second, false);
-        break;
-    case 'R':
-        p = new Rook(Colour::WHITE, pos.first, pos.second, false);
-        break;
-    case 'N':
-        p = new Knight(Colour::WHITE, pos.first, pos.second, false);
-        break;
-    case 'B':
-        p = new Bishop(Colour::WHITE, pos.first, pos.second, false);
-        break;
-    case 'Q':
-        p = new Queen(Colour::WHITE, pos.first, pos.second, false);
-        break;
-    case 'P':
-        p = new Pawn(Colour::WHITE, pos.first, pos.second, false, false);
-        break;
-    case 'k':
-        p = new King(Colour::BLACK, pos.first, pos.second, false);
-        break;
-    case 'r':
-        p = new Rook(Colour::BLACK, pos.first, pos.second, false);
-        break;
-    case 'n':
-        p = new Knight(Colour::BLACK, pos.first, pos.second, false);
-        break;
-    case 'b':
-        p = new Bishop(Colour::BLACK, pos.first, pos.second, false);
-        break;
-    case 'q':
-        p = new Queen(Colour::BLACK, pos.first, pos.second, false);
-        break;
-    case 'p':
-        p = new Pawn(Colour::BLACK, pos.first, pos.second, false, false);
-        break;
-    }
-    return p;
-}
-
 pair<int, int> Chessgame::findKing(Colour c)
 {
     for (int i = 0; i < 8; i++)
@@ -202,7 +157,7 @@ void Chessgame::setup()
             cin >> pieceType;
             cin >> coord;
             coordPair = convertCoord(coord);
-            board.setPiece(buildPiece(pieceType, coordPair), coordPair.first, coordPair.second);
+            board.setOrCreatePiece(nullptr, coordPair.first, coordPair.second, true, board.getTypeChar(pieceType), isupper(pieceType) ? Colour::WHITE : Colour::BLACK);
         }
         else if (cmd == "-")
         {
@@ -589,9 +544,8 @@ bool Chessgame::inStalemate()
     return false;
 }
 
-void Chessgame::move(string coord1, string coord2)
+void Chessgame::move(string coord1, string coord2, char promotion)
 {
-
     pair<int, int> start = convertCoord(coord1);
     pair<int, int> end = convertCoord(coord2);
 
@@ -604,11 +558,11 @@ void Chessgame::move(string coord1, string coord2)
 
     if (turn == Colour::WHITE)
     {
-        p1->move(&board, start, end);
+        p1->move(&board, start, end, promotion);
     }
     else
     {
-        p2->move(&board, start, end);
+        p2->move(&board, start, end, promotion);
     }
 
     board.print();
