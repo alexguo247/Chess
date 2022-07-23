@@ -25,7 +25,7 @@ bool Rook::checkMove(pair<int, int> n, Board &b)
     int colDiff = n.second - col;
 
     // If the ending spot is the same colour
-    if (b.getPiece(n.first, n.second)->getColour() == colour)
+    if (b.getPiece(n.first, n.second) != nullptr && b.getPiece(n.first, n.second)->getColour() == colour)
     {
         return false;
     }

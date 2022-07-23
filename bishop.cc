@@ -1,6 +1,6 @@
 #include "bishop.h"
 #include "board.h"
-
+#include <iostream>
 #include <cmath>
 using namespace std;
 Bishop::Bishop(Colour c, int row, int col, bool hasMoved) : Piece(c, Type::BISHOP, row, col, hasMoved){};
@@ -24,7 +24,7 @@ bool Bishop::checkMove(pair<int, int> n, Board &b)
     int colDiff = n.second - col;
 
     // If the ending spot is the same colour
-    if (b.getPiece(n.first, n.second)->getColour() == colour)
+    if (b.getPiece(n.first, n.second) != nullptr && b.getPiece(n.first, n.second)->getColour() == colour)
     {
         return false;
     }

@@ -84,8 +84,6 @@ void Board::setPiece(Piece *piece, int row, int col)
         bool doubleMove = static_cast<Pawn *>(piece)->hasDoubleMoved();
         grid[row][col] = new Pawn(c, row, col, true, doubleMove);
         break;
-    default:
-        break;
     }
 }
 

@@ -16,23 +16,18 @@ bool Queen::checkMove(pair<int, int> n, Board &b)
     {
         return false;
     }
-    if ((abs((double)(n.second - col) / (n.first - row)) != 1.0) && row != n.first && col != n.second) {
+    if ((abs((double)(n.second - col) / (n.first - row)) != 1.0) && row != n.first && col != n.second)
+    {
         return false;
     }
-     // If the ending spot is the same colour
-    if (b.getPiece(n.first, n.second)->getColour() == colour)
+    // If the ending spot is the same colour
+    if (b.getPiece(n.first, n.second) != nullptr && b.getPiece(n.first, n.second)->getColour() == colour)
     {
         return false;
     }
 
     int rowDiff = n.first - row;
     int colDiff = n.second - col;
-
-    // If the ending spot is the same colour
-    if (b.getPiece(n.first, n.second)->getColour() == colour)
-    {
-        return false;
-    }
 
     // Down
     if (rowDiff > 0 && colDiff == 0)
@@ -193,7 +188,7 @@ vector<vector<int>> Queen::getAttackMoves(Board &b)
         attackMoves.push_back({currRow, currCol, row, col});
     }
     currRow = row - 1;
-    currCol = col; 
+    currCol = col;
     // Up
     while (currRow >= 0 && b.getPiece(currRow, currCol) == nullptr)
     {
