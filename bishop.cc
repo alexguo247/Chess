@@ -5,7 +5,7 @@
 using namespace std;
 Bishop::Bishop(Colour c, int row, int col, bool hasMoved) : Piece(c, Type::BISHOP, row, col, hasMoved){};
 
-bool Bishop::checkMove(pair<int, int> n, Board *b)
+bool Bishop::checkMove(pair<int, int> n, Board &b)
 {
     if (row == n.first && col == n.second)
     {
@@ -24,7 +24,7 @@ bool Bishop::checkMove(pair<int, int> n, Board *b)
     int colDiff = n.second - col;
 
     // If the ending spot is the same colour
-    if (b->getPiece(n.first, n.second)->getColour() == colour)
+    if (b.getPiece(n.first, n.second)->getColour() == colour)
     {
         return false;
     }
@@ -34,7 +34,7 @@ bool Bishop::checkMove(pair<int, int> n, Board *b)
     {
         for (int i = 1; i < rowDiff; i++)
         {
-            if (b->getPiece(row + i, col + i) != nullptr)
+            if (b.getPiece(row + i, col + i) != nullptr)
             {
                 return false;
             }
@@ -45,7 +45,7 @@ bool Bishop::checkMove(pair<int, int> n, Board *b)
     {
         for (int i = 1; i < colDiff; i++)
         {
-            if (b->getPiece(row - i, col + i) != nullptr)
+            if (b.getPiece(row - i, col + i) != nullptr)
             {
                 return false;
             }
@@ -56,7 +56,7 @@ bool Bishop::checkMove(pair<int, int> n, Board *b)
     {
         for (int i = 1; i < rowDiff; i++)
         {
-            if (b->getPiece(row + i, col - i) != nullptr)
+            if (b.getPiece(row + i, col - i) != nullptr)
             {
                 return false;
             }
@@ -67,7 +67,7 @@ bool Bishop::checkMove(pair<int, int> n, Board *b)
     {
         for (int i = 1; i < (-1 * rowDiff); i++)
         {
-            if (b->getPiece(row - i, col - i) != nullptr)
+            if (b.getPiece(row - i, col - i) != nullptr)
             {
                 return false;
             }

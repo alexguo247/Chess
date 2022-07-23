@@ -5,7 +5,7 @@ using namespace std;
 
 King::King(Colour c, int row, int col, bool hasMoved) : Piece(c, Type::KING, row, col, hasMoved){};
 
-bool King::checkMove(pair<int, int> n, Board *b)
+bool King::checkMove(pair<int, int> n, Board &b)
 {
     if (row == n.first && col == n.second)
     {
@@ -26,14 +26,14 @@ bool King::checkMove(pair<int, int> n, Board *b)
             {
                 if (n.second - col == 2)
                 {
-                    if (b->getPiece(7, 5) == nullptr && b->getPiece(7, 6) == nullptr && !b->getPiece(7, 7)->getHasMoved())
+                    if (b.getPiece(7, 5) == nullptr && b.getPiece(7, 6) == nullptr && b.getPiece(7, 7)->getHasMoved())
                     {
                         return true;
                     }
                 }
                 else
                 {
-                    if (b->getPiece(7, 1) == nullptr && b->getPiece(7, 2) == nullptr && b->getPiece(7, 3) == nullptr && !b->getPiece(7, 0)->getHasMoved())
+                    if (b.getPiece(7, 1) == nullptr && b.getPiece(7, 2) == nullptr && b.getPiece(7, 3) == nullptr && b.getPiece(7, 0)->getHasMoved())
                     {
                         return true;
                     }
@@ -43,14 +43,14 @@ bool King::checkMove(pair<int, int> n, Board *b)
             {
                 if (n.second - col == 2)
                 {
-                    if (b->getPiece(0, 5) == nullptr && b->getPiece(0, 6) == nullptr && !b->getPiece(0, 7)->getHasMoved())
+                    if (b.getPiece(0, 5) == nullptr && b.getPiece(0, 6) == nullptr && b.getPiece(0, 7)->getHasMoved())
                     {
                         return true;
                     }
                 }
                 else
                 {
-                    if (b->getPiece(0, 1) == nullptr && b->getPiece(0, 2) == nullptr && b->getPiece(0, 3) == nullptr && !b->getPiece(0, 0)->getHasMoved())
+                    if (b.getPiece(0, 1) == nullptr && b.getPiece(0, 2) == nullptr && b.getPiece(0, 3) == nullptr && b.getPiece(0, 0)->getHasMoved())
                     {
                         return true;
                     }
@@ -77,7 +77,7 @@ bool King::checkMove(pair<int, int> n, Board *b)
         };
         for (auto &d : dirs)
         {
-            if (n.first == row + d.first && n.second == col + d.second && (b->getPiece(n.first, n.second) == nullptr || b->getPiece(n.first, n.second)->getColour() != colour))
+            if (n.first == row + d.first && n.second == col + d.second && (b.getPiece(n.first, n.second) == nullptr || b.getPiece(n.first, n.second)->getColour() != colour))
             {
                 return true;
             }
