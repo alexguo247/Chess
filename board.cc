@@ -138,7 +138,7 @@ void Board::setOrCreatePiece(Piece *piece, int row, int col, bool isCreate, Type
 }
 
 Type Board::getTypeChar(char p) {
-    if (p == 'p' || 'P') {
+    if (p == 'p' || p == 'P') {
         return Type::PAWN;
     } else if (p == 'k' || p == 'K') {
         return Type::KING;

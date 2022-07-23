@@ -14,6 +14,7 @@ class Chessgame
     Player *p1;
     Player *p2;
     bool hasSetup;
+    bool gameIsRunning;
     Colour turn;
     Scoreboard *sb;
     std::vector<std::vector<int>> whiteAttackingMoves;
