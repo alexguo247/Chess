@@ -12,6 +12,7 @@ void Human::move(Board *board, pair<int, int> start, pair<int, int> end)
     if (!p->checkMove(end, *b))
     {
         cout << "Invalid move!" << endl;
+        return; 
     }
 
     board->setPiece(p, end.first, end.second);
