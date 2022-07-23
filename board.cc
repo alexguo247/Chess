@@ -76,7 +76,8 @@ void Board::setPiece(Piece *piece, int row, int col)
     case Type::QUEEN:
         grid[row][col] = new Queen(c, row, col, true);
     case Type::PAWN:
-        grid[row][col] = new Pawn(c, row, col, true);
+        bool doubleMove = static_cast<Pawn *>(piece)->hasDoubleMoved();
+        grid[row][col] = new Pawn(c, row, col, true, doubleMove);
     }
 }
 
@@ -213,8 +214,8 @@ void Board::setup()
 
     for (int i = 0; i < 8; i++)
     {
-        grid[1][i] = new Pawn(Colour::BLACK, 1, i, false);
-        grid[6][i] = new Pawn(Colour::WHITE, 6, i, false);
+        grid[1][i] = new Pawn(Colour::BLACK, 1, i, false, false);
+        grid[6][i] = new Pawn(Colour::WHITE, 6, i, false, false);
     }
 
     for (int i = 0; i < 8; i++)

@@ -68,7 +68,7 @@ Piece *buildPiece(char pieceType, pair<int, int> pos)
     case 'Q':
         p = new Queen(Colour::WHITE, pos.first, pos.second, false);
     case 'P':
-        p = new Pawn(Colour::WHITE, pos.first, pos.second, false);
+        p = new Pawn(Colour::WHITE, pos.first, pos.second, false, false);
     case 'k':
         p = new King(Colour::BLACK, pos.first, pos.second, false);
     case 'r':
@@ -80,7 +80,7 @@ Piece *buildPiece(char pieceType, pair<int, int> pos)
     case 'q':
         p = new Queen(Colour::BLACK, pos.first, pos.second, false);
     case 'p':
-        p = new Pawn(Colour::BLACK, pos.first, pos.second, false);
+        p = new Pawn(Colour::BLACK, pos.first, pos.second, false, false);
     }
     return p;
 }
