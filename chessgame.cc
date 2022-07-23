@@ -210,6 +210,7 @@ void Chessgame::game(string player1, string player2)
 
     hasSetup = false;
     gameIsRunning = true;
+    board.resetTurn(); // turn number
 
     if (player1 == "human") {
         p1 = new Human(&board, Colour::WHITE);
@@ -263,6 +264,7 @@ void Chessgame::updateAttackingMoves()
             }
 
             Colour c = board.getPiece(i, j)->getColour();
+
             vector<vector<int>> attackMoves = board.getPiece(i, j)->getAttackMoves(board);
 
             for (auto a : attackMoves)
@@ -613,7 +615,7 @@ void Chessgame::move(string coord1, string coord2, char promotion)
             return;
         }
     }
-
+    board.incrementTurn();
     board.print();
     this->updateAttackingMoves();
 

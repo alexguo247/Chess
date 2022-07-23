@@ -32,6 +32,14 @@ Piece *Board::getPiece(int row, int col)
     return grid[row][col];
 }
 
+void Board::incrementTurn() {
+    turn += 1;
+}
+
+void Board::resetTurn() {
+    turn = 0;
+}
+
 bool Board::move(pair<int, int> start, pair<int, int> end, char promotion) {
     Piece *p = getPiece(start.first, start.second);
 
@@ -44,8 +52,19 @@ bool Board::move(pair<int, int> start, pair<int, int> end, char promotion) {
     Colour c = p->getColour();
 
     if (t == Type::PAWN && abs(end.first - start.first) == 2) {
-       static_cast<Pawn *>(p)->setDidDoubleMove(true);
+       static_cast<Pawn *>(p)->setDoubleMove(turn);
     }
+
+    Piece *pawnBesidesMe = getPiece(start.first, end.second); 
+    // en passant
+    if ((((p->getColour() == Colour::WHITE && start.first == 3) || (p->getColour() == Colour::BLACK && start.first == 4)) && getPiece(end.first, end.second) == nullptr && pawnBesidesMe != nullptr && pawnBesidesMe->getColour() != p->getColour() && pawnBesidesMe->getType() == Type::PAWN && static_cast<Pawn *>(pawnBesidesMe)->hasDoubleMoved() && static_cast<Pawn *>(pawnBesidesMe)->doubleMove + 1 == turn)) {
+        setOrCreatePiece(p, end.first, end.second, false, t, c);
+        deletePiece(start.first, start.second);
+        deletePiece(start.first, end.second);
+        pawnBesidesMe = nullptr;
+        return true;
+    }
+    pawnBesidesMe = nullptr;
 
     if (t == Type::KING && end.second - start.second == 2) {
         // castle right side
@@ -61,14 +80,20 @@ bool Board::move(pair<int, int> start, pair<int, int> end, char promotion) {
         deletePiece(start.first, start.second);
     } else if (p->getType() == Type::PAWN && (end.first == 0 || end.first == 7)) {
         // promotion
-        if (promotion == '\0' || promotion == 'k' || promotion == 'K') {
+        if (promotion == '\0' || getTypeChar(promotion) == Type::KING) {
             cout << "Invalid promotion type! Move again." << endl;
             return false; 
-        } else {
-            setOrCreatePiece(nullptr, end.first, end.second, true, getTypeChar(promotion), c);
-            deletePiece(start.first, start.second);
         }
-    } else {
+
+        if ((c == Colour::WHITE && !isupper(promotion)) || (c == Colour::BLACK && isupper(promotion))) {
+            return false;
+        }
+
+        setOrCreatePiece(nullptr, end.first, end.second, true, getTypeChar(promotion), c);
+        deletePiece(start.first, start.second);
+    } 
+    
+    else {
         // basic move
         setOrCreatePiece(p, end.first, end.second, false, t, c);
         deletePiece(start.first, start.second);
@@ -135,9 +160,9 @@ void Board::setOrCreatePiece(Piece *piece, int row, int col, bool isCreate, Type
         break;
     case Type::PAWN:
         if (piece == nullptr) {
-            grid[row][col] = new Pawn(c, row, col, false, false);
+            grid[row][col] = new Pawn(c, row, col, false, -1);
         } else {
-            bool doubleMove = static_cast<Pawn *>(piece)->hasDoubleMoved();
+            int doubleMove = static_cast<Pawn *>(piece)->doubleMove;
             grid[row][col] = new Pawn(c, row, col, true, doubleMove);
         }
         break;
@@ -293,8 +318,8 @@ void Board::setup()
 
     for (int i = 0; i < 8; i++)
     {
-        grid[1][i] = new Pawn(Colour::BLACK, 1, i, false, false);
-        grid[6][i] = new Pawn(Colour::WHITE, 6, i, false, false);
+        grid[1][i] = new Pawn(Colour::BLACK, 1, i, false, -1);
+        grid[6][i] = new Pawn(Colour::WHITE, 6, i, false, -1);
     }
 
     for (int i = 0; i < 8; i++)

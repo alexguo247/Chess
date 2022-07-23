@@ -7,13 +7,13 @@ class Board;
 
 class Pawn : public Piece
 {
-    bool didDoubleMove;
 public:
-    Pawn(Colour, int, int, bool, bool);
+    int doubleMove; 
+    Pawn(Colour, int, int, bool, int);
     bool checkMove(std::pair<int, int>, Board &);
     std::vector<std::vector<int>> getAttackMoves(Board &);
     bool hasDoubleMoved();
-    void setDidDoubleMove(bool);
+    void setDoubleMove(int);
 };
 
 #endif

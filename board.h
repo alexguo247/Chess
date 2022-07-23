@@ -11,6 +11,7 @@ class Piece;
 class Board
 {
 public:
+    int turn;
     std::vector<std::vector<Piece *>> grid;
     Board();
     Piece *getPiece(int, int);
@@ -18,6 +19,8 @@ public:
     bool isValid();
     Type getTypeChar(char);
     char getCharType(Piece *);
+    void incrementTurn();
+    void resetTurn();
     void print();
     bool move(std::pair<int, int>, std::pair<int, int>, char); // false if error
     void deletePiece(int, int);

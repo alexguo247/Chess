@@ -1,6 +1,7 @@
 #include "knight.h"
 #include "board.h"
 #include <cmath>
+#include <iostream>
 using namespace std;
 
 Knight::Knight(Colour c, int row, int col, bool hasMoved) : Piece(c, Type::KNIGHT, row, col, hasMoved){};
