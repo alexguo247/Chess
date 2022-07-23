@@ -60,12 +60,6 @@ void Board::setPiece(Piece *piece, int row, int col)
         grid[row][col] = nullptr;
     }
 
-    if (piece == nullptr) {
-        delete grid[row][col];
-        grid[row][col] = nullptr;
-        return;
-    }
-
     Type t = piece->getType();
     Colour c = piece->getColour();
 

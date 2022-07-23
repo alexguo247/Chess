@@ -12,7 +12,6 @@ void Human::move(Board *board, pair<int, int> start, pair<int, int> end) {
         cout << "Invalid move!" << endl;
     }
 
-    p->setPos(end.first, end.second);
     board->setPiece(p, end.first, end.second);
-    board->setPiece(nullptr, start.first, start.second);
+    board->deletePiece(start.first, start.second);
 };
