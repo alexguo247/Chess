@@ -7,6 +7,10 @@ using namespace std;
 
 Pawn::Pawn(Colour c, int row, int col, bool hasMoved, bool didDoubleMove) : Piece(c, Type::PAWN, row, col, hasMoved), didDoubleMove{didDoubleMove} {};
 
+Pawn::setDidDoubleMove(bool didDoubleMove) {
+    hasDoubleMoved = didDoubleMove;
+}
+
 bool Pawn::checkMove(pair<int, int> n, Board &b)
 {
     if (row == n.first && col == n.second)
