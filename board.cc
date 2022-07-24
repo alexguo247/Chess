@@ -90,19 +90,6 @@ bool Board::move(pair<int, int> start, pair<int, int> end, char promotion)
     else if (p->getType() == Type::PAWN && (end.first == 0 || end.first == 7))
     {
         // promotion
-        if (promotion == '\0' || promotion == 'k' || promotion == 'K')
-        {
-            cout << "Invalid promotion type! Move again." << endl;
-            return false;
-        }
-        else
-        {
-            setOrCreatePiece(nullptr, end.first, end.second, true, getTypeChar(promotion), c);
-            deletePiece(start.first, start.second);
-        }
-    }
-    else
-    {
         if (promotion == '\0' || getTypeChar(promotion) == Type::KING)
         {
             cout << "Invalid promotion type! Move again." << endl;
@@ -115,6 +102,13 @@ bool Board::move(pair<int, int> start, pair<int, int> end, char promotion)
         }
 
         setOrCreatePiece(nullptr, end.first, end.second, true, getTypeChar(promotion), c);
+        deletePiece(start.first, start.second);
+    }
+
+    else
+    {
+        // basic move
+        setOrCreatePiece(p, end.first, end.second, false, t, c);
         deletePiece(start.first, start.second);
     }
     return true;
