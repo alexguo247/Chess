@@ -413,7 +413,7 @@ bool Board::validateBoard()
     return valid;
 }
 
-void Board::updateAttackingMoves(Colour turn, bool flag)
+void Board::updateAttackingMoves(Colour turn, int count)
 {
     whiteAttackingMoves.clear();
     blackAttackingMoves.clear();
@@ -432,18 +432,18 @@ void Board::updateAttackingMoves(Colour turn, bool flag)
                 Piece *p = getPiece(i, j);
                 if (turn == c)
                 {
-                    attackMoves = static_cast<Pawn *>(p)->getActualMoves(*this, flag);
+                    attackMoves = static_cast<Pawn *>(p)->getActualMoves(*this, count);
                     p = nullptr;
                 }
                 else
                 {
-                    attackMoves = static_cast<Pawn *>(p)->getAttackMoves(*this, flag);
+                    attackMoves = static_cast<Pawn *>(p)->getAttackMoves(*this, count);
                     p = nullptr;
                 }
             }
-            else
+            else if (getPiece(i, j)->getType() != Type::KING)
             {
-                attackMoves = getPiece(i, j)->getAttackMoves(*this, flag);
+                attackMoves = getPiece(i, j)->getAttackMoves(*this, count);
             }
             for (auto a : attackMoves)
             {
@@ -456,6 +456,24 @@ void Board::updateAttackingMoves(Colour turn, bool flag)
                     blackAttackingMoves.push_back(a);
                 }
             }
+        }
+    }
+    pair<int, int> whiteKing = findKing(Colour::WHITE);
+    pair<int, int> blackKing = findKing(Colour::BLACK);
+    if (whiteKing.first != -1)
+    {
+        vector<vector<int>> attackMoves = getPiece(whiteKing.first, whiteKing.second)->getAttackMoves(*this, count);
+        for (auto a : attackMoves)
+        {
+            whiteAttackingMoves.push_back(a);
+        }
+    }
+    if (blackKing.first != -1)
+    {
+        vector<vector<int>> attackMoves = getPiece(blackKing.first, blackKing.second)->getAttackMoves(*this, count);
+        for (auto a : attackMoves)
+        {
+            blackAttackingMoves.push_back(a);
         }
     }
 }
@@ -754,13 +772,11 @@ bool Board::inCheckmate(Colour turn)
 bool Board::inStalemate(Colour turn)
 {
     Colour opposing = turn == Colour::WHITE ? Colour::BLACK : Colour::WHITE;
-    updateAttackingMoves(opposing, true);
-    for (auto a : blackAttackingMoves)
-    {
-        cout << a[0] << a[1] << "  " << a[2] << a[3] << endl;
-    }
+    updateAttackingMoves(opposing, 0);
+
     if (turn == Colour::WHITE && blackAttackingMoves.size() == 0)
     {
+
         return true;
     }
     else if (turn == Colour::BLACK && whiteAttackingMoves.size() == 0)
@@ -770,9 +786,10 @@ bool Board::inStalemate(Colour turn)
     return false;
 }
 
-bool Board::causesCheck(Piece *p, pair<int, int> n)
+bool Board::causesCheck(Piece *p, pair<int, int> n, int count)
 {
     Colour colour = p->getColour();
+    Colour opposingColour = colour == Colour::WHITE ? Colour::BLACK : Colour::WHITE;
     Type type = p->getType();
     int currRow = p->getPos().first;
     int currCol = p->getPos().second;
@@ -794,8 +811,9 @@ bool Board::causesCheck(Piece *p, pair<int, int> n)
     }
     b.setOrCreatePiece(nullptr, n.first, n.second, true, type, colour);
     b.deletePiece(currRow, currCol);
-    b.updateAttackingMoves(colour, false);
+    b.updateAttackingMoves(colour, count + 1);
     bool ret = b.inDanger(colour, kingPos.first, kingPos.second);
+
     b.clearBoard();
     return ret;
 }

@@ -70,7 +70,7 @@ void Chessgame::defaultConfiguration()
 {
     turn = Colour::WHITE;
     board.setup();
-    board.updateAttackingMoves(turn, true);
+    board.updateAttackingMoves(turn, 0);
 }
 
 void Chessgame::setup()
@@ -226,7 +226,7 @@ void Chessgame::move(string coord1, string coord2, char promotion)
     }
 
     board.print();
-    board.updateAttackingMoves(turn, true);
+    board.updateAttackingMoves(turn, 0);
 
     if (board.inCheck(turn))
     {

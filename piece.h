@@ -25,7 +25,7 @@ public:
     std::pair<int, int> getPos();                             // return the position of the piece
     void setPos(int, int);                                    // set the position of the piece
     virtual bool checkMove(std::pair<int, int>, Board &) = 0; // check if move is valid
-    virtual std::vector<std::vector<int>> getAttackMoves(Board &, bool) = 0;
+    virtual std::vector<std::vector<int>> getAttackMoves(Board &, int) = 0;
     virtual bool getHasMoved();
 };
 #endif

@@ -91,7 +91,7 @@ bool King::checkMove(pair<int, int> n, Board &b)
     }
 }
 
-vector<vector<int>> King::getAttackMoves(Board &b, bool flag)
+vector<vector<int>> King::getAttackMoves(Board &b, int count)
 {
     vector<vector<int>> attackMoves;
     vector<pair<int, int>> dirs{

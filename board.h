@@ -29,14 +29,14 @@ public:
     void deletePiece(int, int);
     void clearBoard();
     void setup();
-    void updateAttackingMoves(Colour, bool);
+    void updateAttackingMoves(Colour, int);
     bool validateBoard();
     std::pair<int, int> findKing(Colour);
     bool inDanger(Colour, int, int);
     bool inCheck(Colour);
     bool inCheckmate(Colour);
     bool inStalemate(Colour);
-    bool causesCheck(Piece *, std::pair<int, int>);
+    bool causesCheck(Piece *, std::pair<int, int>, int);
 };
 
 #endif

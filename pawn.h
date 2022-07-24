@@ -12,8 +12,8 @@ class Pawn : public Piece
 public:
     Pawn(Colour, int, int, bool, bool);
     bool checkMove(std::pair<int, int>, Board &) override;
-    std::vector<std::vector<int>> getAttackMoves(Board &, bool) override;
-    std::vector<std::vector<int>> getActualMoves(Board &, bool);
+    std::vector<std::vector<int>> getAttackMoves(Board &, int) override;
+    std::vector<std::vector<int>> getActualMoves(Board &, int);
     bool hasDoubleMoved();
     void setDidDoubleMove(bool);
 };
