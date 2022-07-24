@@ -15,6 +15,7 @@ class Board
     bool canBlock(Colour, int, int);
 
 public:
+    int turn;
     std::vector<std::vector<Piece *>> grid;
     std::vector<std::vector<int>> whiteAttackingMoves;
     std::vector<std::vector<int>> blackAttackingMoves;
@@ -24,6 +25,8 @@ public:
     bool isValid();
     Type getTypeChar(char);
     char getCharType(Piece *);
+    void incrementTurn();
+    void resetTurn();
     void print();
     bool move(std::pair<int, int>, std::pair<int, int>, char); // false if error
     void deletePiece(int, int);

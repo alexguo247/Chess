@@ -146,6 +146,7 @@ void Chessgame::game(string player1, string player2)
 
     hasSetup = false;
     gameIsRunning = true;
+    board.resetTurn(); // turn number
 
     if (player1 == "human")
     {
@@ -224,7 +225,7 @@ void Chessgame::move(string coord1, string coord2, char promotion)
             return;
         }
     }
-
+    board.incrementTurn();
     board.print();
     board.updateAttackingMoves(turn, 0);
 
