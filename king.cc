@@ -112,7 +112,7 @@ vector<vector<int>> King::getAttackMoves(Board &b, int count)
         {
             continue;
         }
-        if ((b.getPiece(newRow, newCol) == nullptr || b.getPiece(newRow, newCol)->getColour() != colour) && !b.inDanger(Colour::BLACK, newRow, newCol))
+        if ((b.getPiece(newRow, newCol) == nullptr || b.getPiece(newRow, newCol)->getColour() != colour) && !b.inDanger(colour, newRow, newCol))
         {
             attackMoves.push_back({newRow, newCol, row, col});
         }

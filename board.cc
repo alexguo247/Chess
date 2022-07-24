@@ -710,6 +710,7 @@ bool Board::inCheckmate(Colour turn)
                     isCheckmate = false;
                 }
             }
+
             // Escape by blocking
             // Down right
             if (rowDiff > 0 && colDiff > 0)
