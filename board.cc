@@ -799,12 +799,11 @@ bool Board::inStalemate(Colour turn)
     Colour opposing = turn == Colour::WHITE ? Colour::BLACK : Colour::WHITE;
     updateAttackingMoves(opposing, 0);
 
-    if (turn == Colour::WHITE && blackAttackingMoves.size() == 0)
+    if (turn == Colour::WHITE && blackAttackingMoves.size() == 0 && !inCheck(Colour::BLACK))
     {
-
         return true;
     }
-    else if (turn == Colour::BLACK && whiteAttackingMoves.size() == 0)
+    else if (turn == Colour::BLACK && whiteAttackingMoves.size() == 0 && !inCheck(Colour::WHITE))
     {
         return true;
     }
@@ -814,7 +813,6 @@ bool Board::inStalemate(Colour turn)
 bool Board::causesCheck(Piece *p, pair<int, int> n, int count)
 {
     Colour colour = p->getColour();
-    Colour opposingColour = colour == Colour::WHITE ? Colour::BLACK : Colour::WHITE;
     Type type = p->getType();
     int currRow = p->getPos().first;
     int currCol = p->getPos().second;
