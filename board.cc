@@ -402,6 +402,10 @@ bool Board::validateBoard()
     {
         for (int j = 0; j < 8; j++)
         {
+            if (getPiece(i, j) == nullptr) {
+                continue;
+            }
+
             if (i == 0 || i == 7)
             {
                 if (getPiece(i, j)->getType() == Type::PAWN)
