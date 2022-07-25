@@ -113,12 +113,14 @@ void Chessgame::setup()
             input >> coord;
             coordPair = convertCoord(coord);
             board.setOrCreatePiece(nullptr, coordPair.first, coordPair.second, true, board.getTypeChar(pieceType), isupper(pieceType) ? Colour::WHITE : Colour::BLACK);
+            board.print();
         }
         else if (cmd == "-")
         {
             input >> coord;
             coordPair = convertCoord(coord);
             board.deletePiece(coordPair.first, coordPair.second);
+            board.print();
         }
         else if (cmd == "done")
         {
