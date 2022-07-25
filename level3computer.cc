@@ -16,7 +16,7 @@
 
 using namespace std;
 
-bool computer3::move(Board *board, std::pair<int, int> start, std::pair<int, int> finish, char tempChar){ 
+bool Computer3::move(Board *board, std::pair<int, int> start, std::pair<int, int> finish, char tempChar){ 
 
 //perfers capturing moves and checks over other moves
     bool isMoved = false;

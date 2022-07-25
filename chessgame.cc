@@ -167,19 +167,19 @@ void Chessgame::game(string player1, string player2)
     } 
     else if(player1 == "computer1")
     {
-        p1 = new computer1(&board, Colour::WHITE);
+        p1 = new Computer1(&board, Colour::WHITE);
     }
     else if(player1 == "computer2")
     {
-        p1 = new computer2(&board, Colour::WHITE);
+        p1 = new Computer2(&board, Colour::WHITE);
     }
     else if(player1 == "computer3")
     {
-        p1 = new computer3(&board, Colour::WHITE);
+        p1 = new Computer3(&board, Colour::WHITE);
     }
     else if(player1 == "computer4")
     {
-        p1 = new computer4(&board, Colour::WHITE);
+        p1 = new Computer4(&board, Colour::WHITE);
     }
     else
     {
@@ -193,19 +193,19 @@ void Chessgame::game(string player1, string player2)
     }
     else if(player2 == "computer1")
     {
-        p2 = new computer1(&board, Colour::BLACK);
+        p2 = new Computer1(&board, Colour::BLACK);
     }
     else if(player2 == "computer2")
     {
-        p2 = new computer2(&board, Colour::BLACK);
+        p2 = new Computer2(&board, Colour::BLACK);
     }
     else if(player2 == "computer3")
     {
-        p2 = new computer3(&board, Colour::BLACK);
+        p2 = new Computer3(&board, Colour::BLACK);
     }
     else if(player2 == "computer4")
     {
-        p2 = new computer4(&board, Colour::BLACK);
+        p2 = new Computer4(&board, Colour::BLACK);
     }
     else
     {

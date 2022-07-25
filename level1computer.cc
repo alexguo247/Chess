@@ -15,7 +15,7 @@
 
 using namespace std;
 
-bool computer1::move(Board *board, std::pair<int, int> start, std::pair<int, int> finish, char tempChar){ 
+bool Computer1::move(Board *board, std::pair<int, int> start, std::pair<int, int> finish, char tempChar){ 
     bool isMoved = false;
 
     vector<vector<int>> moves;
