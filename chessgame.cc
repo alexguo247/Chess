@@ -114,6 +114,7 @@ void Chessgame::setup()
             coordPair = convertCoord(coord);
             board.setOrCreatePiece(nullptr, coordPair.first, coordPair.second, true, board.getTypeChar(pieceType), isupper(pieceType) ? Colour::WHITE : Colour::BLACK);
             board.print();
+            board.updateAttackingMoves(turn, 0);
         }
         else if (cmd == "-")
         {
@@ -121,6 +122,7 @@ void Chessgame::setup()
             coordPair = convertCoord(coord);
             board.deletePiece(coordPair.first, coordPair.second);
             board.print();
+            board.updateAttackingMoves(turn, 0);
         }
         else if (cmd == "done")
         {
