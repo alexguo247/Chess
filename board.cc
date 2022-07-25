@@ -642,7 +642,7 @@ bool Board::inCheckmate(Colour turn)
             for (auto &d : dirs)
             {
                 int nr = kingRow + d.first;
-                int nc = kingRow + d.second;
+                int nc = kingCol + d.second;
                 if (currKing->checkMove({nr, nc}, *this) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
                 {
                     isCheckmate = false;
@@ -677,7 +677,7 @@ bool Board::inCheckmate(Colour turn)
             for (auto &d : dirs)
             {
                 int nr = kingRow + d.first;
-                int nc = kingRow + d.second;
+                int nc = kingCol + d.second;
                 if (currKing->checkMove({nr, nc}, *this) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
                 {
                     isCheckmate = false;
@@ -712,7 +712,7 @@ bool Board::inCheckmate(Colour turn)
             for (auto &d : dirs)
             {
                 int nr = kingRow + d.first;
-                int nc = kingRow + d.second;
+                int nc = kingCol + d.second;
                 if (currKing->checkMove({nr, nc}, *this) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
                 {
                     isCheckmate = false;
