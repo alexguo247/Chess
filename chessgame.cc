@@ -19,6 +19,10 @@ using namespace std;
 
 pair<int, int> convertCoord(string coord)
 {
+    if (coord.length() == 0) {
+        return make_pair(-1, -1);
+    }
+
     pair<int, int> convertedCoordinate;
     int row = coord[1] - '0';
     switch (coord[0])
@@ -244,20 +248,18 @@ void Chessgame::move(string coord1, string coord2, char promotion)
     pair<int, int> start = convertCoord(coord1);
     pair<int, int> end = convertCoord(coord2);
 
-    Piece *piece = board.getPiece(start.first, start.second);
-    if(start.first != NULL && end.first != NULL ){
-        if (piece == nullptr)
-            {
-                cout << "No piece to move at that square! Move again." << endl;
-                return;
+    if (coord1.length() != 0 && coord2.length() != 0) {
+        Piece *piece = board.getPiece(start.first, start.second);
+
+        if (piece == nullptr) {
+            cout << "No piece to move at that square! Move again." << endl;
+            return;
         }
 
-        if (piece->getColour() != turn)
-            {
-                cout << "Moving piece of opposite colour is not allowed! Move again." << endl;
-                return;
+        if (piece->getColour() != turn) {
+            cout << "Moving piece of opposite colour is not allowed! Move again." << endl;
+            return;
         }
-
     }
     
     if (turn == Colour::WHITE)

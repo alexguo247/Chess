@@ -55,9 +55,6 @@ bool computer2::move(Board *board, std::pair<int, int> start, std::pair<int, int
     int size1 = moves.size();
     int index1 = rand() % size1;
 
-    int size2 = moves[index1].size();
-    int index2 = rand() & size2;
-
     auto a = moves[index1];
 
     

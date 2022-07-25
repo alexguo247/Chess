@@ -4,7 +4,6 @@
 
 using namespace std;
 
-
 int main()
 {
     Chessgame *chess = new Chessgame();
@@ -13,6 +12,11 @@ int main()
 
     while (getline(cin, line))
     {
+        if (!line.length()) {
+            cout << "No command entered. Try again." << endl;
+            continue; 
+        }
+
         stringstream input(line);
         input >> cmd;
         if (cmd == "game")
@@ -47,6 +51,7 @@ int main()
             cout << "Not a valid command" << endl;
         }
     }
+
     chess->printScoreboard();
     delete chess;
     return 0;
