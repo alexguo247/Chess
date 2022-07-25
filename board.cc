@@ -827,10 +827,6 @@ bool Board::causesCheck(Piece *p, pair<int, int> n, int count)
     int currRow = p->getPos().first;
     int currCol = p->getPos().second;
     pair<int, int> kingPos = findKing(colour);
-    if (inDanger(colour, kingPos.first, kingPos.second))
-    {
-        return true;
-    }
     Board b = Board{};
     for (int i = 0; i < grid.size(); i++)
     {
@@ -846,7 +842,6 @@ bool Board::causesCheck(Piece *p, pair<int, int> n, int count)
     b.deletePiece(currRow, currCol);
     b.updateAttackingMoves(colour, count + 1);
     bool ret = b.inDanger(colour, kingPos.first, kingPos.second);
-
     b.clearBoard();
     return ret;
 }

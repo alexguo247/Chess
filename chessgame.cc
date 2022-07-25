@@ -143,7 +143,8 @@ void Chessgame::setup()
 
 void Chessgame::game(string player1, string player2)
 {
-    if (gameIsRunning) {
+    if (gameIsRunning)
+    {
         cout << "Game is already running." << endl;
         return;
     }
@@ -202,7 +203,8 @@ void Chessgame::resign()
 
 void Chessgame::move(string coord1, string coord2, char promotion)
 {
-    if (!gameIsRunning) {
+    if (!gameIsRunning)
+    {
         cout << "Can't move. No active game is running." << endl;
         return;
     }
@@ -241,7 +243,6 @@ void Chessgame::move(string coord1, string coord2, char promotion)
     board.incrementTurn();
     board.print();
     board.updateAttackingMoves(turn, 0);
-
     if (board.inCheck(turn))
     {
         if (turn == Colour::WHITE)
@@ -253,7 +254,6 @@ void Chessgame::move(string coord1, string coord2, char promotion)
             cout << "White is in check." << endl;
         }
     };
-
     if (board.inCheckmate(turn))
     {
         if (turn == Colour::WHITE)
