@@ -403,7 +403,8 @@ bool Board::validateBoard()
     {
         for (int j = 0; j < 8; j++)
         {
-            if (getPiece(i, j) == nullptr) {
+            if (getPiece(i, j) == nullptr)
+            {
                 continue;
             }
 
@@ -619,6 +620,10 @@ bool Board::inCheckmate(Colour turn)
     int kingCol = kingCoords.second;
     Piece *currKing = getPiece(kingRow, kingCol);
     bool isCheckmate = true;
+    if (!inDanger(attacked, kingRow, kingCol))
+    {
+        return false;
+    }
     // No attackers
     if (attackers.size() == 0)
     {
@@ -631,7 +636,6 @@ bool Board::inCheckmate(Colour turn)
         int attackerCol = attackers[0][3];
         int rowDiff = attackerRow - kingRow;
         int colDiff = attackerCol - kingCol;
-
         // Same row (rook / queen)
         if (rowDiff == 0)
         {
@@ -776,8 +780,8 @@ bool Board::inCheckmate(Colour turn)
             for (auto &d : dirs)
             {
                 int nr = kingRow + d.first;
-                int nc = kingRow + d.second;
-                if (currKing->checkMove({nr, nc}, *this) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
+                int nc = kingCol + d.second;
+                if (currKing->checkMove({nr, nc}, *this))
                 {
                     isCheckmate = false;
                 }
@@ -790,13 +794,14 @@ bool Board::inCheckmate(Colour turn)
         for (auto &d : dirs)
         {
             int nr = kingRow + d.first;
-            int nc = kingRow + d.second;
+            int nc = kingCol + d.second;
             if (currKing->checkMove({nr, nc}, *this) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
             {
                 isCheckmate = false;
             }
         }
     }
+    currKing = nullptr;
     return isCheckmate;
 }
 

@@ -113,12 +113,16 @@ void Chessgame::setup()
             input >> coord;
             coordPair = convertCoord(coord);
             board.setOrCreatePiece(nullptr, coordPair.first, coordPair.second, true, board.getTypeChar(pieceType), isupper(pieceType) ? Colour::WHITE : Colour::BLACK);
+            board.print();
+            board.updateAttackingMoves(turn, 0);
         }
         else if (cmd == "-")
         {
             input >> coord;
             coordPair = convertCoord(coord);
             board.deletePiece(coordPair.first, coordPair.second);
+            board.print();
+            board.updateAttackingMoves(turn, 0);
         }
         else if (cmd == "done")
         {
@@ -139,6 +143,11 @@ void Chessgame::setup()
 
 void Chessgame::game(string player1, string player2)
 {
+    if (gameIsRunning) {
+        cout << "Game is already running." << endl;
+        return;
+    }
+
     if (!hasSetup)
     {
         defaultConfiguration();
@@ -201,7 +210,6 @@ void Chessgame::game(string player1, string player2)
     }
     
     board.print();
-    //displayPrint
 }
 
 void Chessgame::resign()
@@ -228,6 +236,11 @@ void Chessgame::resign()
 
 void Chessgame::move(string coord1, string coord2, char promotion)
 {
+    if (!gameIsRunning) {
+        cout << "Can't move. No active game is running." << endl;
+        return;
+    }
+
     pair<int, int> start = convertCoord(coord1);
     pair<int, int> end = convertCoord(coord2);
 
@@ -261,6 +274,7 @@ void Chessgame::move(string coord1, string coord2, char promotion)
             return;
         }
     }
+
     board.incrementTurn();
     board.print();
     board.updateAttackingMoves(turn, 0);
