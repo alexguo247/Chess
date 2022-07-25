@@ -151,6 +151,23 @@ void Chessgame::game(string player1, string player2)
     if (player1 == "human")
     {
         p1 = new Human(&board, Colour::WHITE);
+    } 
+    else if(player1 == "computer1")
+    {
+        p1 = new computer1(&board, Colour::WHITE);
+    }
+    else if(player1 == "computer2")
+    {
+        cout << "inside 1 " << endl;
+        p1 = new computer2(&board, Colour::WHITE);
+    }
+    else if(player1 == "computer3")
+    {
+        p1 = new computer3(&board, Colour::WHITE);
+    }
+    else if(player1 == "computer4")
+    {
+        // p1 = new computer4(&board, Colour::WHITE);
     }
     else
     {
@@ -162,11 +179,29 @@ void Chessgame::game(string player1, string player2)
     {
         p2 = new Human(&board, Colour::BLACK);
     }
+    else if(player2 == "computer1")
+    {
+        p2 = new computer1(&board, Colour::BLACK);
+    }
+    else if(player2 == "computer2")
+    {
+        p2 = new computer2(&board, Colour::BLACK);
+    }
+    else if(player2 == "computer3")
+    {
+        p2 = new computer3(&board, Colour::BLACK);
+    }
+    else if(player2 == "computer4")
+    {
+        // p2 = new computer4(&board, Colour::BLACK);
+    }
     else
     {
         cout << "Invalid player 2 type!" << endl;
         return;
     }
+    
+    //TODO - add setup for if player is a computer
 
     board.print();
 }

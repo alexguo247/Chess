@@ -5,6 +5,10 @@
 #include <vector>
 #include "board.h"
 #include "scoreboard.h"
+#include "level1computer.h"
+#include "level2computer.h"
+#include "level3computer.h"
+#include "level4computer.h"
 
 class Player;
 

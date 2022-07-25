@@ -3,7 +3,7 @@
 
 #include "colour.h"
 #include "type.h"
-
+#include <vector>
 #include <string>
 
 class Board;

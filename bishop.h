@@ -1,6 +1,7 @@
 #ifndef __BISHOP_H__
 #define __BISHOP_H__
 #include "piece.h"
+#include <vector>
 class Board;
 
 class Bishop : public Piece
