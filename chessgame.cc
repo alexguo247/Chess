@@ -158,7 +158,6 @@ void Chessgame::game(string player1, string player2)
     }
     else if(player1 == "computer2")
     {
-        cout << "inside 1 " << endl;
         p1 = new computer2(&board, Colour::WHITE);
     }
     else if(player1 == "computer3")
@@ -167,7 +166,7 @@ void Chessgame::game(string player1, string player2)
     }
     else if(player1 == "computer4")
     {
-        // p1 = new computer4(&board, Colour::WHITE);
+        p1 = new computer4(&board, Colour::WHITE);
     }
     else
     {
@@ -193,7 +192,7 @@ void Chessgame::game(string player1, string player2)
     }
     else if(player2 == "computer4")
     {
-        // p2 = new computer4(&board, Colour::BLACK);
+        p2 = new computer4(&board, Colour::BLACK);
     }
     else
     {
@@ -201,9 +200,8 @@ void Chessgame::game(string player1, string player2)
         return;
     }
     
-    //TODO - add setup for if player is a computer
-
     board.print();
+    //displayPrint
 }
 
 void Chessgame::resign()

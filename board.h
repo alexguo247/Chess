@@ -6,6 +6,7 @@
 #include "colour.h"
 #include <stdbool.h>
 #include "colour.h"
+#include "sdl_wrap.h"
 
 class Piece;
 

@@ -1,8 +1,11 @@
 #include "chessgame.h"
+#include "sdl_wrap.h"
 #include <iostream>
 #include <sstream>
 
 using namespace std;
+
+SDL_Runner r;
 
 int main()
 {

@@ -286,6 +286,7 @@ char Board::getCharType(Piece *p)
 
 void Board::print()
 {
+    //TODO-> DRAW THE BOARD HERE DIRECTLY
     cout << endl;
 
     int rowNum = 8;
