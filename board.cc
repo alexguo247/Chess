@@ -96,8 +96,9 @@ bool Board::move(pair<int, int> start, pair<int, int> end, char promotion)
             return false;
         }
 
-        if ((c == Colour::WHITE && !isupper(promotion)) || (c == Colour::BLACK && isupper(promotion)))
+        if ((c == Colour::WHITE && isupper(promotion)) || (c == Colour::BLACK && !isupper(promotion)))
         {
+            cout << "Invalid colour promotion!" << endl;
             return false;
         }
 

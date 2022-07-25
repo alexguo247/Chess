@@ -139,6 +139,11 @@ void Chessgame::setup()
 
 void Chessgame::game(string player1, string player2)
 {
+    if (gameIsRunning) {
+        cout << "Game is already running." << endl;
+        return;
+    }
+
     if (!hasSetup)
     {
         defaultConfiguration();
@@ -167,8 +172,6 @@ void Chessgame::game(string player1, string player2)
         cout << "Invalid player 2 type!" << endl;
         return;
     }
-
-    board.print();
 }
 
 void Chessgame::resign()
@@ -195,6 +198,11 @@ void Chessgame::resign()
 
 void Chessgame::move(string coord1, string coord2, char promotion)
 {
+    if (!gameIsRunning) {
+        cout << "Can't move. No active game is running." << endl;
+        return;
+    }
+
     pair<int, int> start = convertCoord(coord1);
     pair<int, int> end = convertCoord(coord2);
 
@@ -225,6 +233,7 @@ void Chessgame::move(string coord1, string coord2, char promotion)
             return;
         }
     }
+
     board.incrementTurn();
     board.print();
     board.updateAttackingMoves(turn, 0);
