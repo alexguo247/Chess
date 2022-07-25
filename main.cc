@@ -6,14 +6,16 @@ using namespace std;
 
 int main()
 {
-    Chessgame* chess = new Chessgame();
+    Chessgame *chess = new Chessgame();
     string line;
     string cmd;
 
-    while (getline(cin, line)) {
+    while (getline(cin, line))
+    {
         stringstream input(line);
         input >> cmd;
-        if (cmd == "game") {
+        if (cmd == "game")
+        {
             string p1;
             string p2;
             input >> p1;
@@ -33,7 +35,9 @@ int main()
             input >> end;
             input >> promotion;
             chess->move(start, end, promotion);
-        } else if (cmd == "setup") {
+        }
+        else if (cmd == "setup")
+        {
             chess->setup();
         }
         else

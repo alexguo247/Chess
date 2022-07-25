@@ -20,12 +20,16 @@ bool Rook::checkMove(pair<int, int> n, Board &b)
     {
         return false;
     }
-
     int rowDiff = n.first - row;
     int colDiff = n.second - col;
 
     // If the ending spot is the same colour
     if (b.getPiece(n.first, n.second) != nullptr && b.getPiece(n.first, n.second)->getColour() == colour)
+    {
+        return false;
+    }
+
+    if (b.causesCheck(this, n, 0))
     {
         return false;
     }
@@ -78,55 +82,55 @@ bool Rook::checkMove(pair<int, int> n, Board &b)
     return true;
 }
 
-vector<vector<int>> Rook::getAttackMoves(Board &b)
+vector<vector<int>> Rook::getAttackMoves(Board &b, int count)
 {
     vector<vector<int>> attackMoves;
 
     int currRow = row + 1;
     int currCol = col;
     // Down
-    while (currRow < 8 && b.getPiece(currRow, currCol) == nullptr)
+    while (currRow < 8 && b.getPiece(currRow, currCol) == nullptr && count <= 1 && !b.causesCheck(this, {currRow, currCol}, count))
     {
         attackMoves.push_back({currRow, currCol, row, col});
         currRow++;
     }
-    if (currRow < 8 && b.getPiece(currRow, currCol)->getColour() != colour)
+    if (currRow < 8 && b.getPiece(currRow, currCol) != nullptr && b.getPiece(currRow, currCol)->getColour() != colour && count <= 1 && !b.causesCheck(this, {currRow, currCol}, count))
     {
         attackMoves.push_back({currRow, currCol, row, col});
     }
     currRow = row - 1;
     // Up
-    while (currRow >= 0 && b.getPiece(currRow, currCol) == nullptr)
+    while (currRow >= 0 && b.getPiece(currRow, currCol) == nullptr && count <= 1 && !b.causesCheck(this, {currRow, currCol}, count))
     {
         attackMoves.push_back({currRow, currCol, row, col});
         currRow--;
     }
-    if (currRow >= 0 && b.getPiece(currRow, currCol)->getColour() != colour)
+
+    if (currRow >= 0 && b.getPiece(currRow, currCol) != nullptr && b.getPiece(currRow, currCol)->getColour() != colour && count <= 1 && !b.causesCheck(this, {currRow, currCol}, count))
     {
         attackMoves.push_back({currRow, currCol, row, col});
     }
 
     currRow = row;
     currCol = col - 1;
-
     // Left
-    while (currCol >= 0 && b.getPiece(currRow, currCol) == nullptr)
+    while (currCol >= 0 && b.getPiece(currRow, currCol) == nullptr && count <= 1 && !b.causesCheck(this, {currRow, currCol}, count))
     {
         attackMoves.push_back({currRow, currCol, row, col});
         currCol--;
     }
-    if (currCol >= 0 && b.getPiece(currRow, currCol)->getColour() != colour)
+    if (currCol >= 0 && b.getPiece(currRow, currCol) != nullptr && b.getPiece(currRow, currCol)->getColour() != colour && count <= 1 && !b.causesCheck(this, {currRow, currCol}, count))
     {
         attackMoves.push_back({currRow, currCol, row, col});
     }
     currCol = col + 1;
     // Right
-    while (currCol < 8 && b.getPiece(currRow, currCol) == nullptr)
+    while (currCol < 8 && b.getPiece(currRow, currCol) == nullptr && count <= 1 && !b.causesCheck(this, {currRow, currCol}, count))
     {
         attackMoves.push_back({currRow, currCol, row, col});
         currCol++;
     }
-    if (currCol < 8 && b.getPiece(currRow, currCol)->getColour() != colour)
+    if (currCol < 8 && b.getPiece(currRow, currCol) != nullptr && b.getPiece(currRow, currCol)->getColour() != colour && count <= 1 && !b.causesCheck(this, {currRow, currCol}, count))
     {
         attackMoves.push_back({currRow, currCol, row, col});
     }

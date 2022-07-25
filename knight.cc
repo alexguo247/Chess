@@ -16,6 +16,10 @@ bool Knight::checkMove(pair<int, int> n, Board &b)
     {
         return false;
     }
+    if (b.causesCheck(this, n, 0))
+    {
+        return false;
+    }
 
     vector<pair<int, int>> dirs{
         pair<int, int>{-1, -2},
@@ -39,7 +43,7 @@ bool Knight::checkMove(pair<int, int> n, Board &b)
     return false;
 }
 
-vector<vector<int>> Knight::getAttackMoves(Board &b)
+vector<vector<int>> Knight::getAttackMoves(Board &b, int count)
 {
     vector<vector<int>> attackMoves;
     vector<pair<int, int>> dirs{
@@ -62,7 +66,7 @@ vector<vector<int>> Knight::getAttackMoves(Board &b)
             continue;
         }
 
-        if (b.getPiece(newRow, newCol) == nullptr || b.getPiece(newRow, newCol)->getColour() != colour)
+        if ((b.getPiece(newRow, newCol) == nullptr || b.getPiece(newRow, newCol)->getColour() != colour) && count <= 1 && !b.causesCheck(this, {newRow, newCol}, count))
         {
             attackMoves.push_back({newRow, newCol, row, col});
         }

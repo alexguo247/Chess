@@ -7,7 +7,8 @@ using namespace std;
 
 Pawn::Pawn(Colour c, int row, int col, bool hasMoved, int doubleMove) : Piece(c, Type::PAWN, row, col, hasMoved), doubleMove{doubleMove} {};
 
-void Pawn::setDoubleMove(int turn) {
+void Pawn::setDoubleMove(int turn)
+{
     doubleMove = turn;
 }
 
@@ -26,6 +27,10 @@ bool Pawn::checkMove(pair<int, int> n, Board &b)
     {
         return false;
     }
+    if (b.causesCheck(this, n, 0))
+    {
+        return false;
+    }
 
     int rowDiff = n.first - row;
     int colDiff = n.second - col;
@@ -35,9 +40,10 @@ bool Pawn::checkMove(pair<int, int> n, Board &b)
         if ((colDiff == 1 || colDiff == -1) && rowDiff == 1)
         {
 
-            Piece *p = b.getPiece(row, n.second); 
+            Piece *p = b.getPiece(row, n.second);
             // en passant
-            if (row == 4 && b.getPiece(n.first, n.second) == nullptr && p != nullptr && p->getColour() != colour && p->getType() == Type::PAWN && static_cast<Pawn *>(p)->hasDoubleMoved() && static_cast<Pawn *>(p)->doubleMove + 1 == b.turn) {
+            if (row == 4 && b.getPiece(n.first, n.second) == nullptr && p != nullptr && p->getColour() != colour && p->getType() == Type::PAWN && static_cast<Pawn *>(p)->hasDoubleMoved() && static_cast<Pawn *>(p)->doubleMove + 1 == b.turn)
+            {
                 p = nullptr;
                 return true;
             }
@@ -76,7 +82,8 @@ bool Pawn::checkMove(pair<int, int> n, Board &b)
         {
             Piece *p = b.getPiece(row, n.second); // get piece beside you
             // En passant
-            if (row == 3 && b.getPiece(n.first, n.second) == nullptr && p != nullptr && p->getColour() != colour && p->getType() == Type::PAWN && static_cast<Pawn *>(p)->hasDoubleMoved() && static_cast<Pawn *>(p)->doubleMove + 1 == b.turn) {
+            if (row == 3 && b.getPiece(n.first, n.second) == nullptr && p != nullptr && p->getColour() != colour && p->getType() == Type::PAWN && static_cast<Pawn *>(p)->hasDoubleMoved() && static_cast<Pawn *>(p)->doubleMove + 1 == b.turn)
+            {
                 p = nullptr;
                 return true;
             }
@@ -111,48 +118,75 @@ bool Pawn::checkMove(pair<int, int> n, Board &b)
     return false;
 }
 
-vector<vector<int>> Pawn::getAttackMoves(Board &b)
+vector<vector<int>> Pawn::getActualMoves(Board &b, int count)
 {
     vector<vector<int>> attackMoves = {};
     if (colour == Colour::BLACK)
     {
-        // Attack moves
-        if (row + 1 < 8 && col + 1 < 8 && b.getPiece(row + 1, col + 1) != nullptr && b.getPiece(row + 1, col + 1)->getColour() != colour)
+        // Actual moves
+        if (row + 1 < 8 && col + 1 < 8 && b.getPiece(row + 1, col + 1) != nullptr && b.getPiece(row + 1, col + 1)->getColour() != colour && count <= 1 && !b.causesCheck(this, {row + 1, col + 1}, count))
         {
             attackMoves.push_back({row + 1, col + 1, row, col});
         }
-        if (row + 1 < 8 && col - 1 >= 0 && b.getPiece(row + 1, col - 1) != nullptr && b.getPiece(row + 1, col - 1)->getColour() != colour)
+        if (row + 1 < 8 && col - 1 >= 0 && b.getPiece(row + 1, col - 1) != nullptr && b.getPiece(row + 1, col - 1)->getColour() != colour && count <= 1 && !b.causesCheck(this, {row + 1, col - 1}, count))
         {
             attackMoves.push_back({row + 1, col - 1, row, col});
         }
-        if (row + 1 < 8 && b.getPiece(row + 1, col) == nullptr)
+        if (row + 1 < 8 && b.getPiece(row + 1, col) == nullptr && count <= 1 && !b.causesCheck(this, {row + 1, col}, count))
         {
             attackMoves.push_back({row + 1, col, row, col});
         }
-        if (row + 2 < 8 && b.getPiece(row + 1, col) == nullptr && b.getPiece(row + 2, col) == nullptr && !hasMoved)
+        if (row + 2 < 8 && b.getPiece(row + 1, col) == nullptr && b.getPiece(row + 2, col) == nullptr && !hasMoved && count <= 1 && !b.causesCheck(this, {row + 2, col}, count) && !b.causesCheck(this, {row + 1, col}, count))
         {
             attackMoves.push_back({row + 2, col, row, col});
         }
     }
     else
     {
-        // Attack moves
-        if (row - 1 >= 0 && col + 1 < 8 && b.getPiece(row - 1, col + 1) != nullptr && b.getPiece(row - 1, col + 1)->getColour() != colour)
+        // Actual moves
+        if (row - 1 >= 0 && col + 1 < 8 && b.getPiece(row - 1, col + 1) != nullptr && b.getPiece(row - 1, col + 1)->getColour() != colour && count <= 1 && !b.causesCheck(this, {row - 1, col + 1}, count))
         {
-            attackMoves.push_back(vector<int>{row - 1, col + 1, row, col});
+            attackMoves.push_back({row - 1, col + 1, row, col});
         }
-
-        if (row - 1 >= 0 && col - 1 >= 0 && b.getPiece(row - 1, col - 1) != nullptr && b.getPiece(row - 1, col - 1)->getColour() != colour)
+        if (row - 1 >= 0 && col - 1 >= 0 && b.getPiece(row - 1, col - 1) != nullptr && b.getPiece(row - 1, col - 1)->getColour() != colour && count <= 1 && !b.causesCheck(this, {row - 1, col - 1}, count))
         {
-            attackMoves.push_back(vector<int>{row - 1, col - 1, row, col});
+            attackMoves.push_back({row - 1, col - 1, row, col});
         }
-        if (row - 1 >= 0 && b.getPiece(row - 1, col) == nullptr)
+        if (row - 1 >= 0 && b.getPiece(row - 1, col) == nullptr && count <= 1 && !b.causesCheck(this, {row - 1, col}, count))
         {
             attackMoves.push_back({row - 1, col, row, col});
         }
-        if (row - 2 >= 0 && b.getPiece(row - 1, col) == nullptr && b.getPiece(row - 2, col) == nullptr && !hasMoved)
-        {
+        if (row - 2 >= 0 && b.getPiece(row - 1, col) == nullptr && b.getPiece(row - 2, col) == nullptr && !hasMoved && count <= 1 && !b.causesCheck(this, {row - 2, col}, count) && !b.causesCheck(this, {row - 1, col}, count))
             attackMoves.push_back({row - 2, col, row, col});
+    }
+    return attackMoves;
+}
+
+vector<vector<int>> Pawn::getAttackMoves(Board &b, int count)
+{
+    vector<vector<int>> attackMoves = {};
+    if (colour == Colour::BLACK)
+    {
+        // Attack moves
+        if (row + 1 < 8 && col + 1 < 8 && (b.getPiece(row + 1, col + 1) == nullptr || b.getPiece(row + 1, col + 1)->getColour() != colour) && count <= 1 && !b.causesCheck(this, {row + 1, col + 1}, count))
+        {
+            attackMoves.push_back({row + 1, col + 1, row, col});
+        }
+        if (row + 1 < 8 && col - 1 >= 0 && (b.getPiece(row + 1, col - 1) == nullptr || b.getPiece(row + 1, col - 1)->getColour() != colour) && count <= 1 && !b.causesCheck(this, {row + 1, col - 1}, count))
+        {
+            attackMoves.push_back({row + 1, col - 1, row, col});
+        }
+    }
+    else
+    {
+        // Attack moves
+        if (row - 1 >= 0 && col + 1 < 8 && (b.getPiece(row - 1, col + 1) == nullptr || b.getPiece(row - 1, col + 1)->getColour() != colour) && count <= 1 && !b.causesCheck(this, {row - 1, col + 1}, count))
+        {
+            attackMoves.push_back({row - 1, col + 1, row, col});
+        }
+        if (row - 1 >= 0 && col - 1 >= 0 && (b.getPiece(row - 1, col - 1) == nullptr || b.getPiece(row - 1, col - 1)->getColour() != colour) && count <= 1 && !b.causesCheck(this, {row - 1, col - 1}, count))
+        {
+            attackMoves.push_back({row - 1, col - 1, row, col});
         }
     }
     return attackMoves;

@@ -1,6 +1,7 @@
 #include "king.h"
 #include "board.h"
 #include <cmath>
+#include <iostream>
 using namespace std;
 
 King::King(Colour c, int row, int col, bool hasMoved) : Piece(c, Type::KING, row, col, hasMoved){};
@@ -16,11 +17,15 @@ bool King::checkMove(pair<int, int> n, Board &b)
         return false;
     }
 
+    if (b.inDanger(colour, n.first, n.second))
+    {
+        return false;
+    }
     // Castling
     if (row == n.first && abs(n.second - col) == 2)
     {
         // Castling check
-        if (!hasMoved)
+        if (!hasMoved && !b.inDanger(colour, row, col))
         {
             if (this->getColour() == Colour::WHITE)
             {
@@ -86,7 +91,7 @@ bool King::checkMove(pair<int, int> n, Board &b)
     }
 }
 
-vector<vector<int>> King::getAttackMoves(Board &b)
+vector<vector<int>> King::getAttackMoves(Board &b, int count)
 {
     vector<vector<int>> attackMoves;
     vector<pair<int, int>> dirs{
@@ -99,7 +104,6 @@ vector<vector<int>> King::getAttackMoves(Board &b)
         pair<int, int>{1, 0},
         pair<int, int>{1, 1},
     };
-
     for (auto &d : dirs)
     {
         int newRow = row + d.first;
@@ -108,7 +112,7 @@ vector<vector<int>> King::getAttackMoves(Board &b)
         {
             continue;
         }
-        if (b.getPiece(newRow, newCol) == nullptr || b.getPiece(newRow, newCol)->getColour() != colour)
+        if ((b.getPiece(newRow, newCol) == nullptr || b.getPiece(newRow, newCol)->getColour() != colour) && !b.inDanger(colour, newRow, newCol))
         {
             attackMoves.push_back({newRow, newCol, row, col});
         }

@@ -29,6 +29,11 @@ bool Bishop::checkMove(pair<int, int> n, Board &b)
         return false;
     }
 
+    if (b.causesCheck(this, n, 0))
+    {
+        return false;
+    }
+
     // Down right diagonal
     if (rowDiff > 0 && colDiff > 0)
     {
@@ -77,58 +82,58 @@ bool Bishop::checkMove(pair<int, int> n, Board &b)
     return true;
 }
 
-vector<vector<int>> Bishop::getAttackMoves(Board &b)
+vector<vector<int>> Bishop::getAttackMoves(Board &b, int count)
 {
     vector<vector<int>> attackMoves;
     int currRow = row + 1;
     int currCol = col + 1;
     // Down right
-    while (currRow < 8 && currCol < 8 && b.getPiece(currRow, currCol) == nullptr)
+    while (currRow < 8 && currCol < 8 && b.getPiece(currRow, currCol) == nullptr && count <= 1 && !b.causesCheck(this, {currRow, currCol}, count))
     {
         attackMoves.push_back({currRow, currCol, row, col});
         currRow++;
         currCol++;
     }
-    if (currRow < 8 && currCol < 8 && b.getPiece(currRow, currCol)->getColour() != colour)
+    if (currRow < 8 && currCol < 8 && b.getPiece(currRow, currCol) != nullptr && b.getPiece(currRow, currCol)->getColour() != colour && count <= 1 && !b.causesCheck(this, {currRow, currCol}, count))
     {
         attackMoves.push_back({currRow, currCol, row, col});
     }
     currRow = row - 1;
     currCol = col - 1;
     // Top left
-    while (currRow >= 0 && currCol >= 0 && b.getPiece(currRow, currCol) == nullptr)
+    while (currRow >= 0 && currCol >= 0 && b.getPiece(currRow, currCol) == nullptr && count <= 1 && !b.causesCheck(this, {currRow, currCol}, count))
     {
         attackMoves.push_back({currRow, currCol, row, col});
         currRow--;
         currCol--;
     }
-    if (currRow >= 0 && currCol >= 0 && b.getPiece(currRow, currCol)->getColour() != colour)
+    if (currRow >= 0 && currCol >= 0 && b.getPiece(currRow, currCol) != nullptr && b.getPiece(currRow, currCol)->getColour() != colour && count <= 1 && !b.causesCheck(this, {currRow, currCol}, count))
     {
         attackMoves.push_back({currRow, currCol, row, col});
     }
     currRow = row + 1;
     currCol = col - 1;
     // Bottom left
-    while (currRow < 8 && currCol >= 0 && b.getPiece(currRow, currCol) == nullptr)
+    while (currRow < 8 && currCol >= 0 && b.getPiece(currRow, currCol) == nullptr && count <= 1 && !b.causesCheck(this, {currRow, currCol}, count))
     {
         attackMoves.push_back({currRow, currCol, row, col});
         currRow++;
         currCol--;
     }
-    if (currRow < 8 && currCol >= 0 && b.getPiece(currRow, currCol)->getColour() != colour)
+    if (currRow < 8 && currCol >= 0 && b.getPiece(currRow, currCol) != nullptr && b.getPiece(currRow, currCol)->getColour() != colour && count <= 1 && !b.causesCheck(this, {currRow, currCol}, count))
     {
         attackMoves.push_back({currRow, currCol, row, col});
     }
     currRow = row - 1;
     currCol = col + 1;
     // Top right
-    while (currRow >= 0 && currCol < 8 && b.getPiece(currRow, currCol) == nullptr)
+    while (currRow >= 0 && currCol < 8 && b.getPiece(currRow, currCol) == nullptr && count <= 1 && !b.causesCheck(this, {currRow, currCol}, count))
     {
         attackMoves.push_back({currRow, currCol, row, col});
         currRow--;
         currCol++;
     }
-    if (currRow >= 0 && currCol < 8 && b.getPiece(currRow, currCol)->getColour() != colour)
+    if (currRow >= 0 && currCol < 8 && b.getPiece(currRow, currCol) != nullptr && b.getPiece(currRow, currCol)->getColour() != colour && count <= 1 && !b.causesCheck(this, {currRow, currCol}, count))
     {
         attackMoves.push_back({currRow, currCol, row, col});
     }

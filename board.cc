@@ -6,7 +6,7 @@
 #include "queen.h"
 #include "knight.h"
 #include "pawn.h"
-
+#include <cmath>
 #include <set>
 #include <cmath>
 #include <iostream>
@@ -32,18 +32,22 @@ Piece *Board::getPiece(int row, int col)
     return grid[row][col];
 }
 
-void Board::incrementTurn() {
+void Board::incrementTurn()
+{
     turn += 1;
 }
 
-void Board::resetTurn() {
+void Board::resetTurn()
+{
     turn = 0;
 }
 
-bool Board::move(pair<int, int> start, pair<int, int> end, char promotion) {
+bool Board::move(pair<int, int> start, pair<int, int> end, char promotion)
+{
     Piece *p = getPiece(start.first, start.second);
 
-    if (!p->checkMove(end, *this)) {
+    if (!p->checkMove(end, *this))
+    {
         cout << "Invalid move! Move again." << endl;
         return false;
     }
@@ -51,13 +55,14 @@ bool Board::move(pair<int, int> start, pair<int, int> end, char promotion) {
     Type t = p->getType();
     Colour c = p->getColour();
 
-    if (t == Type::PAWN && abs(end.first - start.first) == 2) {
-       static_cast<Pawn *>(p)->setDoubleMove(turn);
+    if (t == Type::PAWN && abs(end.first - start.first) == 2)
+    {
+        static_cast<Pawn *>(p)->setDoubleMove(turn);
     }
-
-    Piece *pawnBesidesMe = getPiece(start.first, end.second); 
+    Piece *pawnBesidesMe = getPiece(start.first, end.second);
     // en passant
-    if ((((p->getColour() == Colour::WHITE && start.first == 3) || (p->getColour() == Colour::BLACK && start.first == 4)) && getPiece(end.first, end.second) == nullptr && pawnBesidesMe != nullptr && pawnBesidesMe->getColour() != p->getColour() && pawnBesidesMe->getType() == Type::PAWN && static_cast<Pawn *>(pawnBesidesMe)->hasDoubleMoved() && static_cast<Pawn *>(pawnBesidesMe)->doubleMove + 1 == turn)) {
+    if ((((p->getColour() == Colour::WHITE && start.first == 3) || (p->getColour() == Colour::BLACK && start.first == 4)) && getPiece(end.first, end.second) == nullptr && pawnBesidesMe != nullptr && pawnBesidesMe->getColour() != p->getColour() && pawnBesidesMe->getType() == Type::PAWN && static_cast<Pawn *>(pawnBesidesMe)->hasDoubleMoved() && static_cast<Pawn *>(pawnBesidesMe)->doubleMove + 1 == turn))
+    {
         setOrCreatePiece(p, end.first, end.second, false, t, c);
         deletePiece(start.first, start.second);
         deletePiece(start.first, end.second);
@@ -66,34 +71,42 @@ bool Board::move(pair<int, int> start, pair<int, int> end, char promotion) {
     }
     pawnBesidesMe = nullptr;
 
-    if (t == Type::KING && end.second - start.second == 2) {
+    if (t == Type::KING && end.second - start.second == 2)
+    {
         // castle right side
         setOrCreatePiece(p, end.first, end.second, false, t, c);
         setOrCreatePiece(getPiece(start.first, 7), start.first, 5, false, t, c);
         deletePiece(start.first, 7);
         deletePiece(start.first, start.second);
-    } else if (p->getType() == Type::KING && start.second - end.second == 2) {
+    }
+    else if (p->getType() == Type::KING && start.second - end.second == 2)
+    {
         // castle left side
         setOrCreatePiece(p, end.first, end.second, false, t, c);
         setOrCreatePiece(getPiece(start.first, 0), start.first, 3, false, t, c);
         deletePiece(start.first, 0);
         deletePiece(start.first, start.second);
-    } else if (p->getType() == Type::PAWN && (end.first == 0 || end.first == 7)) {
+    }
+    else if (p->getType() == Type::PAWN && (end.first == 0 || end.first == 7))
+    {
         // promotion
-        if (promotion == '\0' || getTypeChar(promotion) == Type::KING) {
+        if (promotion == '\0' || getTypeChar(promotion) == Type::KING)
+        {
             cout << "Invalid promotion type! Move again." << endl;
-            return false; 
+            return false;
         }
 
-        if ((c == Colour::WHITE && !isupper(promotion)) || (c == Colour::BLACK && isupper(promotion))) {
+        if ((c == Colour::WHITE && !isupper(promotion)) || (c == Colour::BLACK && isupper(promotion)))
+        {
             return false;
         }
 
         setOrCreatePiece(nullptr, end.first, end.second, true, getTypeChar(promotion), c);
         deletePiece(start.first, start.second);
-    } 
-    
-    else {
+    }
+
+    else
+    {
         // basic move
         setOrCreatePiece(p, end.first, end.second, false, t, c);
         deletePiece(start.first, start.second);
@@ -133,10 +146,13 @@ void Board::setOrCreatePiece(Piece *piece, int row, int col, bool isCreate, Type
     Type t;
     Colour c;
 
-    if (isCreate) {
+    if (isCreate)
+    {
         t = createType;
         c = createColour;
-    } else {
+    }
+    else
+    {
         t = piece->getType();
         c = piece->getColour();
     }
@@ -159,9 +175,12 @@ void Board::setOrCreatePiece(Piece *piece, int row, int col, bool isCreate, Type
         grid[row][col] = new Queen(c, row, col, true);
         break;
     case Type::PAWN:
-        if (piece == nullptr) {
+        if (piece == nullptr)
+        {
             grid[row][col] = new Pawn(c, row, col, false, -1);
-        } else {
+        }
+        else
+        {
             int doubleMove = static_cast<Pawn *>(piece)->doubleMove;
             grid[row][col] = new Pawn(c, row, col, true, doubleMove);
         }
@@ -169,18 +188,30 @@ void Board::setOrCreatePiece(Piece *piece, int row, int col, bool isCreate, Type
     }
 }
 
-Type Board::getTypeChar(char p) {
-    if (p == 'p' || p == 'P') {
+Type Board::getTypeChar(char p)
+{
+    if (p == 'p' || p == 'P')
+    {
         return Type::PAWN;
-    } else if (p == 'k' || p == 'K') {
+    }
+    else if (p == 'k' || p == 'K')
+    {
         return Type::KING;
-    } else if (p == 'q' || p == 'Q') {
+    }
+    else if (p == 'q' || p == 'Q')
+    {
         return Type::QUEEN;
-    } else if (p == 'r' || p == 'R') {
+    }
+    else if (p == 'r' || p == 'R')
+    {
         return Type::ROOK;
-    } else if (p == 'n' || p == 'N') {
+    }
+    else if (p == 'n' || p == 'N')
+    {
         return Type::KNIGHT;
-    } else {
+    }
+    else
+    {
         return Type::BISHOP;
     }
 }
@@ -345,4 +376,472 @@ void Board::setup()
             grid[7][i] = new King(Colour::WHITE, 7, i, false);
         }
     }
+}
+
+pair<int, int> Board::findKing(Colour c)
+{
+    for (int i = 0; i < 8; i++)
+    {
+        for (int j = 0; j < 8; j++)
+        {
+            if (getPiece(i, j) != nullptr && getPiece(i, j)->getType() == Type::KING && getPiece(i, j)->getColour() == c)
+            {
+                return pair<int, int>{i, j};
+            }
+        }
+    }
+    return pair<int, int>{-1, -1};
+}
+
+bool Board::validateBoard()
+{
+    bool valid = true;
+    int whiteKingCount = 0;
+    int blackKingCount = 0;
+    for (int i = 0; i < 8; i++)
+    {
+        for (int j = 0; j < 8; j++)
+        {
+            if (getPiece(i, j) == nullptr) {
+                continue;
+            }
+
+            if (i == 0 || i == 7)
+            {
+                if (getPiece(i, j)->getType() == Type::PAWN)
+                {
+                    valid = false;
+                }
+            }
+            if (getPiece(i, j)->getType() == Type::KING)
+            {
+                if (getPiece(i, j)->getColour() == Colour::BLACK)
+                {
+                    if (inDanger(Colour::BLACK, i, j))
+                    {
+                        valid = false;
+                    }
+                    blackKingCount++;
+                }
+                else
+                {
+                    if (inDanger(Colour::WHITE, i, j))
+                    {
+                        valid = false;
+                    }
+                    whiteKingCount++;
+                }
+            }
+        }
+    }
+    if (whiteKingCount != 1 || blackKingCount != 1)
+    {
+        valid = false;
+    }
+
+    return valid;
+}
+
+void Board::updateAttackingMoves(Colour turn, int count)
+{
+    whiteAttackingMoves.clear();
+    blackAttackingMoves.clear();
+    for (int i = 0; i < 8; i++)
+    {
+        for (int j = 0; j < 8; j++)
+        {
+            if (getPiece(i, j) == nullptr)
+            {
+                continue;
+            }
+            Colour c = getPiece(i, j)->getColour();
+            vector<vector<int>> attackMoves;
+            if (getPiece(i, j)->getType() == Type::PAWN)
+            {
+                Piece *p = getPiece(i, j);
+                if (turn == c)
+                {
+                    attackMoves = static_cast<Pawn *>(p)->getActualMoves(*this, count);
+                    p = nullptr;
+                }
+                else
+                {
+                    attackMoves = static_cast<Pawn *>(p)->getAttackMoves(*this, count);
+                    p = nullptr;
+                }
+            }
+            else if (getPiece(i, j)->getType() != Type::KING)
+            {
+                attackMoves = getPiece(i, j)->getAttackMoves(*this, count);
+            }
+            for (auto a : attackMoves)
+            {
+                if (c == Colour::WHITE)
+                {
+                    whiteAttackingMoves.push_back(a);
+                }
+                else
+                {
+                    blackAttackingMoves.push_back(a);
+                }
+            }
+        }
+    }
+    pair<int, int> whiteKing = findKing(Colour::WHITE);
+    pair<int, int> blackKing = findKing(Colour::BLACK);
+    if (whiteKing.first != -1)
+    {
+        vector<vector<int>> attackMoves = getPiece(whiteKing.first, whiteKing.second)->getAttackMoves(*this, count);
+        for (auto a : attackMoves)
+        {
+            whiteAttackingMoves.push_back(a);
+        }
+    }
+    if (blackKing.first != -1)
+    {
+        vector<vector<int>> attackMoves = getPiece(blackKing.first, blackKing.second)->getAttackMoves(*this, count);
+        for (auto a : attackMoves)
+        {
+            blackAttackingMoves.push_back(a);
+        }
+    }
+}
+
+vector<vector<int>> Board::getAttackers(Colour c)
+{
+    vector<vector<int>> attackers;
+    pair<int, int> kingCoords = findKing(c);
+    int kingRow = kingCoords.first;
+    int kingCol = kingCoords.second;
+    if (c == Colour::BLACK)
+    {
+        for (auto move : whiteAttackingMoves)
+        {
+            if (move[0] == kingRow && move[1] == kingCol)
+            {
+                attackers.push_back(move);
+            }
+        }
+    }
+    else
+    {
+        for (auto move : blackAttackingMoves)
+        {
+            if (move[0] == kingRow && move[1] == kingCol)
+            {
+                attackers.push_back(move);
+            }
+        }
+    }
+    return attackers;
+}
+
+bool Board::inDanger(Colour c, int row, int col)
+{
+    if (c == Colour::BLACK)
+    {
+        for (auto move : whiteAttackingMoves)
+        {
+            if (move[0] == row && move[1] == col)
+            {
+                return true;
+            }
+        }
+    }
+    else
+    {
+        for (auto move : blackAttackingMoves)
+        {
+            if (move[0] == row && move[1] == col)
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool Board::canBlock(Colour c, int row, int col)
+{
+    if (c == Colour::BLACK)
+    {
+        for (auto move : blackAttackingMoves)
+        {
+            if (move[0] == row && move[1] == col)
+            {
+                return true;
+            }
+        }
+    }
+    else
+    {
+        for (auto move : whiteAttackingMoves)
+        {
+            if (move[0] == row && move[1] == col)
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool Board::inCheck(Colour turn)
+{
+    Colour attacked = (turn == Colour::WHITE) ? Colour::BLACK : Colour::WHITE;
+    pair<int, int> kingCoords = findKing(attacked);
+    int kingRow = kingCoords.first;
+    int kingCol = kingCoords.second;
+    if (inDanger(attacked, kingRow, kingCol) && !inCheckmate(turn))
+    {
+        return true;
+    }
+    return false;
+}
+
+bool Board::inCheckmate(Colour turn)
+{
+    Colour attacked = (turn == Colour::WHITE) ? Colour::BLACK : Colour::WHITE;
+    vector<vector<int>> attackers = getAttackers(attacked);
+    vector<pair<int, int>> dirs{
+        pair<int, int>{-1, -1},
+        pair<int, int>{-1, 0},
+        pair<int, int>{-1, 1},
+        pair<int, int>{0, -1},
+        pair<int, int>{0, 1},
+        pair<int, int>{1, -1},
+        pair<int, int>{1, 0},
+        pair<int, int>{1, 1},
+    };
+    pair<int, int> kingCoords = findKing(attacked);
+    int kingRow = kingCoords.first;
+    int kingCol = kingCoords.second;
+    Piece *currKing = getPiece(kingRow, kingCol);
+    bool isCheckmate = true;
+    // No attackers
+    if (attackers.size() == 0)
+    {
+        isCheckmate = false;
+    }
+    // 1 attacker
+    else if (attackers.size() == 1)
+    {
+        int attackerRow = attackers[0][2];
+        int attackerCol = attackers[0][3];
+        int rowDiff = attackerRow - kingRow;
+        int colDiff = attackerCol - kingCol;
+
+        // Same row (rook / queen)
+        if (rowDiff == 0)
+        {
+            // Escape by moving away
+            for (auto &d : dirs)
+            {
+                int nr = kingRow + d.first;
+                int nc = kingRow + d.second;
+                if (currKing->checkMove({nr, nc}, *this) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
+                {
+                    isCheckmate = false;
+                }
+            }
+            // Escape by blocking
+            if (colDiff > 0)
+            {
+                for (int i = attackerCol; i > kingCol; i--)
+                {
+                    if (canBlock(attacked, attackerRow, i))
+                    {
+                        isCheckmate = false;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = attackerCol; i < kingCol; i++)
+                {
+                    if (canBlock(attacked, attackerRow, i))
+                    {
+                        isCheckmate = false;
+                    }
+                }
+            }
+        }
+        // Same column (rook / queen)
+        else if (colDiff == 0)
+        {
+            // Escape by moving away
+            for (auto &d : dirs)
+            {
+                int nr = kingRow + d.first;
+                int nc = kingRow + d.second;
+                if (currKing->checkMove({nr, nc}, *this) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
+                {
+                    isCheckmate = false;
+                }
+            }
+            // Escape by blocking
+            if (rowDiff > 0)
+            {
+                for (int i = attackerRow; i > kingRow; i--)
+                {
+                    if (canBlock(attacked, i, attackerCol))
+                    {
+                        isCheckmate = false;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = attackerRow; i < kingRow; i++)
+                {
+                    if (canBlock(attacked, i, attackerCol))
+                    {
+                        isCheckmate = false;
+                    }
+                }
+            }
+        }
+        // Same diagonal (bishop / queen / pawn)
+        else if (abs((double)(colDiff) / (rowDiff)) == 1.0)
+        {
+            // Escape by moving away
+            for (auto &d : dirs)
+            {
+                int nr = kingRow + d.first;
+                int nc = kingRow + d.second;
+                if (currKing->checkMove({nr, nc}, *this) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
+                {
+                    isCheckmate = false;
+                }
+            }
+
+            // Escape by blocking
+            // Down right
+            if (rowDiff > 0 && colDiff > 0)
+            {
+                int i = 1;
+                while (kingRow + i <= attackerRow)
+                {
+                    if (canBlock(attacked, kingRow + i, kingCol + i))
+                    {
+                        isCheckmate = false;
+                    }
+                    i++;
+                }
+            }
+            // Up right
+            else if (rowDiff < 0 && colDiff > 0)
+            {
+                int i = 1;
+                while (kingRow - i >= attackerRow)
+                {
+                    if (canBlock(attacked, kingRow - i, kingCol + i))
+                    {
+                        isCheckmate = false;
+                    }
+                    i++;
+                }
+            }
+            // Down left
+            else if (rowDiff > 0 && colDiff < 0)
+            {
+                int i = 1;
+                while (kingRow + i <= attackerRow)
+                {
+                    if (canBlock(attacked, kingRow + i, kingCol - i))
+                    {
+                        isCheckmate = false;
+                    }
+                    i++;
+                }
+            }
+            // Up left
+            else
+            {
+                int i = 1;
+                while (kingRow - i >= attackerRow)
+                {
+                    if (canBlock(attacked, kingRow - i, kingCol - i))
+                    {
+                        isCheckmate = false;
+                    }
+                    i++;
+                }
+            }
+        }
+        // Horse
+        else
+        {
+            for (auto &d : dirs)
+            {
+                int nr = kingRow + d.first;
+                int nc = kingRow + d.second;
+                if (currKing->checkMove({nr, nc}, *this) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
+                {
+                    isCheckmate = false;
+                }
+            }
+        }
+    }
+    // 2 attackers
+    else
+    {
+        for (auto &d : dirs)
+        {
+            int nr = kingRow + d.first;
+            int nc = kingRow + d.second;
+            if (currKing->checkMove({nr, nc}, *this) && !inDanger(attacked, kingRow + d.first, kingCol + d.second))
+            {
+                isCheckmate = false;
+            }
+        }
+    }
+    return isCheckmate;
+}
+
+bool Board::inStalemate(Colour turn)
+{
+    Colour opposing = turn == Colour::WHITE ? Colour::BLACK : Colour::WHITE;
+    updateAttackingMoves(opposing, 0);
+
+    if (turn == Colour::WHITE && blackAttackingMoves.size() == 0 && !inCheck(Colour::BLACK))
+    {
+        return true;
+    }
+    else if (turn == Colour::BLACK && whiteAttackingMoves.size() == 0 && !inCheck(Colour::WHITE))
+    {
+        return true;
+    }
+    return false;
+}
+
+bool Board::causesCheck(Piece *p, pair<int, int> n, int count)
+{
+    Colour colour = p->getColour();
+    Type type = p->getType();
+    int currRow = p->getPos().first;
+    int currCol = p->getPos().second;
+    pair<int, int> kingPos = findKing(colour);
+    if (inDanger(colour, kingPos.first, kingPos.second))
+    {
+        return true;
+    }
+    Board b = Board{};
+    for (int i = 0; i < grid.size(); i++)
+    {
+        for (int j = 0; j < grid[i].size(); j++)
+        {
+            if (getPiece(i, j) != nullptr)
+            {
+                b.setOrCreatePiece(nullptr, i, j, true, grid[i][j]->getType(), grid[i][j]->getColour());
+            }
+        }
+    }
+    b.setOrCreatePiece(nullptr, n.first, n.second, true, type, colour);
+    b.deletePiece(currRow, currCol);
+    b.updateAttackingMoves(colour, count + 1);
+    bool ret = b.inDanger(colour, kingPos.first, kingPos.second);
+
+    b.clearBoard();
+    return ret;
 }
