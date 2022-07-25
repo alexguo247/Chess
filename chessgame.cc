@@ -84,7 +84,7 @@ void Chessgame::setup()
     // if board has not been setup before use default configuration
     if (!hasSetup)
     {
-        defaultConfiguration();
+        board.clearBoard();
     }
 
     string line;
