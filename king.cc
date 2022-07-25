@@ -25,7 +25,7 @@ bool King::checkMove(pair<int, int> n, Board &b)
     if (row == n.first && abs(n.second - col) == 2)
     {
         // Castling check
-        if (!hasMoved)
+        if (!hasMoved && !b.inDanger(colour, row, col))
         {
             if (this->getColour() == Colour::WHITE)
             {
