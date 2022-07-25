@@ -35,6 +35,7 @@ int main()
             input >> end;
             input >> promotion;
             chess->move(start, end, promotion);
+
         }
         else if (cmd == "setup")
         {

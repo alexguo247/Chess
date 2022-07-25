@@ -234,18 +234,21 @@ void Chessgame::move(string coord1, string coord2, char promotion)
     pair<int, int> end = convertCoord(coord2);
 
     Piece *piece = board.getPiece(start.first, start.second);
-    if (piece == nullptr)
-    {
-        cout << "No piece to move at that square! Move again." << endl;
-        return;
-    }
+    if(start.first != NULL && end.first != NULL ){
+        if (piece == nullptr)
+            {
+                cout << "No piece to move at that square! Move again." << endl;
+                return;
+        }
 
-    if (piece->getColour() != turn)
-    {
-        cout << "Moving piece of opposite colour is not allowed! Move again." << endl;
-        return;
-    }
+        if (piece->getColour() != turn)
+            {
+                cout << "Moving piece of opposite colour is not allowed! Move again." << endl;
+                return;
+        }
 
+    }
+    
     if (turn == Colour::WHITE)
     {
         if (!p1->move(&board, start, end, promotion))
