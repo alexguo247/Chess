@@ -15,8 +15,7 @@
 
 using namespace std;
 
-bool computer1::move(Board *board, std::pair<int, int> start, std::pair<int, int> finish, char tempChar){ 
-
+bool Computer1::move(Board *board, std::pair<int, int> start, std::pair<int, int> finish, char tempChar){ 
     bool isMoved = false;
 
     vector<vector<int>> moves;
@@ -33,13 +32,8 @@ bool computer1::move(Board *board, std::pair<int, int> start, std::pair<int, int
 
     int size1 = moves.size();
     int index1 = rand() % size1;
-
-    int size2 = moves[index1].size();
-    int index2 = rand() & size2;
-
     auto a = moves[index1];
 
-    
     if(a[3] && a[2]){
         isMoved = true;
     }
@@ -47,6 +41,4 @@ bool computer1::move(Board *board, std::pair<int, int> start, std::pair<int, int
     b->move(make_pair(a[2], a[3]), make_pair(a[0], a[1]), '\0');
 
     return isMoved; 
-        
-
 }   

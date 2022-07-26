@@ -3,11 +3,11 @@
 #include "player.h"
 #include "board.h"
 
-class computer1 : public Player
+class Computer1 : public Player
 {
 public:
-    computer1(Board *b, Colour c): Player(b,c) {};
-    bool virtual move(Board *board, std::pair<int, int>, std::pair<int, int>, char) override;
+    Computer1(Board *b, Colour c): Player(b,c) {};
+    bool move(Board *, std::pair<int, int>, std::pair<int, int>, char) override;
 };
 
 #endif

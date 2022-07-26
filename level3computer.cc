@@ -16,7 +16,7 @@
 
 using namespace std;
 
-bool computer3::move(Board *board, std::pair<int, int> start, std::pair<int, int> finish, char tempChar){ 
+bool Computer3::move(Board *board, std::pair<int, int> start, std::pair<int, int> finish, char tempChar){ 
 
 //perfers capturing moves and checks over other moves
     bool isMoved = false;
@@ -78,12 +78,7 @@ bool computer3::move(Board *board, std::pair<int, int> start, std::pair<int, int
 
     int size1 = moves.size();
     int index1 = rand() % size1;
-
-    int size2 = moves[index1].size();
-    int index2 = rand() & size2;
-
     auto a = moves[index1];
-
     
     if(a[3] && a[2]){
         isMoved = true;

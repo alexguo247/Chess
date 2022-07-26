@@ -4,7 +4,6 @@
 #include <iostream>
 #include <vector>
 #include "board.h"
-#include "sdl_wrap.h"
 #include "scoreboard.h"
 #include "level1computer.h"
 #include "level2computer.h"
