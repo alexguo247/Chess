@@ -31,7 +31,6 @@ bool Computer4::move(Board *board, std::pair<int, int> start, std::pair<int, int
     
 //0 1 -> end
 // 2 3 -> start
-
     
     //once we have finished opening moves, we can value checkmate over all other moves
     bool isMoved = false;
@@ -54,7 +53,6 @@ bool Computer4::move(Board *board, std::pair<int, int> start, std::pair<int, int
     } else {
         opposingMoves = b->whiteAttackingMoves;
     }
-
 
     // here we want to value checkmate as our primary move 
 
@@ -93,16 +91,13 @@ bool Computer4::move(Board *board, std::pair<int, int> start, std::pair<int, int
 
     // if bishop or knight dont have capture moves, continue with other piece
     int numAttackers = 0; 
-    vector<vector<int>> attackers; 
+    vector<vector<vector<int>>> allAttackers;
 
     for(auto a: moves){
         if((b->getPiece(a[0], a[1])) != nullptr){
-            vector<int> tempAttackers;
+            vector<vector<int>> attackers; 
             attackers.push_back(vector<int>{a[0], a[1], a[2], a[3]});
-            // tempAttackers.push_back(a[0]);
-            // tempAttackers.push_back(a[1]);
-            // tempAttackers.push_back(a[2]);
-            // tempAttackers.push_back(a[3]);
+
             for(auto b: moves){
                 if(b[0] == a[0] && b[1] == a[1] && b[2] != a[2] && b[3] != a[3]){
                     numAttackers++;
@@ -110,51 +105,325 @@ bool Computer4::move(Board *board, std::pair<int, int> start, std::pair<int, int
                 }
             }
 
-            if(numAttackers > 0){
-                break;
-            }
+            allAttackers.push_back(attackers);
+        }
+    }
+
+    for(int i = 0; i < allAttackers.size(); i++){
+        for(int j = 0; j < allAttackers[i].size(); j++){
+         cout << "moves: " << allAttackers[i][j][0] << allAttackers[i][j][1] << " " << allAttackers[i][j][2] << allAttackers[i][j][3] << endl;
+
         }
     }
     //attacker at pos 0 wil always be intial piece
 
-
-    if(numAttackers >= 1){
-        for(auto a: attackers){
-            if(b->getPiece(a[2], a[3])->getType() == Type::PAWN){
-                b->move(make_pair(a[2], a[3]), make_pair(a[0], a[1]), '\0');
-                return true;
+    //figure out which piece is being attacked
+    for(int i = 0; i < allAttackers.size(); i++){
+        if(b->getPiece(allAttackers[i][0][0], allAttackers[i][0][1])->getType() == Type::KING){
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::PAWN &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::BISHOP &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::KNIGHT &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::ROOK &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::QUEEN &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::KING &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
             }
         }
-        for(auto a: attackers){
-            if(b->getPiece(a[2], a[3])->getType() == Type::BISHOP){
-                b->move(make_pair(a[2], a[3]), make_pair(a[0], a[1]), '\0');
-                return true;
+        // check if it's a queen
+        else if(b->getPiece(allAttackers[i][0][0], allAttackers[i][0][1])->getType() == Type::QUEEN){
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::PAWN &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::BISHOP &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::KNIGHT &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::ROOK &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::QUEEN &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::KING &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
             }
         }
-       for(auto a: attackers){
-            if(b->getPiece(a[2], a[3])->getType() == Type::KNIGHT){
-                b->move(make_pair(a[2], a[3]), make_pair(a[0], a[1]), '\0');
-                return true;
+        // check if it's a ROOK
+        else if(b->getPiece(allAttackers[i][0][0], allAttackers[i][0][1])->getType() == Type::ROOK){
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::PAWN &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::BISHOP &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::KNIGHT &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::ROOK &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::QUEEN &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::KING &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
             }
         }
-       for(auto a: attackers){
-            if(b->getPiece(a[2], a[3])->getType() == Type::ROOK){
-                b->move(make_pair(a[2], a[3]), make_pair(a[0], a[1]), '\0');
-                return true;
+        //check if it's a knight
+        else if(b->getPiece(allAttackers[i][0][0], allAttackers[i][0][1])->getType() == Type::KNIGHT){
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::PAWN &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::BISHOP &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::KNIGHT &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::ROOK &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::QUEEN &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::KING &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
             }
         }
-        for(auto a: attackers){
-            if(b->getPiece(a[2], a[3])->getType() == Type::QUEEN){
-                b->move(make_pair(a[2], a[3]), make_pair(a[0], a[1]), '\0');
-                return true;
+        //check if it's a bishop
+        else if(b->getPiece(allAttackers[i][0][0], allAttackers[i][0][1])->getType() == Type::BISHOP){
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::PAWN &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::BISHOP &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::KNIGHT &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::ROOK &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::QUEEN &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::KING &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
             }
         }
-        for(auto a: attackers){
-            if(b->getPiece(a[2], a[3])->getType() == Type::KING){
-                b->move(make_pair(a[2], a[3]), make_pair(a[0], a[1]), '\0');
-                return true;
+        //check if it's a pawrn
+        else if(b->getPiece(allAttackers[i][0][0], allAttackers[i][0][1])->getType() == Type::PAWN){
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::PAWN &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
             }
-        }    
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::BISHOP &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::KNIGHT &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::ROOK &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::QUEEN &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+            for(int j = 0; j < allAttackers[i].size(); j++){
+                if(b->getPiece(allAttackers[i][j][2], allAttackers[i][j][3])->getType() == Type::KING &&
+                    allAttackers[i][j][2] != allAttackers[i][0][2] && allAttackers[i][j][3] != allAttackers[i][0][3]){
+                        b->move(make_pair(allAttackers[i][j][2], allAttackers[i][j][3]), 
+                                make_pair(allAttackers[i][j][0], allAttackers[i][j][1]), '\0');
+                        return true;
+                }
+            }
+        }
     }
 
     //for each attacking peice, check if it's occupied - capture
