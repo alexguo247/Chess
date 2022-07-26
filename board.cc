@@ -6,6 +6,7 @@
 #include "queen.h"
 #include "knight.h"
 #include "pawn.h"
+#include "sdl_wrap.h"
 #include <cmath>
 #include <set>
 #include <cmath>
@@ -15,6 +16,7 @@ using namespace std;
 
 Board::Board()
 {
+    // s = new Screen(800,800);
     vector<Piece *> row;
     for (int i = 0; i < 8; i++)
     {
@@ -25,6 +27,7 @@ Board::Board()
         grid.push_back(row);
         row = {};
     }
+
 }
 
 Piece *Board:: getPiece(int row, int col)
@@ -127,6 +130,8 @@ void Board::clearBoard()
             }
         }
     }
+    //TO DO CHECK IF WE NEED THIS
+    // delete s;
 }
 
 void Board::deletePiece(int row, int col)
@@ -283,10 +288,101 @@ char Board::getCharType(Piece *p)
 
     return type;
 }
+void Board::printDisplay(){ 
+    s = new Screen(640,640);
+    s->add_img("b", "./b.png");
+    s->add_img("b1", "./b1.png");
+    s->add_img("h", "./h.png");
+    s->add_img("h1", "./h1.png");
+    s->add_img("k", "./k.png");
+    s->add_img("k1", "./k1.png");
+    s->add_img("p", "./p.png");
+    s->add_img("p1", "./p1.png");
+    s->add_img("q", "./q.png");
+    s->add_img("q1", "./q1.png");
+    s->add_img("r", "./r.png");
+    s->add_img("r1", "./r1.png");
+
+    for (int row = 0; row < 8; row++)
+    {
+        colour1 tile; 
+        for (int col = 0; col < 8; col++)
+        {
+          
+            if ((row % 2 == 0 && col % 2 == 0) || (row % 2 != 0 && col % 2 != 0))
+            {
+                tile = {'\xff', '\xff', '\xff'};
+            }
+            else
+            {
+                tile = {'\x129', '\x79', '\x175'};
+            }
+
+            s->draw_rect(80*col, 80*row, 80,80, tile);
+            
+            if(grid[row][col] != nullptr){
+                char p = getCharType(grid[row][col]);
+
+                if (p == 'p')
+                {
+                    s->draw_img("p", 80*col + 8, 80*row + 5);
+                }
+                else if (p == 'k')
+                {
+                    s->draw_img("k", 80*col + 8, 80*row + 5);
+                }
+                else if (p == 'q')
+                {
+                    s->draw_img("q", 80*col + 8, 80*row + 5);
+                }
+                else if (p == 'r')
+                {
+                    s->draw_img("r", 80*col + 8, 80*row + 5);
+                }
+                else if (p == 'n')
+                {
+                    s->draw_img("h", 80*col + 8, 80*row + 5);
+                } 
+                else if(p == 'b')
+                {
+                    s->draw_img("b", 80*col + 8, 80*row + 5);
+                } 
+
+                else if (p == 'P')
+                {
+                    s->draw_img("p1", 80*col + 8, 80*row + 5);
+                }
+                else if (p == 'K')
+                {
+                    s->draw_img("k1", 80*col + 8, 80*row + 5);
+                }
+                else if (p == 'Q')
+                {
+                    s->draw_img("q1", 80*col + 8, 80*row + 5);
+                }
+                else if (p == 'R')
+                {
+                    s->draw_img("r1", 80*col + 8, 80*row + 5);
+                }
+                else if (p == 'N')
+                {
+                    s->draw_img("h1", 80*col + 8, 80*row + 5);
+                } 
+                else if(p == 'B')
+                {
+                    s->draw_img("b1", 80*col + 8, 80*row + 5);
+                }
+
+            }
+        
+        }
+    }
+
+    s->update();
+}
 
 void Board::print()
 {
-    //TODO-> DRAW THE BOARD HERE DIRECTLY
     cout << endl;
 
     int rowNum = 8;
@@ -317,6 +413,9 @@ void Board::print()
 
     cout << endl;
     cout << "  abcdefgh" << endl;
+
+    //TODO-> DRAW THE BOARD HERE DIRECTLY
+    printDisplay();
 }
 
 void Board::setup()
