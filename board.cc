@@ -48,15 +48,20 @@ void Board::resetTurn()
 bool Board::move(pair<int, int> start, pair<int, int> end, char promotion)
 {
     Piece *p = getPiece(start.first, start.second);
+    cout << "in here 12" << endl;
 
     if (!p->checkMove(end, *this))
     {
         cout << "Invalid move! Move again." << endl;
         return false;
     }
+    cout << "in here 13" << endl;
+
 
     Type t = p->getType();
     Colour c = p->getColour();
+
+    cout << "in here 14" << endl;
 
     if (t == Type::PAWN && abs(end.first - start.first) == 2)
     {
@@ -72,6 +77,8 @@ bool Board::move(pair<int, int> start, pair<int, int> end, char promotion)
         pawnBesidesMe = nullptr;
         return true;
     }
+    cout << "in here 13" << endl;
+
     pawnBesidesMe = nullptr;
 
     if (t == Type::KING && end.second - start.second == 2)
@@ -114,6 +121,8 @@ bool Board::move(pair<int, int> start, pair<int, int> end, char promotion)
         setOrCreatePiece(p, end.first, end.second, false, t, c);
         deletePiece(start.first, start.second);
     }
+    cout << "in here 155" << endl;
+
     return true;
 }
 
@@ -288,18 +297,18 @@ char Board::getCharType(Piece *p)
 
     return type;
 }
-void Board::printDisplay(){ 
-    s = new Screen(640,640);
+void Board::printDisplay(Screen * s){ 
+    // s = new Screen(640,640);
     s->add_img("b", "./b.png");
     s->add_img("b1", "./b1.png");
     s->add_img("h", "./h.png");
     s->add_img("h1", "./h1.png");
-    s->add_img("k", "./k.png");
-    s->add_img("k1", "./k1.png");
+    s->add_img("q", "./k.png");
+    s->add_img("q1", "./k1.png");
     s->add_img("p", "./p.png");
     s->add_img("p1", "./p1.png");
-    s->add_img("q", "./q.png");
-    s->add_img("q1", "./q1.png");
+    s->add_img("k", "./q.png");
+    s->add_img("k1", "./q1.png");
     s->add_img("r", "./r.png");
     s->add_img("r1", "./r1.png");
 
@@ -413,9 +422,6 @@ void Board::print()
 
     cout << endl;
     cout << "  abcdefgh" << endl;
-
-    //TODO-> DRAW THE BOARD HERE DIRECTLY
-    printDisplay();
 }
 
 void Board::setup()

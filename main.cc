@@ -6,15 +6,6 @@ using namespace std;
 
 int main()
 {
-    // Screen s{800,800};
-    // cout <<"INSIDE DISPLAY PRINT" << endl;
-    // colour1 white{'\xff', '\xff', '\xff'};
-    // colour1 blue{'\x0', '\x0', '\xff'};
-    // s.draw_rect(0, 0, 640, 480, white);
-    // s.draw_rect(310, 230, 20, 20, blue);
-    // s.update();
-    // cout <<"ENDING" << endl;
-
     Chessgame *chess = new Chessgame();
     string line;
     string cmd;

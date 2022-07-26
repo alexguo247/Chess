@@ -4,6 +4,7 @@
 #include <vector>
 #include "type.h"
 #include "colour.h"
+#include "sdl_wrap.h"
 #include <stdbool.h>
 #include "colour.h"
 
@@ -28,7 +29,7 @@ public:
     void incrementTurn();
     void resetTurn();
     void print();
-    void printDisplay();
+    void printDisplay(Screen *s);
     bool move(std::pair<int, int>, std::pair<int, int>, char); // false if error
     void deletePiece(int, int);
     void clearBoard();
