@@ -55,16 +55,26 @@ bool Computer4::move(Board *board, std::pair<int, int> start, std::pair<int, int
     }
 
     // here we want to value checkmate as our primary move 
-
+    
     // Here we are valuing a checkmate of the opposing colour and will always try to make that 
     // move before anything else
     for(auto a: moves){
         Piece* p = b->getPiece(a[2], a[3]);
-        if(b->causesOpposingCheck(p, make_pair(a[0], a[1]))){
-            if(b->inCheckmate(opposingColour)){
-                b->move(make_pair(a[2], a[3]), make_pair(a[0], a[1]), '\0');
-                return true;
-            }
+        if(b->causesOpposingCheckmate(p, make_pair(a[0], a[1]))){
+            b->move(make_pair(a[2], a[3]), make_pair(a[0], a[1]), '\0');
+            return true;
+        }
+    }
+
+    // this is used for promotion
+    for(auto a: moves){
+        Piece* p = b->getPiece(a[2], a[3]);
+        if(p->getType() == Type::PAWN && p->getColour() == Colour::WHITE && a[0] == 0){
+            b->move(make_pair(a[2], a[3]), make_pair(a[0], a[1]), 'Q');
+            return true;
+        } else if(p->getType() == Type::PAWN && p->getColour() == Colour::BLACK && a[0] == 6){
+            b->move(make_pair(a[2], a[3]), make_pair(a[0], a[1]), 'q');
+            return true;
         }
     }
 
@@ -109,13 +119,6 @@ bool Computer4::move(Board *board, std::pair<int, int> start, std::pair<int, int
         }
     }
 
-    for(int i = 0; i < allAttackers.size(); i++){
-        for(int j = 0; j < allAttackers[i].size(); j++){
-         cout << "moves: " << allAttackers[i][j][0] << allAttackers[i][j][1] << " " << allAttackers[i][j][2] << allAttackers[i][j][3] << endl;
-
-        }
-    }
-    //attacker at pos 0 wil always be intial piece
 
     //figure out which piece is being attacked
     for(int i = 0; i < allAttackers.size(); i++){

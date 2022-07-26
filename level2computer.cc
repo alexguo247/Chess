@@ -32,6 +32,18 @@ bool Computer2::move(Board *board, std::pair<int, int> start, std::pair<int, int
         moves = b->blackAttackingMoves;
     }
 
+    // this is used for promotion
+    for(auto a: moves){
+        Piece* p = b->getPiece(a[2], a[3]);
+        if(p->getType() == Type::PAWN && p->getColour() == Colour::WHITE && a[0] == 0){
+            b->move(make_pair(a[2], a[3]), make_pair(a[0], a[1]), 'Q');
+            return true;
+        } else if(p->getType() == Type::PAWN && p->getColour() == Colour::BLACK && a[0] == 6){
+            b->move(make_pair(a[2], a[3]), make_pair(a[0], a[1]), 'q');
+            return true;
+        }
+    }
+
 
     //check 
     for(auto a: moves){

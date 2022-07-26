@@ -43,6 +43,8 @@ public:
     bool inStalemate(Colour);
     bool causesCheck(Piece *, std::pair<int, int>, int);
     bool causesOpposingCheck(Piece *, std::pair<int, int>);
+    bool causesOpposingCheckmate(Piece *, std::pair<int, int>);
+    
 };
 
 #endif

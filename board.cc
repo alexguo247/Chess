@@ -972,3 +972,30 @@ bool Board::causesOpposingCheck(Piece *p, pair<int, int> n)
     b.clearBoard();
     return ret;
 }
+
+bool Board::causesOpposingCheckmate(Piece *p, pair<int, int> n)
+{
+    Colour colour = p->getColour();
+    Colour opposingColour = colour == Colour::WHITE ? Colour::BLACK : Colour::WHITE;
+    Type type = p->getType();
+    int currRow = p->getPos().first;
+    int currCol = p->getPos().second;
+    pair<int, int> kingPos = findKing(opposingColour);
+    Board b = Board{};
+    for (int i = 0; i < grid.size(); i++)
+    {
+        for (int j = 0; j < grid[i].size(); j++)
+        {
+            if (getPiece(i, j) != nullptr)
+            {
+                b.setOrCreatePiece(nullptr, i, j, true, grid[i][j]->getType(), grid[i][j]->getColour());
+            }
+        }
+    }
+    b.setOrCreatePiece(nullptr, n.first, n.second, true, type, colour);
+    b.deletePiece(currRow, currCol);
+    b.updateAttackingMoves(opposingColour, 0);
+    bool ret = b.inCheckmate(colour);
+    b.clearBoard();
+    return ret;
+}

@@ -98,6 +98,7 @@ void Chessgame::setup()
     string coord;
     pair<int, int> coordPair;
     char pieceType;
+    turn = Colour::WHITE;
     bool exit = false;
 
     while (!exit)
