@@ -21,6 +21,7 @@ class Chessgame
     bool gameIsRunning;
     Colour turn;
     Scoreboard *sb;
+    Screen *s;
     void defaultConfiguration();
 
 public:

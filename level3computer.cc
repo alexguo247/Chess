@@ -39,19 +39,21 @@ bool Computer3::move(Board *board, std::pair<int, int> start, std::pair<int, int
         opposingMoves = b->whiteAttackingMoves;
     }
 
-// 0 1 -> end row col
-// 2 3 -> start row col 
 
     //move any of your pieces that are going to be captured
     for(auto a: opposingMoves){
         for(auto c: moves){
+
             // cout << "inside here1" << endl;
             if((a[0] == c[2]) && (a[1] == c[3])){
+
                 b->move(make_pair(c[2], c[3]), make_pair(c[0], c[1]), '\0');
                 return true; 
             }
         }
     }
+
+
 
     //check if check is possible
     for(auto a: moves){
@@ -59,6 +61,7 @@ bool Computer3::move(Board *board, std::pair<int, int> start, std::pair<int, int
             // cout << "inside here2" << endl;
 
         if(b->causesOpposingCheck(p, make_pair(a[0], a[1]))){
+
             b->move(make_pair(a[2], a[3]), make_pair(a[0], a[1]), '\0');
             return true;
         }
@@ -67,12 +70,12 @@ bool Computer3::move(Board *board, std::pair<int, int> start, std::pair<int, int
     //for each attacking peice, check if it's occupied - capture
     for(auto a: moves){
         if((b->getPiece(a[0], a[1])) != nullptr){
-            // cout << "inside here3" << endl;
 
             b->move(make_pair(a[2], a[3]), make_pair(a[0], a[1]), '\0');
             return true;
         }
     }
+
 
     srand (time(NULL));
 
@@ -84,9 +87,12 @@ bool Computer3::move(Board *board, std::pair<int, int> start, std::pair<int, int
         isMoved = true;
     }
 
-    b->move(make_pair(a[2], a[3]), make_pair(a[0], a[1]), '\0');
 
-    return isMoved; 
+
+    return b->move(make_pair(a[2], a[3]), make_pair(a[0], a[1]), '\0');
+
+
+    // return isMoved; 
         
 
 }   

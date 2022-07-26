@@ -62,7 +62,7 @@ bool Computer2::move(Board *board, std::pair<int, int> start, std::pair<int, int
         isMoved = true;
     }
 
-    b->move(make_pair(a[2], a[3]), make_pair(a[0], a[1]), '\0');
+    return b->move(make_pair(a[2], a[3]), make_pair(a[0], a[1]), '\0');
 
     return isMoved; 
         
