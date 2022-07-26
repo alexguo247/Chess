@@ -168,11 +168,11 @@ vector<vector<int>> Pawn::getAttackMoves(Board &b, int count)
     if (colour == Colour::BLACK)
     {
         // Attack moves
-        if (row + 1 < 8 && col + 1 < 8 && (b.getPiece(row + 1, col + 1) == nullptr || b.getPiece(row + 1, col + 1)->getColour() != colour) && count <= 1 && !b.causesCheck(this, {row + 1, col + 1}, count))
+        if (row + 1 < 8 && col + 1 < 8 && b.getPiece(row + 1, col + 1) == nullptr && count <= 1 && !b.causesCheck(this, {row + 1, col + 1}, count))
         {
             attackMoves.push_back({row + 1, col + 1, row, col});
         }
-        if (row + 1 < 8 && col - 1 >= 0 && (b.getPiece(row + 1, col - 1) == nullptr || b.getPiece(row + 1, col - 1)->getColour() != colour) && count <= 1 && !b.causesCheck(this, {row + 1, col - 1}, count))
+        if (row + 1 < 8 && col - 1 >= 0 && b.getPiece(row + 1, col - 1) == nullptr && count <= 1 && !b.causesCheck(this, {row + 1, col - 1}, count))
         {
             attackMoves.push_back({row + 1, col - 1, row, col});
         }
@@ -180,11 +180,11 @@ vector<vector<int>> Pawn::getAttackMoves(Board &b, int count)
     else
     {
         // Attack moves
-        if (row - 1 >= 0 && col + 1 < 8 && (b.getPiece(row - 1, col + 1) == nullptr || b.getPiece(row - 1, col + 1)->getColour() != colour) && count <= 1 && !b.causesCheck(this, {row - 1, col + 1}, count))
+        if (row - 1 >= 0 && col + 1 < 8 && b.getPiece(row - 1, col + 1) == nullptr && count <= 1 && !b.causesCheck(this, {row - 1, col + 1}, count))
         {
             attackMoves.push_back({row - 1, col + 1, row, col});
         }
-        if (row - 1 >= 0 && col - 1 >= 0 && (b.getPiece(row - 1, col - 1) == nullptr || b.getPiece(row - 1, col - 1)->getColour() != colour) && count <= 1 && !b.causesCheck(this, {row - 1, col - 1}, count))
+        if (row - 1 >= 0 && col - 1 >= 0 && b.getPiece(row - 1, col - 1) == nullptr && count <= 1 && !b.causesCheck(this, {row - 1, col - 1}, count))
         {
             attackMoves.push_back({row - 1, col - 1, row, col});
         }
