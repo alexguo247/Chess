@@ -39,31 +39,44 @@ bool Computer3::move(Board *board, std::pair<int, int> start, std::pair<int, int
         opposingMoves = b->whiteAttackingMoves;
     }
 
-
-    //move any of your pieces that are going to be captured
-    for(auto a: opposingMoves){
-        for(auto c: moves){
-
-            // cout << "inside here1" << endl;
-            if((a[0] == c[2]) && (a[1] == c[3])){
-
-                b->move(make_pair(c[2], c[3]), make_pair(c[0], c[1]), '\0');
-                return true; 
-            }
-        }
-    }
-
-
+    bool killFirst = false;
 
     //check if check is possible
     for(auto a: moves){
         Piece* p = b->getPiece(a[2], a[3]);
-            // cout << "inside here2" << endl;
-
         if(b->causesOpposingCheck(p, make_pair(a[0], a[1]))){
 
             b->move(make_pair(a[2], a[3]), make_pair(a[0], a[1]), '\0');
             return true;
+        }
+    }
+
+    // this is used for promotion
+    for(auto a: moves){
+        Piece* p = b->getPiece(a[2], a[3]);
+        if(p->getType() == Type::PAWN && p->getColour() == Colour::WHITE && a[0] == 0){
+            b->move(make_pair(a[2], a[3]), make_pair(a[0], a[1]), 'Q');
+            return true;
+        } else if(p->getType() == Type::PAWN && p->getColour() == Colour::BLACK && a[0] == 6){
+            b->move(make_pair(a[2], a[3]), make_pair(a[0], a[1]), 'q');
+            return true;
+        }
+    }
+
+    for(auto a: moves){
+        if((b->getPiece(a[0], a[1])) != nullptr){
+            killFirst = true;
+        }
+    }
+
+    //move any of your pieces that are going to be captured
+    for(auto a: opposingMoves){
+        for(auto c: moves){
+            if((a[0] == c[2]) && (a[1] == c[3]) && killFirst != true){
+
+                b->move(make_pair(c[2], c[3]), make_pair(c[0], c[1]), '\0');
+                return true; 
+            }
         }
     }
 
