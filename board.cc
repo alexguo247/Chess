@@ -48,20 +48,16 @@ void Board::resetTurn()
 bool Board::move(pair<int, int> start, pair<int, int> end, char promotion)
 {
     Piece *p = getPiece(start.first, start.second);
-    cout << "in here 12" << endl;
 
     if (!p->checkMove(end, *this))
     {
         cout << "Invalid move! Move again." << endl;
         return false;
     }
-    cout << "in here 13" << endl;
 
 
     Type t = p->getType();
     Colour c = p->getColour();
-
-    cout << "in here 14" << endl;
 
     if (t == Type::PAWN && abs(end.first - start.first) == 2)
     {
@@ -77,7 +73,6 @@ bool Board::move(pair<int, int> start, pair<int, int> end, char promotion)
         pawnBesidesMe = nullptr;
         return true;
     }
-    cout << "in here 13" << endl;
 
     pawnBesidesMe = nullptr;
 
@@ -121,7 +116,6 @@ bool Board::move(pair<int, int> start, pair<int, int> end, char promotion)
         setOrCreatePiece(p, end.first, end.second, false, t, c);
         deletePiece(start.first, start.second);
     }
-    cout << "in here 155" << endl;
 
     return true;
 }
