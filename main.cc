@@ -12,6 +12,11 @@ int main()
 
     while (getline(cin, line))
     {
+        if (!line.length()) {
+            cout << "No command entered. Try again." << endl;
+            continue; 
+        }
+
         stringstream input(line);
         input >> cmd;
         if (cmd == "game")
@@ -35,6 +40,7 @@ int main()
             input >> end;
             input >> promotion;
             chess->move(start, end, promotion);
+
         }
         else if (cmd == "setup")
         {
@@ -45,6 +51,7 @@ int main()
             cout << "Not a valid command" << endl;
         }
     }
+
     chess->printScoreboard();
     delete chess;
     return 0;

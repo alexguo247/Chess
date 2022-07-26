@@ -2,6 +2,7 @@
 #include "board.h"
 #include <iostream>
 #include <cmath>
+#include <vector>
 using namespace std;
 Bishop::Bishop(Colour c, int row, int col, bool hasMoved) : Piece(c, Type::BISHOP, row, col, hasMoved){};
 

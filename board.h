@@ -40,6 +40,7 @@ public:
     bool inCheckmate(Colour);
     bool inStalemate(Colour);
     bool causesCheck(Piece *, std::pair<int, int>, int);
+    bool causesOpposingCheck(Piece *, std::pair<int, int>);
 };
 
 #endif
