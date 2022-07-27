@@ -19,7 +19,8 @@ using namespace std;
 
 pair<int, int> convertCoord(string coord)
 {
-    if (coord.length() == 0) {
+    if (coord.length() == 0)
+    {
         return make_pair(-1, -1);
     }
 
@@ -60,13 +61,13 @@ pair<int, int> convertCoord(string coord)
 Chessgame::Chessgame() : p1{nullptr}, p2{nullptr}
 {
     sb = new Scoreboard();
-    s = new Screen(640,640);
-
+    s = new Screen(640, 640);
 };
 
 Chessgame::~Chessgame()
 {
     delete sb;
+    delete s;
     delete p1;
     delete p2;
     board.clearBoard();
@@ -170,20 +171,20 @@ void Chessgame::game(string player1, string player2)
     if (player1 == "human")
     {
         p1 = new Human(&board, Colour::WHITE);
-    } 
-    else if(player1 == "computer1")
+    }
+    else if (player1 == "computer1")
     {
         p1 = new Computer1(&board, Colour::WHITE);
     }
-    else if(player1 == "computer2")
+    else if (player1 == "computer2")
     {
         p1 = new Computer2(&board, Colour::WHITE);
     }
-    else if(player1 == "computer3")
+    else if (player1 == "computer3")
     {
         p1 = new Computer3(&board, Colour::WHITE);
     }
-    else if(player1 == "computer4")
+    else if (player1 == "computer4")
     {
         p1 = new Computer4(&board, Colour::WHITE);
     }
@@ -197,19 +198,19 @@ void Chessgame::game(string player1, string player2)
     {
         p2 = new Human(&board, Colour::BLACK);
     }
-    else if(player2 == "computer1")
+    else if (player2 == "computer1")
     {
         p2 = new Computer1(&board, Colour::BLACK);
     }
-    else if(player2 == "computer2")
+    else if (player2 == "computer2")
     {
         p2 = new Computer2(&board, Colour::BLACK);
     }
-    else if(player2 == "computer3")
+    else if (player2 == "computer3")
     {
         p2 = new Computer3(&board, Colour::BLACK);
     }
-    else if(player2 == "computer4")
+    else if (player2 == "computer4")
     {
         p2 = new Computer4(&board, Colour::BLACK);
     }
@@ -218,10 +219,9 @@ void Chessgame::game(string player1, string player2)
         cout << "Invalid player 2 type!" << endl;
         return;
     }
-    
+
     board.print();
     board.printDisplay(s);
-
 }
 
 void Chessgame::resign()
@@ -257,20 +257,23 @@ void Chessgame::move(string coord1, string coord2, char promotion)
     pair<int, int> start = convertCoord(coord1);
     pair<int, int> end = convertCoord(coord2);
 
-    if (coord1.length() != 0 && coord2.length() != 0) {
+    if (coord1.length() != 0 && coord2.length() != 0)
+    {
         Piece *piece = board.getPiece(start.first, start.second);
 
-        if (piece == nullptr) {
+        if (piece == nullptr)
+        {
             cout << "No piece to move at that square! Move again." << endl;
             return;
         }
 
-        if (piece->getColour() != turn) {
+        if (piece->getColour() != turn)
+        {
             cout << "Moving piece of opposite colour is not allowed! Move again." << endl;
             return;
         }
     }
-    
+
     if (turn == Colour::WHITE)
     {
         if (!p1->move(&board, start, end, promotion))
