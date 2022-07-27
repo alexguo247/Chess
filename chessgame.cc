@@ -94,9 +94,9 @@ void Chessgame::setup()
         board.clearBoard();
     }
 
-    string line;
-    string cmd;
-    string coord;
+    string line = "";
+    string cmd = "";
+    string coord = "";
     pair<int, int> coordPair;
     char pieceType;
     turn = Colour::WHITE;
