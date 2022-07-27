@@ -164,64 +164,64 @@ void Chessgame::game(string player1, string player2)
         defaultConfiguration();
     }
 
-    hasSetup = false;
-    gameIsRunning = true;
-    board.resetTurn(); // turn number
+    // hasSetup = false;
+    // gameIsRunning = true;
+    // board.resetTurn(); // turn number
 
-    if (player1 == "human")
-    {
-        p1 = new Human(&board, Colour::WHITE);
-    }
-    else if (player1 == "computer1")
-    {
-        p1 = new Computer1(&board, Colour::WHITE);
-    }
-    else if (player1 == "computer2")
-    {
-        p1 = new Computer2(&board, Colour::WHITE);
-    }
-    else if (player1 == "computer3")
-    {
-        p1 = new Computer3(&board, Colour::WHITE);
-    }
-    else if (player1 == "computer4")
-    {
-        p1 = new Computer4(&board, Colour::WHITE);
-    }
-    else
-    {
-        cout << "Invalid player 1 type!" << endl;
-        return;
-    }
+    // if (player1 == "human")
+    // {
+    //     p1 = new Human(&board, Colour::WHITE);
+    // }
+    // else if (player1 == "computer1")
+    // {
+    //     p1 = new Computer1(&board, Colour::WHITE);
+    // }
+    // else if (player1 == "computer2")
+    // {
+    //     p1 = new Computer2(&board, Colour::WHITE);
+    // }
+    // else if (player1 == "computer3")
+    // {
+    //     p1 = new Computer3(&board, Colour::WHITE);
+    // }
+    // else if (player1 == "computer4")
+    // {
+    //     p1 = new Computer4(&board, Colour::WHITE);
+    // }
+    // else
+    // {
+    //     cout << "Invalid player 1 type!" << endl;
+    //     return;
+    // }
 
-    if (player2 == "human")
-    {
-        p2 = new Human(&board, Colour::BLACK);
-    }
-    else if (player2 == "computer1")
-    {
-        p2 = new Computer1(&board, Colour::BLACK);
-    }
-    else if (player2 == "computer2")
-    {
-        p2 = new Computer2(&board, Colour::BLACK);
-    }
-    else if (player2 == "computer3")
-    {
-        p2 = new Computer3(&board, Colour::BLACK);
-    }
-    else if (player2 == "computer4")
-    {
-        p2 = new Computer4(&board, Colour::BLACK);
-    }
-    else
-    {
-        cout << "Invalid player 2 type!" << endl;
-        return;
-    }
+    // if (player2 == "human")
+    // {
+    //     p2 = new Human(&board, Colour::BLACK);
+    // }
+    // else if (player2 == "computer1")
+    // {
+    //     p2 = new Computer1(&board, Colour::BLACK);
+    // }
+    // else if (player2 == "computer2")
+    // {
+    //     p2 = new Computer2(&board, Colour::BLACK);
+    // }
+    // else if (player2 == "computer3")
+    // {
+    //     p2 = new Computer3(&board, Colour::BLACK);
+    // }
+    // else if (player2 == "computer4")
+    // {
+    //     p2 = new Computer4(&board, Colour::BLACK);
+    // }
+    // else
+    // {
+    //     cout << "Invalid player 2 type!" << endl;
+    //     return;
+    // }
 
-    // board.print();
-    // board.printDisplay(s);
+    board.print();
+    board.printDisplay(s);
 }
 
 void Chessgame::resign()
