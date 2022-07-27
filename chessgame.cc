@@ -220,8 +220,8 @@ void Chessgame::game(string player1, string player2)
         return;
     }
 
-    board.print();
-    board.printDisplay(s);
+    // board.print();
+    // board.printDisplay(s);
 }
 
 void Chessgame::resign()
