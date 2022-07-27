@@ -7,8 +7,8 @@ using namespace std;
 int main()
 {
     Chessgame *chess = new Chessgame();
-    string line;
-    string cmd;
+    string line = "";
+    string cmd = "";
 
     while (getline(cin, line))
     {
@@ -21,8 +21,8 @@ int main()
         input >> cmd;
         if (cmd == "game")
         {
-            string p1;
-            string p2;
+            string p1 = "";
+            string p2 = "";
             input >> p1;
             input >> p2;
             chess->game(p1, p2);
