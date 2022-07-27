@@ -61,13 +61,13 @@ pair<int, int> convertCoord(string coord)
 Chessgame::Chessgame() : p1{nullptr}, p2{nullptr}
 {
     sb = new Scoreboard();
-    s = new Screen(640, 640);
+    // s = new Screen(640, 640);
 };
 
 Chessgame::~Chessgame()
 {
     delete sb;
-    delete s;
+    // delete s;
     board.clearBoard();
     delete p1;
     delete p2;
@@ -122,7 +122,7 @@ void Chessgame::setup()
             coordPair = convertCoord(coord);
             board.setOrCreatePiece(nullptr, coordPair.first, coordPair.second, true, board.getTypeChar(pieceType), isupper(pieceType) ? Colour::WHITE : Colour::BLACK);
             board.print();
-            board.printDisplay(s);
+            // board.printDisplay(s);
             board.updateAttackingMoves(turn, 0);
         }
         else if (cmd == "-")
@@ -131,7 +131,7 @@ void Chessgame::setup()
             coordPair = convertCoord(coord);
             board.deletePiece(coordPair.first, coordPair.second);
             board.print();
-            board.printDisplay(s);
+            // board.printDisplay(s);
             board.updateAttackingMoves(turn, 0);
         }
         else if (cmd == "done")
@@ -159,10 +159,10 @@ void Chessgame::game(string player1, string player2)
         return;
     }
 
-    // if (!hasSetup)
-    // {
-    //     defaultConfiguration();
-    // }
+    if (!hasSetup)
+    {
+        defaultConfiguration();
+    }
 
     hasSetup = false;
     gameIsRunning = true;
@@ -221,7 +221,7 @@ void Chessgame::game(string player1, string player2)
     }
 
     board.print();
-    board.printDisplay(s);
+    // board.printDisplay(s);
 }
 
 void Chessgame::resign()
@@ -291,7 +291,7 @@ void Chessgame::move(string coord1, string coord2, char promotion)
 
     board.incrementTurn();
     board.print();
-    board.printDisplay(s);
+    // board.printDisplay(s);
     board.updateAttackingMoves(turn, 0);
     if (board.inCheck(turn))
     {
