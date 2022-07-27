@@ -76,7 +76,7 @@ Chessgame::~Chessgame()
 void Chessgame::defaultConfiguration()
 {
     turn = Colour::WHITE;
-    // board.setup();
+    board.setup();
     board.updateAttackingMoves(turn, 0);
 }
 
@@ -159,10 +159,10 @@ void Chessgame::game(string player1, string player2)
         return;
     }
 
-    if (!hasSetup)
-    {
-        defaultConfiguration();
-    }
+    // if (!hasSetup)
+    // {
+    //     defaultConfiguration();
+    // }
 
     hasSetup = false;
     gameIsRunning = true;
