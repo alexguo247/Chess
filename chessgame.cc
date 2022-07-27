@@ -76,8 +76,8 @@ Chessgame::~Chessgame()
 void Chessgame::defaultConfiguration()
 {
     turn = Colour::WHITE;
-    board.setup();
-    // board.updateAttackingMoves(turn, 0);
+    // board.setup();
+    board.updateAttackingMoves(turn, 0);
 }
 
 void Chessgame::setup()
