@@ -66,12 +66,11 @@ Chessgame::Chessgame() : p1{nullptr}, p2{nullptr}
 
 Chessgame::~Chessgame()
 {
-    cout << "HI" << endl;
     delete sb;
     delete s;
+    board.clearBoard();
     delete p1;
     delete p2;
-    board.clearBoard();
 }
 
 void Chessgame::defaultConfiguration()
